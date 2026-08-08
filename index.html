@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SideQuest generates quick, simple activities whenever you want to shake up your day.">
+  <title>SideQuest | Find Your Next Adventure</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="page-shell">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="brand-mark" aria-hidden="true">
+        <span>↗</span>
+      </div>
+
+      <p class="eyebrow">A little spark for your day</p>
+      <h1 id="page-title">Side<span>Quest.</span></h1>
+      <p class="intro">
+        Break the routine with one simple idea. Your next small adventure is only a click away.
+      </p>
+
+      <button class="quest-button" id="generate-quest" type="button">
+        <span>Generate a Quest</span>
+        <span class="button-arrow" aria-hidden="true">→</span>
+      </button>
+
+      <div class="quest-card" id="quest-card" aria-live="polite" aria-atomic="true" hidden>
+        <p class="quest-label">Your next quest</p>
+        <p class="quest-idea" id="quest-idea"></p>
+      </div>
+
+      <p class="hint">No planning. No pressure. Just try something new.</p>
+    </section>
+  </main>
+
+  <div class="orb orb-one" aria-hidden="true"></div>
+  <div class="orb orb-two" aria-hidden="true"></div>
+</body>
+</html>
