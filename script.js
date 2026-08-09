@@ -16,13 +16,75 @@ const quests = [
   { title: "Make a three-song playlist for your current mood.", category: "Relaxing", effort: "Easy" }
 ];
 
+const SAVED_QUESTS_KEY = "sidequest-saved-quests";
+
 const generateButton = document.querySelector("#generate-quest");
 const questCard = document.querySelector("#quest-card");
 const questCategory = document.querySelector("#quest-category");
 const questEffort = document.querySelector("#quest-effort");
 const questIdea = document.querySelector("#quest-idea");
+const saveQuestButton = document.querySelector("#save-quest");
+const saveQuestIcon = document.querySelector("#save-quest-icon");
 
 let previousQuestIndex = -1;
+let currentQuest = null;
+let savedQuests = loadSavedQuests();
+
+function isValidSavedQuest(quest) {
+  return quest
+    && typeof quest.title === "string"
+    && typeof quest.category === "string"
+    && typeof quest.effort === "string";
+}
+
+function loadSavedQuests() {
+  try {
+    const storedQuests = JSON.parse(localStorage.getItem(SAVED_QUESTS_KEY) || "[]");
+    return Array.isArray(storedQuests) ? storedQuests.filter(isValidSavedQuest) : [];
+  } catch {
+    return [];
+  }
+}
+
+function isQuestSaved(quest) {
+  return savedQuests.some((savedQuest) => (
+    savedQuest.title === quest.title
+    && savedQuest.category === quest.category
+    && savedQuest.effort === quest.effort
+  ));
+}
+
+function updateSaveButton() {
+  const isSaved = isQuestSaved(currentQuest);
+  const action = isSaved ? "Unsave" : "Save";
+
+  saveQuestButton.setAttribute("aria-pressed", String(isSaved));
+  saveQuestButton.setAttribute("aria-label", `${action} quest: ${currentQuest.title}`);
+  saveQuestButton.title = `${action} quest`;
+  saveQuestIcon.textContent = isSaved ? "\u2665" : "\u2661";
+}
+
+function toggleSavedQuest() {
+  if (!currentQuest) {
+    return;
+  }
+
+  const updatedQuests = isQuestSaved(currentQuest)
+    ? savedQuests.filter((savedQuest) => savedQuest.title !== currentQuest.title)
+    : [...savedQuests, {
+      title: currentQuest.title,
+      category: currentQuest.category,
+      effort: currentQuest.effort
+    }];
+
+  try {
+    localStorage.setItem(SAVED_QUESTS_KEY, JSON.stringify(updatedQuests));
+    savedQuests = updatedQuests;
+    updateSaveButton();
+  } catch {
+    // Keep the current UI state if browser storage is unavailable.
+  }
+}
 
 function getRandomQuestIndex() {
   if (quests.length === 1) {
@@ -42,9 +104,11 @@ function generateQuest() {
   const nextQuestIndex = getRandomQuestIndex();
   const nextQuest = quests[nextQuestIndex];
   previousQuestIndex = nextQuestIndex;
+  currentQuest = nextQuest;
   questCategory.textContent = nextQuest.category;
   questEffort.textContent = nextQuest.effort;
   questIdea.textContent = nextQuest.title;
+  updateSaveButton();
 
   if (questCard.hidden) {
     questCard.hidden = false;
@@ -59,3 +123,4 @@ function generateQuest() {
 }
 
 generateButton.addEventListener("click", generateQuest);
+saveQuestButton.addEventListener("click", toggleSavedQuest);

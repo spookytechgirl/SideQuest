@@ -193,6 +193,41 @@ h1 span {
   content: "•";
 }
 
+.save-quest-button {
+  display: grid;
+  width: 1.8rem;
+  height: 1.8rem;
+  padding: 0;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.save-quest-button:hover {
+  color: var(--accent-dark);
+  background: rgba(255, 107, 66, 0.08);
+  transform: translateY(-1px);
+}
+
+.save-quest-button[aria-pressed="true"] {
+  color: var(--accent-dark);
+  background: rgba(255, 107, 66, 0.08);
+}
+
+.save-quest-button:focus-visible {
+  outline: 3px solid rgba(255, 107, 66, 0.35);
+  outline-offset: 2px;
+}
+
+.save-quest-icon {
+  font-size: 1.15rem;
+}
+
 .quest-idea {
   margin: 0;
   font-family: "Manrope", sans-serif;

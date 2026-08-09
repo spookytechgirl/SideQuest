@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=effort-levels-2">
-  <script src="script.js?v=effort-levels" defer></script>
+  <link rel="stylesheet" href="style.css?v=save-quest">
+  <script src="script.js?v=save-quest" defer></script>
 </head>
 <body>
   <main class="page-shell">
@@ -33,6 +33,9 @@
         <div class="quest-meta">
           <p id="quest-category" class="quest-label"></p>
           <p id="quest-effort" class="quest-effort"></p>
+          <button class="save-quest-button" id="save-quest" type="button" aria-label="Save quest" aria-pressed="false" title="Save quest">
+            <span class="save-quest-icon" id="save-quest-icon" aria-hidden="true">&#9825;</span>
+          </button>
         </div>
         <p class="quest-idea" id="quest-idea"></p>
       </div>
