@@ -162,14 +162,35 @@ h1 span {
   content: "";
 }
 
-.quest-label {
-  display: block;
+.quest-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
   margin: 0 0 0.5rem;
+}
+
+.quest-label {
+  margin: 0;
   color: var(--accent-dark);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
+}
+
+.quest-effort {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.quest-effort:not(:empty)::before {
+  margin-right: 0.6rem;
+  color: var(--muted);
+  content: "•";
 }
 
 .quest-idea {

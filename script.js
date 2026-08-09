@@ -1,24 +1,25 @@
 const quests = [
-  { title: "Take a 15-minute walk without your phone.", category: "Outdoors" },
-  { title: "Try a snack or drink you have never had before.", category: "Food" },
-  { title: "Write and send a kind note to someone you appreciate.", category: "Random" },
-  { title: "Visit a nearby park and find the best view.", category: "Local Adventure" },
-  { title: "Learn how to say hello in three new languages.", category: "Random" },
-  { title: "Sketch something in the room using your non-dominant hand.", category: "Creative" },
-  { title: "Put on one song and dance until it ends.", category: "Random" },
-  { title: "Take five photos of things that share the same color.", category: "Creative" },
-  { title: "Read ten pages of a book you have been meaning to start.", category: "Relaxing" },
-  { title: "Make a tiny meal using only ingredients you already have.", category: "Food" },
-  { title: "Step outside and watch the sky for five quiet minutes.", category: "Outdoors" },
-  { title: "Rearrange one small corner of your space.", category: "Relaxing" },
-  { title: "Learn one simple magic trick.", category: "Creative" },
-  { title: "Leave a positive review for a local place you enjoy.", category: "Local Adventure" },
-  { title: "Make a three-song playlist for your current mood.", category: "Relaxing" }
+  { title: "Take a 15-minute walk without your phone.", category: "Outdoors", effort: "Easy" },
+  { title: "Try a snack or drink you have never had before.", category: "Food", effort: "Quick" },
+  { title: "Write and send a kind note to someone you appreciate.", category: "Random", effort: "Quick" },
+  { title: "Visit a nearby park and find the best view.", category: "Local Adventure", effort: "Adventure" },
+  { title: "Learn how to say hello in three new languages.", category: "Random", effort: "Quick" },
+  { title: "Sketch something in the room using your non-dominant hand.", category: "Creative", effort: "A Little Effort" },
+  { title: "Put on one song and dance until it ends.", category: "Random", effort: "Quick" },
+  { title: "Take five photos of things that share the same color.", category: "Creative", effort: "A Little Effort" },
+  { title: "Read ten pages of a book you have been meaning to start.", category: "Relaxing", effort: "Easy" },
+  { title: "Make a tiny meal using only ingredients you already have.", category: "Food", effort: "A Little Effort" },
+  { title: "Step outside and watch the sky for five quiet minutes.", category: "Outdoors", effort: "Easy" },
+  { title: "Rearrange one small corner of your space.", category: "Relaxing", effort: "A Little Effort" },
+  { title: "Learn one simple magic trick.", category: "Creative", effort: "A Little Effort" },
+  { title: "Leave a positive review for a local place you enjoy.", category: "Local Adventure", effort: "Quick" },
+  { title: "Make a three-song playlist for your current mood.", category: "Relaxing", effort: "Easy" }
 ];
 
 const generateButton = document.querySelector("#generate-quest");
 const questCard = document.querySelector("#quest-card");
 const questCategory = document.querySelector("#quest-category");
+const questEffort = document.querySelector("#quest-effort");
 const questIdea = document.querySelector("#quest-idea");
 
 let previousQuestIndex = -1;
@@ -42,6 +43,7 @@ function generateQuest() {
   const nextQuest = quests[nextQuestIndex];
   previousQuestIndex = nextQuestIndex;
   questCategory.textContent = nextQuest.category;
+  questEffort.textContent = nextQuest.effort;
   questIdea.textContent = nextQuest.title;
 
   if (questCard.hidden) {

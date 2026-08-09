@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js?v=category-label" defer></script>
+  <link rel="stylesheet" href="style.css?v=effort-levels-2">
+  <script src="script.js?v=effort-levels" defer></script>
 </head>
 <body>
   <main class="page-shell">
@@ -30,7 +30,10 @@
       </button>
 
       <div class="quest-card" id="quest-card" aria-live="polite" aria-atomic="true" hidden>
-        <p id="quest-category" class="quest-label"></p>
+        <div class="quest-meta">
+          <p id="quest-category" class="quest-label"></p>
+          <p id="quest-effort" class="quest-effort"></p>
+        </div>
         <p class="quest-idea" id="quest-idea"></p>
       </div>
 
