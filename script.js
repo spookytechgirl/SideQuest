@@ -1,19 +1,19 @@
 const quests = [
-  { title: "Take a 15-minute walk without your phone.", category: "Outdoors", effort: "Easy" },
-  { title: "Try a snack or drink you have never had before.", category: "Food", effort: "Quick" },
-  { title: "Write and send a kind note to someone you appreciate.", category: "Random", effort: "Quick" },
-  { title: "Visit a nearby park and find the best view.", category: "Local Adventure", effort: "Adventure" },
-  { title: "Learn how to say hello in three new languages.", category: "Random", effort: "Quick" },
-  { title: "Sketch something in the room using your non-dominant hand.", category: "Creative", effort: "A Little Effort" },
-  { title: "Put on one song and dance until it ends.", category: "Random", effort: "Quick" },
-  { title: "Take five photos of things that share the same color.", category: "Creative", effort: "A Little Effort" },
-  { title: "Read ten pages of a book you have been meaning to start.", category: "Relaxing", effort: "Easy" },
-  { title: "Make a tiny meal using only ingredients you already have.", category: "Food", effort: "A Little Effort" },
-  { title: "Step outside and watch the sky for five quiet minutes.", category: "Outdoors", effort: "Easy" },
-  { title: "Rearrange one small corner of your space.", category: "Relaxing", effort: "A Little Effort" },
-  { title: "Learn one simple magic trick.", category: "Creative", effort: "A Little Effort" },
-  { title: "Leave a positive review for a local place you enjoy.", category: "Local Adventure", effort: "Quick" },
-  { title: "Make a three-song playlist for your current mood.", category: "Relaxing", effort: "Easy" }
+  { title: "Take a 15-minute walk without your phone.", category: "Outdoors", effort: "Easy", energy: ["low", "medium"], moods: ["outside", "relax"], times: ["medium"] },
+  { title: "Try a snack or drink you have never had before.", category: "Food", effort: "Quick", energy: ["low", "medium"], moods: ["treat", "explore"], times: ["short"] },
+  { title: "Write and send a kind note to someone you appreciate.", category: "Random", effort: "Quick", energy: ["low", "medium"], moods: ["relax"], times: ["short"] },
+  { title: "Visit a nearby park and find the best view.", category: "Local Adventure", effort: "Adventure", energy: ["medium", "high"], moods: ["outside", "explore"], times: ["long"] },
+  { title: "Learn how to say hello in three new languages.", category: "Random", effort: "Quick", energy: ["low", "medium"], moods: ["explore", "create"], times: ["short"] },
+  { title: "Sketch something in the room using your non-dominant hand.", category: "Creative", effort: "A Little Effort", energy: ["low", "medium"], moods: ["create", "relax"], times: ["short", "medium"] },
+  { title: "Put on one song and dance until it ends.", category: "Random", effort: "Quick", energy: ["medium", "high"], moods: ["treat"], times: ["short"] },
+  { title: "Take five photos of things that share the same color.", category: "Creative", effort: "A Little Effort", energy: ["medium", "high"], moods: ["create", "explore", "outside"], times: ["medium"] },
+  { title: "Read ten pages of a book you have been meaning to start.", category: "Relaxing", effort: "Easy", energy: ["low"], moods: ["relax", "treat"], times: ["medium", "long"] },
+  { title: "Make a tiny meal using only ingredients you already have.", category: "Food", effort: "A Little Effort", energy: ["medium", "high"], moods: ["create", "treat"], times: ["medium", "long"] },
+  { title: "Step outside and watch the sky for five quiet minutes.", category: "Outdoors", effort: "Easy", energy: ["low"], moods: ["outside", "relax"], times: ["short"] },
+  { title: "Rearrange one small corner of your space.", category: "Relaxing", effort: "A Little Effort", energy: ["medium", "high"], moods: ["create", "relax"], times: ["medium"] },
+  { title: "Learn one simple magic trick.", category: "Creative", effort: "A Little Effort", energy: ["medium"], moods: ["create", "explore"], times: ["medium", "long"] },
+  { title: "Leave a positive review for a local place you enjoy.", category: "Local Adventure", effort: "Quick", energy: ["low"], moods: ["treat", "explore"], times: ["short"] },
+  { title: "Make a three-song playlist for your current mood.", category: "Relaxing", effort: "Easy", energy: ["low", "medium"], moods: ["create", "relax", "treat"], times: ["short", "medium"] }
 ];
 
 const SAVED_QUESTS_KEY = "sidequest-saved-quests";
@@ -25,6 +25,8 @@ const questEffort = document.querySelector("#quest-effort");
 const questIdea = document.querySelector("#quest-idea");
 const saveQuestButton = document.querySelector("#save-quest");
 const saveQuestIcon = document.querySelector("#save-quest-icon");
+const quizToggle = document.querySelector("#quiz-toggle");
+const quiz = document.querySelector("#sidequest-quiz");
 
 let previousQuestIndex = -1;
 let currentQuest = null;
@@ -100,8 +102,25 @@ function getRandomQuestIndex() {
   return nextIndex;
 }
 
-function generateQuest() {
-  const nextQuestIndex = getRandomQuestIndex();
+function getMatchedQuestIndex({ energy, mood, time }) {
+  const scoredQuests = quests.map((quest, index) => {
+    let score = 0;
+    score += quest.energy.includes(energy) ? 3 : 0;
+    score += mood === "surprise" ? 0 : (quest.moods.includes(mood) ? 4 : 0);
+    score += quest.times.includes(time) ? 3 : 0;
+    return { index, score };
+  });
+  const highestScore = Math.max(...scoredQuests.map(({ score }) => score));
+  let bestMatches = scoredQuests.filter(({ score }) => score === highestScore);
+
+  if (bestMatches.length > 1) {
+    bestMatches = bestMatches.filter(({ index }) => index !== previousQuestIndex);
+  }
+
+  return bestMatches[Math.floor(Math.random() * bestMatches.length)].index;
+}
+
+function showQuest(nextQuestIndex) {
   const nextQuest = quests[nextQuestIndex];
   previousQuestIndex = nextQuestIndex;
   currentQuest = nextQuest;
@@ -122,5 +141,29 @@ function generateQuest() {
   generateButton.querySelector("span:first-child").textContent = "Generate Another";
 }
 
+function generateQuest() {
+  showQuest(getRandomQuestIndex());
+}
+
+function toggleQuiz() {
+  const willOpen = quiz.hidden;
+  quiz.hidden = !willOpen;
+  quizToggle.setAttribute("aria-expanded", String(willOpen));
+}
+
+function generateMatchedQuest(event) {
+  event.preventDefault();
+
+  if (!quiz.reportValidity()) {
+    return;
+  }
+
+  const answers = Object.fromEntries(new FormData(quiz));
+  showQuest(getMatchedQuestIndex(answers));
+  questCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
 generateButton.addEventListener("click", generateQuest);
+quizToggle.addEventListener("click", toggleQuiz);
+quiz.addEventListener("submit", generateMatchedQuest);
 saveQuestButton.addEventListener("click", toggleSavedQuest);
