@@ -17,12 +17,34 @@ const quests = [
 ];
 
 const SAVED_QUESTS_KEY = "sidequest-saved-quests";
+const QUIZ_EXPLANATION_PHRASES = {
+  energy: {
+    low: "keep it low-energy",
+    medium: "use a medium amount of energy",
+    high: "go high-energy"
+  },
+  mood: {
+    outside: "get outside",
+    create: "make something",
+    treat: "treat yourself",
+    explore: "explore",
+    relax: "relax",
+    surprise: "be surprised"
+  },
+  time: {
+    short: "keep it under 15 minutes",
+    medium: "spend 15–30 minutes",
+    long: "take your time"
+  }
+};
 
 const generateButton = document.querySelector("#generate-quest");
 const questCard = document.querySelector("#quest-card");
 const questCategory = document.querySelector("#quest-category");
 const questEffort = document.querySelector("#quest-effort");
 const questIdea = document.querySelector("#quest-idea");
+const questExplanation = document.querySelector("#quest-explanation");
+const questExplanationText = document.querySelector("#quest-explanation-text");
 const saveQuestButton = document.querySelector("#save-quest");
 const saveQuestIcon = document.querySelector("#save-quest-icon");
 const quizToggle = document.querySelector("#quiz-toggle");
@@ -120,13 +142,19 @@ function getMatchedQuestIndex({ energy, mood, time }) {
   return bestMatches[Math.floor(Math.random() * bestMatches.length)].index;
 }
 
-function showQuest(nextQuestIndex) {
+function getQuizExplanation({ energy, mood, time }) {
+  return `You wanted to ${QUIZ_EXPLANATION_PHRASES.mood[mood]}, ${QUIZ_EXPLANATION_PHRASES.energy[energy]}, and ${QUIZ_EXPLANATION_PHRASES.time[time]}.`;
+}
+
+function showQuest(nextQuestIndex, explanation = "") {
   const nextQuest = quests[nextQuestIndex];
   previousQuestIndex = nextQuestIndex;
   currentQuest = nextQuest;
   questCategory.textContent = nextQuest.category;
   questEffort.textContent = nextQuest.effort;
   questIdea.textContent = nextQuest.title;
+  questExplanationText.textContent = explanation;
+  questExplanation.hidden = !explanation;
   updateSaveButton();
 
   if (questCard.hidden) {
@@ -159,7 +187,7 @@ function generateMatchedQuest(event) {
   }
 
   const answers = Object.fromEntries(new FormData(quiz));
-  showQuest(getMatchedQuestIndex(answers));
+  showQuest(getMatchedQuestIndex(answers), getQuizExplanation(answers));
   questCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 

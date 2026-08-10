@@ -404,6 +404,19 @@ h1 span {
   line-height: 1.35;
 }
 
+.quest-explanation {
+  max-width: 29rem;
+  margin: 0.9rem auto 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.quest-explanation strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
 .hint {
   margin: 1.75rem 0 0;
   color: #878b84;
