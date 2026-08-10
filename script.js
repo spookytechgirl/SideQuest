@@ -45,6 +45,7 @@ const questEffort = document.querySelector("#quest-effort");
 const questIdea = document.querySelector("#quest-idea");
 const questExplanation = document.querySelector("#quest-explanation");
 const questExplanationText = document.querySelector("#quest-explanation-text");
+const tryAnotherButton = document.querySelector("#try-another-quest");
 const saveQuestButton = document.querySelector("#save-quest");
 const saveQuestIcon = document.querySelector("#save-quest-icon");
 const quizToggle = document.querySelector("#quiz-toggle");
@@ -52,6 +53,7 @@ const quiz = document.querySelector("#sidequest-quiz");
 
 let previousQuestIndex = -1;
 let currentQuest = null;
+let currentQuizAnswers = null;
 let savedQuests = loadSavedQuests();
 
 function isValidSavedQuest(quest) {
@@ -124,20 +126,16 @@ function getRandomQuestIndex() {
   return nextIndex;
 }
 
-function getMatchedQuestIndex({ energy, mood, time }) {
+function getMatchedQuestIndex({ energy, mood, time }, excludedIndex = -1) {
   const scoredQuests = quests.map((quest, index) => {
     let score = 0;
     score += quest.energy.includes(energy) ? 3 : 0;
     score += mood === "surprise" ? 0 : (quest.moods.includes(mood) ? 4 : 0);
     score += quest.times.includes(time) ? 3 : 0;
     return { index, score };
-  });
+  }).filter(({ index }) => quests.length === 1 || index !== excludedIndex);
   const highestScore = Math.max(...scoredQuests.map(({ score }) => score));
-  let bestMatches = scoredQuests.filter(({ score }) => score === highestScore);
-
-  if (bestMatches.length > 1) {
-    bestMatches = bestMatches.filter(({ index }) => index !== previousQuestIndex);
-  }
+  const bestMatches = scoredQuests.filter(({ score }) => score === highestScore);
 
   return bestMatches[Math.floor(Math.random() * bestMatches.length)].index;
 }
@@ -146,7 +144,7 @@ function getQuizExplanation({ energy, mood, time }) {
   return `You wanted to ${QUIZ_EXPLANATION_PHRASES.mood[mood]}, ${QUIZ_EXPLANATION_PHRASES.energy[energy]}, and ${QUIZ_EXPLANATION_PHRASES.time[time]}.`;
 }
 
-function showQuest(nextQuestIndex, explanation = "") {
+function showQuest(nextQuestIndex, explanation = "", isQuizQuest = false) {
   const nextQuest = quests[nextQuestIndex];
   previousQuestIndex = nextQuestIndex;
   currentQuest = nextQuest;
@@ -155,6 +153,7 @@ function showQuest(nextQuestIndex, explanation = "") {
   questIdea.textContent = nextQuest.title;
   questExplanationText.textContent = explanation;
   questExplanation.hidden = !explanation;
+  tryAnotherButton.hidden = !isQuizQuest;
   updateSaveButton();
 
   if (questCard.hidden) {
@@ -170,6 +169,7 @@ function showQuest(nextQuestIndex, explanation = "") {
 }
 
 function generateQuest() {
+  currentQuizAnswers = null;
   showQuest(getRandomQuestIndex());
 }
 
@@ -186,12 +186,29 @@ function generateMatchedQuest(event) {
     return;
   }
 
-  const answers = Object.fromEntries(new FormData(quiz));
-  showQuest(getMatchedQuestIndex(answers), getQuizExplanation(answers));
+  currentQuizAnswers = Object.fromEntries(new FormData(quiz));
+  showQuest(
+    getMatchedQuestIndex(currentQuizAnswers, previousQuestIndex),
+    getQuizExplanation(currentQuizAnswers),
+    true
+  );
   questCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function generateAnotherMatchedQuest() {
+  if (!currentQuizAnswers) {
+    return;
+  }
+
+  showQuest(
+    getMatchedQuestIndex(currentQuizAnswers, previousQuestIndex),
+    getQuizExplanation(currentQuizAnswers),
+    true
+  );
 }
 
 generateButton.addEventListener("click", generateQuest);
 quizToggle.addEventListener("click", toggleQuiz);
 quiz.addEventListener("submit", generateMatchedQuest);
+tryAnotherButton.addEventListener("click", generateAnotherMatchedQuest);
 saveQuestButton.addEventListener("click", toggleSavedQuest);
