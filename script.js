@@ -17,6 +17,7 @@ const quests = [
 ];
 
 const SAVED_QUESTS_KEY = "sidequest-saved-quests";
+const RECENT_QUESTS_KEY = "sidequest-recent-quests";
 const QUIZ_EXPLANATION_PHRASES = {
   energy: {
     low: "keep it low-energy",
@@ -50,11 +51,14 @@ const saveQuestButton = document.querySelector("#save-quest");
 const saveQuestIcon = document.querySelector("#save-quest-icon");
 const quizToggle = document.querySelector("#quiz-toggle");
 const quiz = document.querySelector("#sidequest-quiz");
+const recentQuestsSection = document.querySelector("#recent-quests");
+const recentQuestsList = document.querySelector("#recent-quests-list");
 
 let previousQuestIndex = -1;
 let currentQuest = null;
 let currentQuizAnswers = null;
 let savedQuests = loadSavedQuests();
+let recentQuests = loadRecentQuests();
 
 function isValidSavedQuest(quest) {
   return quest
@@ -70,6 +74,50 @@ function loadSavedQuests() {
   } catch {
     return [];
   }
+}
+
+function loadRecentQuests() {
+  try {
+    const storedQuests = JSON.parse(localStorage.getItem(RECENT_QUESTS_KEY) || "[]");
+    return Array.isArray(storedQuests) ? storedQuests.filter(isValidSavedQuest).slice(0, 5) : [];
+  } catch {
+    return [];
+  }
+}
+
+function renderRecentQuests() {
+  recentQuestsList.replaceChildren();
+
+  recentQuests.forEach((quest) => {
+    const item = document.createElement("li");
+    const meta = document.createElement("p");
+    const title = document.createElement("p");
+
+    meta.className = "recent-quest-meta";
+    meta.textContent = `${quest.category} • ${quest.effort}`;
+    title.className = "recent-quest-title";
+    title.textContent = quest.title;
+    item.append(meta, title);
+    recentQuestsList.append(item);
+  });
+
+  recentQuestsSection.hidden = recentQuests.length === 0;
+}
+
+function addRecentQuest(quest) {
+  recentQuests = [{
+    title: quest.title,
+    category: quest.category,
+    effort: quest.effort
+  }, ...recentQuests].slice(0, 5);
+
+  try {
+    localStorage.setItem(RECENT_QUESTS_KEY, JSON.stringify(recentQuests));
+  } catch {
+    // The current session can still show recent quests if storage is unavailable.
+  }
+
+  renderRecentQuests();
 }
 
 function isQuestSaved(quest) {
@@ -155,6 +203,7 @@ function showQuest(nextQuestIndex, explanation = "", isQuizQuest = false) {
   questExplanation.hidden = !explanation;
   tryAnotherButton.hidden = !isQuizQuest;
   updateSaveButton();
+  addRecentQuest(nextQuest);
 
   if (questCard.hidden) {
     questCard.hidden = false;
@@ -212,3 +261,4 @@ quizToggle.addEventListener("click", toggleQuiz);
 quiz.addEventListener("submit", generateMatchedQuest);
 tryAnotherButton.addEventListener("click", generateAnotherMatchedQuest);
 saveQuestButton.addEventListener("click", toggleSavedQuest);
+renderRecentQuests();

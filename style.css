@@ -455,6 +455,67 @@ h1 span {
   font-size: 0.78rem;
 }
 
+.recent-quests {
+  max-width: 35rem;
+  margin: 2.5rem auto 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  text-align: left;
+}
+
+.recent-quests-heading {
+  margin-bottom: 0.8rem;
+  text-align: center;
+}
+
+.recent-quests-kicker {
+  margin: 0 0 0.2rem;
+  color: var(--accent-dark);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.recent-quests-heading h2 {
+  margin: 0;
+  font-family: "Manrope", sans-serif;
+  font-size: 1.15rem;
+  letter-spacing: -0.03em;
+}
+
+.recent-quests-list {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.recent-quests-list li {
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.48);
+}
+
+.recent-quest-meta {
+  margin: 0 0 0.2rem;
+  color: var(--accent-dark);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.recent-quest-title {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
 .orb {
   position: fixed;
   border-radius: 50%;
