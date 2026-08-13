@@ -59,9 +59,117 @@ button {
 .site-nav a:focus-visible,
 .quiz-page-link:focus-visible,
 .brand-link:focus-visible,
-.recent-quests-empty a:focus-visible {
+.recent-quests-empty a:focus-visible,
+.saved-quests-empty a:focus-visible {
   outline: 3px solid rgba(255, 107, 66, 0.35);
   outline-offset: 3px;
+}
+
+.saved-quests-shell {
+  align-items: start;
+}
+
+.saved-quests-title {
+  font-size: clamp(3.25rem, 10vw, 6rem);
+  letter-spacing: -0.07em;
+}
+
+.saved-quests-intro {
+  margin-bottom: 1.5rem;
+}
+
+.saved-quests {
+  max-width: 35rem;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.saved-quests-list {
+  display: grid;
+  gap: 0.65rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.saved-quests-list[hidden],
+.saved-quests-empty[hidden] {
+  display: none;
+}
+
+.saved-quests-list li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.52);
+}
+
+.saved-quest-content {
+  min-width: 0;
+  flex: 1;
+}
+
+.saved-quest-meta {
+  margin: 0 0 0.25rem;
+  color: var(--accent-dark);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.saved-quest-title {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.saved-quest-remove {
+  display: grid;
+  width: 2.2rem;
+  height: 2.2rem;
+  flex: 0 0 auto;
+  padding: 0;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  color: var(--accent-dark);
+  background: rgba(255, 107, 66, 0.08);
+  cursor: pointer;
+  font-size: 1.15rem;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.saved-quest-remove:hover {
+  background: rgba(255, 107, 66, 0.16);
+  transform: translateY(-1px);
+}
+
+.saved-quest-remove:focus-visible {
+  outline: 3px solid rgba(255, 107, 66, 0.35);
+  outline-offset: 2px;
+}
+
+.saved-quests-empty {
+  margin: 0;
+  padding: 1.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 1rem;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.52);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.saved-quests-empty a {
+  color: var(--accent-dark);
+  font-weight: 700;
+  text-decoration: none;
 }
 
 .page-shell {
@@ -699,8 +807,8 @@ h1 span {
   }
 
   .site-nav a {
-    padding-inline: 0.6rem;
-    font-size: 0.68rem;
+    padding-inline: 0.5rem;
+    font-size: 0.62rem;
   }
 
   .intro {

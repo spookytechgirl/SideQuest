@@ -53,6 +53,9 @@ const quiz = document.querySelector("#sidequest-quiz");
 const recentQuestsSection = document.querySelector("#recent-quests");
 const recentQuestsList = document.querySelector("#recent-quests-list");
 const recentQuestsEmpty = document.querySelector("#recent-quests-empty");
+const savedQuestsSection = document.querySelector("#saved-quests");
+const savedQuestsList = document.querySelector("#saved-quests-list");
+const savedQuestsEmpty = document.querySelector("#saved-quests-empty");
 
 let previousQuestIndex = -1;
 let currentQuest = null;
@@ -82,6 +85,57 @@ function loadRecentQuests() {
     return Array.isArray(storedQuests) ? storedQuests.filter(isValidSavedQuest).slice(0, 5) : [];
   } catch {
     return [];
+  }
+}
+
+function renderSavedQuests() {
+  if (!savedQuestsSection || !savedQuestsList) {
+    return;
+  }
+
+  savedQuestsList.replaceChildren();
+
+  savedQuests.forEach((quest) => {
+    const item = document.createElement("li");
+    const content = document.createElement("div");
+    const meta = document.createElement("p");
+    const title = document.createElement("p");
+    const removeButton = document.createElement("button");
+
+    content.className = "saved-quest-content";
+    meta.className = "saved-quest-meta";
+    meta.textContent = `${quest.category} • ${quest.effort}`;
+    title.className = "saved-quest-title";
+    title.textContent = quest.title;
+    removeButton.className = "saved-quest-remove";
+    removeButton.type = "button";
+    removeButton.setAttribute("aria-label", `Unsave quest: ${quest.title}`);
+    removeButton.title = "Unsave quest";
+    removeButton.innerHTML = '<span aria-hidden="true">♥</span>';
+    removeButton.addEventListener("click", () => removeSavedQuest(quest));
+
+    content.append(meta, title);
+    item.append(content, removeButton);
+    savedQuestsList.append(item);
+  });
+
+  savedQuestsList.hidden = savedQuests.length === 0;
+  savedQuestsEmpty.hidden = savedQuests.length > 0;
+}
+
+function removeSavedQuest(quest) {
+  const updatedQuests = savedQuests.filter((savedQuest) => !(
+    savedQuest.title === quest.title
+    && savedQuest.category === quest.category
+    && savedQuest.effort === quest.effort
+  ));
+
+  try {
+    localStorage.setItem(SAVED_QUESTS_KEY, JSON.stringify(updatedQuests));
+    savedQuests = updatedQuests;
+    renderSavedQuests();
+  } catch {
+    // Keep the current UI state if browser storage is unavailable.
   }
 }
 
@@ -272,3 +326,4 @@ quiz?.addEventListener("submit", generateMatchedQuest);
 tryAnotherButton?.addEventListener("click", generateAnotherMatchedQuest);
 saveQuestButton?.addEventListener("click", toggleSavedQuest);
 renderRecentQuests();
+renderSavedQuests();
