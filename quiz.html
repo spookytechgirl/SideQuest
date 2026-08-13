@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Find a personalized SideQuest with a quick three-question vibe check.">
+  <title>Quick Vibe Check | SideQuest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=quiz-page">
+  <script src="script.js?v=quiz-page" defer></script>
+</head>
+<body>
+  <main class="page-shell quiz-page-shell">
+    <section class="hero quiz-page" aria-labelledby="page-title">
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="quiz.html" aria-current="page">Quick Vibe Check</a>
+      </nav>
+
+      <a class="brand-mark brand-link" href="index.html" aria-label="SideQuest home">
+        <span aria-hidden="true">↗</span>
+      </a>
+
+      <p class="eyebrow">Quick vibe check</p>
+      <h1 id="page-title" class="quiz-page-title">What Kind of<br><span>SideQuest</span> Do You Need?</h1>
+      <p class="intro quiz-page-intro">Three quick questions. One little adventure picked for your current mood.</p>
+
+      <form class="sidequest-quiz" id="sidequest-quiz">
+        <fieldset>
+          <legend><span>1</span> Energy level</legend>
+          <div class="quiz-options quiz-options-three">
+            <label><input type="radio" name="energy" value="low" required><span>Low</span></label>
+            <label><input type="radio" name="energy" value="medium"><span>Medium</span></label>
+            <label><input type="radio" name="energy" value="high"><span>High</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend><span>2</span> What sounds good right now?</legend>
+          <div class="quiz-options">
+            <label><input type="radio" name="mood" value="outside" required><span>Get Outside</span></label>
+            <label><input type="radio" name="mood" value="create"><span>Make Something</span></label>
+            <label><input type="radio" name="mood" value="treat"><span>Treat Myself</span></label>
+            <label><input type="radio" name="mood" value="explore"><span>Explore</span></label>
+            <label><input type="radio" name="mood" value="relax"><span>Relax</span></label>
+            <label><input type="radio" name="mood" value="surprise"><span>Surprise Me</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend><span>3</span> How much time do you have?</legend>
+          <div class="quiz-options quiz-options-three">
+            <label><input type="radio" name="time" value="short" required><span>Under 15 Minutes</span></label>
+            <label><input type="radio" name="time" value="medium"><span>15–30 Minutes</span></label>
+            <label><input type="radio" name="time" value="long"><span>I've Got Time</span></label>
+          </div>
+        </fieldset>
+
+        <button class="quiz-submit" type="submit">Find My SideQuest <span aria-hidden="true">→</span></button>
+      </form>
+
+      <div class="quest-card" id="quest-card" aria-live="polite" aria-atomic="true" hidden>
+        <div class="quest-meta">
+          <p id="quest-category" class="quest-label"></p>
+          <p id="quest-effort" class="quest-effort"></p>
+          <button class="save-quest-button" id="save-quest" type="button" aria-label="Save quest" aria-pressed="false" title="Save quest">
+            <span class="save-quest-icon" id="save-quest-icon" aria-hidden="true">&#9825;</span>
+          </button>
+        </div>
+        <p class="quest-idea" id="quest-idea"></p>
+        <p class="quest-explanation" id="quest-explanation" hidden>
+          <strong>Why this quest?</strong>
+          <span id="quest-explanation-text"></span>
+        </p>
+        <button class="try-another-button" id="try-another-quest" type="button" hidden>
+          Not feeling it? Try another <span aria-hidden="true">↻</span>
+        </button>
+      </div>
+
+      <p class="hint">No planning. No pressure. Just try something new.</p>
+
+      <section class="recent-quests" id="recent-quests" aria-labelledby="recent-quests-title" hidden>
+        <div class="recent-quests-heading">
+          <p class="recent-quests-kicker">Your adventure log</p>
+          <h2 id="recent-quests-title">Recent SideQuests</h2>
+        </div>
+        <ol class="recent-quests-list" id="recent-quests-list"></ol>
+      </section>
+    </section>
+  </main>
+
+  <div class="orb orb-one" aria-hidden="true"></div>
+  <div class="orb orb-two" aria-hidden="true"></div>
+</body>
+</html>

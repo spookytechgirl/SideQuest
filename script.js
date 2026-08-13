@@ -49,7 +49,6 @@ const questExplanationText = document.querySelector("#quest-explanation-text");
 const tryAnotherButton = document.querySelector("#try-another-quest");
 const saveQuestButton = document.querySelector("#save-quest");
 const saveQuestIcon = document.querySelector("#save-quest-icon");
-const quizToggle = document.querySelector("#quiz-toggle");
 const quiz = document.querySelector("#sidequest-quiz");
 const recentQuestsSection = document.querySelector("#recent-quests");
 const recentQuestsList = document.querySelector("#recent-quests-list");
@@ -129,6 +128,10 @@ function isQuestSaved(quest) {
 }
 
 function updateSaveButton() {
+  if (!saveQuestButton) {
+    return;
+  }
+
   const isSaved = isQuestSaved(currentQuest);
   const action = isSaved ? "Unsave" : "Save";
 
@@ -199,9 +202,13 @@ function showQuest(nextQuestIndex, explanation = "", isQuizQuest = false) {
   questCategory.textContent = nextQuest.category;
   questEffort.textContent = nextQuest.effort;
   questIdea.textContent = nextQuest.title;
-  questExplanationText.textContent = explanation;
-  questExplanation.hidden = !explanation;
-  tryAnotherButton.hidden = !isQuizQuest;
+  if (questExplanation && questExplanationText) {
+    questExplanationText.textContent = explanation;
+    questExplanation.hidden = !explanation;
+  }
+  if (tryAnotherButton) {
+    tryAnotherButton.hidden = !isQuizQuest;
+  }
   updateSaveButton();
   addRecentQuest(nextQuest);
 
@@ -214,18 +221,14 @@ function showQuest(nextQuestIndex, explanation = "", isQuizQuest = false) {
     });
   }
 
-  generateButton.querySelector("span:first-child").textContent = "Generate Another";
+  if (generateButton) {
+    generateButton.querySelector("span:first-child").textContent = "Generate Another";
+  }
 }
 
 function generateQuest() {
   currentQuizAnswers = null;
   showQuest(getRandomQuestIndex());
-}
-
-function toggleQuiz() {
-  const willOpen = quiz.hidden;
-  quiz.hidden = !willOpen;
-  quizToggle.setAttribute("aria-expanded", String(willOpen));
 }
 
 function generateMatchedQuest(event) {
@@ -256,9 +259,8 @@ function generateAnotherMatchedQuest() {
   );
 }
 
-generateButton.addEventListener("click", generateQuest);
-quizToggle.addEventListener("click", toggleQuiz);
-quiz.addEventListener("submit", generateMatchedQuest);
-tryAnotherButton.addEventListener("click", generateAnotherMatchedQuest);
-saveQuestButton.addEventListener("click", toggleSavedQuest);
+generateButton?.addEventListener("click", generateQuest);
+quiz?.addEventListener("submit", generateMatchedQuest);
+tryAnotherButton?.addEventListener("click", generateAnotherMatchedQuest);
+saveQuestButton?.addEventListener("click", toggleSavedQuest);
 renderRecentQuests();
