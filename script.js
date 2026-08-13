@@ -52,6 +52,7 @@ const saveQuestIcon = document.querySelector("#save-quest-icon");
 const quiz = document.querySelector("#sidequest-quiz");
 const recentQuestsSection = document.querySelector("#recent-quests");
 const recentQuestsList = document.querySelector("#recent-quests-list");
+const recentQuestsEmpty = document.querySelector("#recent-quests-empty");
 
 let previousQuestIndex = -1;
 let currentQuest = null;
@@ -85,6 +86,10 @@ function loadRecentQuests() {
 }
 
 function renderRecentQuests() {
+  if (!recentQuestsSection || !recentQuestsList) {
+    return;
+  }
+
   recentQuestsList.replaceChildren();
 
   recentQuests.forEach((quest) => {
@@ -100,7 +105,10 @@ function renderRecentQuests() {
     recentQuestsList.append(item);
   });
 
-  recentQuestsSection.hidden = recentQuests.length === 0;
+  recentQuestsList.hidden = recentQuests.length === 0;
+  if (recentQuestsEmpty) {
+    recentQuestsEmpty.hidden = recentQuests.length > 0;
+  }
 }
 
 function addRecentQuest(quest) {
