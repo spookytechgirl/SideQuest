@@ -3,18 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Review your five most recent SideQuest adventures.">
-  <title>Adventure Log | SideQuest</title>
+  <meta name="description" content="See how to generate, match, save, and revisit SideQuests.">
+  <title>How It Works | SideQuest</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=mobile-menu">
-  <script src="script.js?v=saved-quests-page" defer></script>
   <script src="navigation.js?v=mobile-menu" defer></script>
 </head>
 <body>
-  <main class="page-shell adventure-log-shell">
-    <section class="hero adventure-log-page" aria-labelledby="page-title">
+  <main class="page-shell info-page-shell">
+    <section class="hero info-page how-page" aria-labelledby="page-title">
       <header class="site-header">
       <button class="nav-toggle" type="button" aria-controls="mobile-navigation" aria-expanded="false" aria-label="Open navigation menu" data-nav-toggle>
         <span>Menu</span>
@@ -24,14 +23,14 @@
       <nav class="site-nav" aria-label="Main navigation">
         <a href="index.html">Home</a>
         <a href="quiz.html">Find My Quest</a>
-        <a href="adventure-log.html" aria-current="page">Adventure Log</a>
+        <a href="adventure-log.html">Adventure Log</a>
         <a href="saved-quests.html">Saved Quests</a>
       </nav>
 
       <nav class="info-nav" aria-label="About SideQuest">
         <a href="about.html">About</a>
         <a href="categories.html">Quest Categories</a>
-        <a href="how-it-works.html">How It Works</a>
+        <a href="how-it-works.html" aria-current="page">How It Works</a>
       </nav>
       </div>
       </header>
@@ -40,17 +39,47 @@
         <span aria-hidden="true">↗</span>
       </a>
 
-      <p class="eyebrow">Your adventure log</p>
-      <h1 id="page-title" class="adventure-log-title">Recent<br><span>SideQuests.</span></h1>
-      <p class="intro adventure-log-intro">A look back at the little adventures that found you.</p>
+      <p class="eyebrow">Your quest, your pace</p>
+      <h1 id="page-title" class="info-page-title">How It<br><span>Works.</span></h1>
+      <p class="intro info-page-intro">Five simple ways to find, keep, and revisit your next small adventure.</p>
 
-      <section class="recent-quests adventure-log-list" id="recent-quests" aria-labelledby="recent-quests-title">
-        <h2 class="visually-hidden" id="recent-quests-title">Recent SideQuests</h2>
-        <p class="recent-quests-empty" id="recent-quests-empty" hidden>
-          No adventures logged yet. Go find a <a href="index.html">SideQuest!</a>
-        </p>
-        <ol class="recent-quests-list" id="recent-quests-list"></ol>
-      </section>
+      <ol class="steps-list">
+        <li>
+          <span class="step-number" aria-hidden="true">01</span>
+          <div>
+            <h2>Generate a random quest</h2>
+            <p>Start on <a href="index.html">Home</a> and let SideQuest hand you one simple idea.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-number" aria-hidden="true">02</span>
+          <div>
+            <h2>Match the moment</h2>
+            <p>Use <a href="quiz.html">Find My Quest</a> for an idea matched to your mood, energy, and available time.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-number" aria-hidden="true">03</span>
+          <div>
+            <h2>Heart the keepers</h2>
+            <p>Save any quest you want to remember by tapping the heart on its card.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-number" aria-hidden="true">04</span>
+          <div>
+            <h2>Follow the trail</h2>
+            <p>Visit the <a href="adventure-log.html">Adventure Log</a> to see the quests that recently found you.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-number" aria-hidden="true">05</span>
+          <div>
+            <h2>Revisit your favorites</h2>
+            <p>Return to <a href="saved-quests.html">Saved Quests</a> whenever you are ready for an encore.</p>
+          </div>
+        </li>
+      </ol>
     </section>
   </main>
 
@@ -60,11 +89,11 @@
       <nav class="footer-nav" aria-label="Footer navigation">
         <a href="index.html">Home</a>
         <a href="quiz.html">Find My Quest</a>
-        <a href="adventure-log.html" aria-current="page">Adventure Log</a>
+        <a href="adventure-log.html">Adventure Log</a>
         <a href="saved-quests.html">Saved Quests</a>
         <a href="about.html">About</a>
         <a href="categories.html">Quest Categories</a>
-        <a href="how-it-works.html">How It Works</a>
+        <a href="how-it-works.html" aria-current="page">How It Works</a>
       </nav>
       <p class="footer-note">Small adventures count.</p>
     </div>

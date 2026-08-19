@@ -8,18 +8,33 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=cozy-journal">
+  <link rel="stylesheet" href="style.css?v=mobile-menu">
   <script src="script.js?v=saved-quests-page" defer></script>
+  <script src="navigation.js?v=mobile-menu" defer></script>
 </head>
 <body>
   <main class="page-shell quiz-page-shell">
     <section class="hero quiz-page" aria-labelledby="page-title">
+      <header class="site-header">
+      <button class="nav-toggle" type="button" aria-controls="mobile-navigation" aria-expanded="false" aria-label="Open navigation menu" data-nav-toggle>
+        <span>Menu</span>
+        <span class="nav-toggle-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+      <div class="top-nav-panel" id="mobile-navigation" data-mobile-nav data-open="false">
       <nav class="site-nav" aria-label="Main navigation">
         <a href="index.html">Home</a>
         <a href="quiz.html" aria-current="page">Find My Quest</a>
         <a href="adventure-log.html">Adventure Log</a>
         <a href="saved-quests.html">Saved Quests</a>
       </nav>
+
+      <nav class="info-nav" aria-label="About SideQuest">
+        <a href="about.html">About</a>
+        <a href="categories.html">Quest Categories</a>
+        <a href="how-it-works.html">How It Works</a>
+      </nav>
+      </div>
+      </header>
 
       <a class="brand-mark brand-link" href="index.html" aria-label="SideQuest home">
         <span aria-hidden="true">↗</span>
@@ -84,6 +99,22 @@
       <p class="hint">No planning. No pressure. Just try something new.</p>
     </section>
   </main>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <a class="footer-brand" href="index.html">Side<span>Quest.</span></a>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="index.html">Home</a>
+        <a href="quiz.html" aria-current="page">Find My Quest</a>
+        <a href="adventure-log.html">Adventure Log</a>
+        <a href="saved-quests.html">Saved Quests</a>
+        <a href="about.html">About</a>
+        <a href="categories.html">Quest Categories</a>
+        <a href="how-it-works.html">How It Works</a>
+      </nav>
+      <p class="footer-note">Small adventures count.</p>
+    </div>
+  </footer>
 
   <div class="orb orb-one" aria-hidden="true"></div>
   <div class="orb orb-two" aria-hidden="true"></div>

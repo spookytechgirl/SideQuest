@@ -3,18 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="SideQuest generates quick, simple activities whenever you want to shake up your day.">
-  <title>SideQuest | Find Your Next Adventure</title>
+  <meta name="description" content="Learn why SideQuest turns ordinary days into small, low-pressure adventures.">
+  <title>About SideQuest | SideQuest</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=mobile-menu">
-  <script src="script.js?v=saved-quests-page" defer></script>
   <script src="navigation.js?v=mobile-menu" defer></script>
 </head>
 <body>
-  <main class="page-shell home-shell">
-    <section class="hero home-hero" aria-labelledby="page-title">
+  <main class="page-shell info-page-shell">
+    <section class="hero info-page about-page" aria-labelledby="page-title">
       <header class="site-header">
       <button class="nav-toggle" type="button" aria-controls="mobile-navigation" aria-expanded="false" aria-label="Open navigation menu" data-nav-toggle>
         <span>Menu</span>
@@ -22,53 +21,52 @@
       </button>
       <div class="top-nav-panel" id="mobile-navigation" data-mobile-nav data-open="false">
       <nav class="site-nav" aria-label="Main navigation">
-        <a href="index.html" aria-current="page">Home</a>
+        <a href="index.html">Home</a>
         <a href="quiz.html">Find My Quest</a>
         <a href="adventure-log.html">Adventure Log</a>
         <a href="saved-quests.html">Saved Quests</a>
       </nav>
 
       <nav class="info-nav" aria-label="About SideQuest">
-        <a href="about.html">About</a>
+        <a href="about.html" aria-current="page">About</a>
         <a href="categories.html">Quest Categories</a>
         <a href="how-it-works.html">How It Works</a>
       </nav>
       </div>
       </header>
 
-      <div class="brand-mark" aria-hidden="true">
-        <span>↗</span>
-      </div>
-
-      <p class="eyebrow">A little spark for your day</p>
-      <h1 id="page-title">Side<span>Quest.</span></h1>
-      <p class="intro">
-        Break the routine with one simple idea. Your next small adventure is only a click away.
-      </p>
-
-      <button class="quest-button" id="generate-quest" type="button">
-        <span>Generate a Quest</span>
-        <span class="button-arrow" aria-hidden="true">→</span>
-      </button>
-
-      <a class="quiz-page-link" href="quiz.html">
-        <span aria-hidden="true">✦</span>
-        Help Me Choose
-        <span aria-hidden="true">→</span>
+      <a class="brand-mark brand-link" href="index.html" aria-label="SideQuest home">
+        <span aria-hidden="true">↗</span>
       </a>
 
-      <div class="quest-card" id="quest-card" aria-live="polite" aria-atomic="true" hidden>
-        <div class="quest-meta">
-          <p id="quest-category" class="quest-label"></p>
-          <p id="quest-effort" class="quest-effort"></p>
-          <button class="save-quest-button" id="save-quest" type="button" aria-label="Save quest" aria-pressed="false" title="Save quest">
-            <span class="save-quest-icon" id="save-quest-icon" aria-hidden="true">&#9825;</span>
-          </button>
-        </div>
-        <p class="quest-idea" id="quest-idea"></p>
-      </div>
+      <p class="eyebrow">The story behind the spark</p>
+      <h1 id="page-title" class="info-page-title">About<br><span>SideQuest.</span></h1>
+      <p class="intro info-page-intro">A small nudge toward something different, delightful, or unexpectedly fun.</p>
 
-      <p class="hint">No planning. No pressure. Just try something new.</p>
+      <section class="info-surface about-story" aria-labelledby="about-story-title">
+        <p class="info-kicker">Why it exists</p>
+        <h2 id="about-story-title">Make an ordinary day feel less ordinary.</h2>
+        <p>SideQuest is for the moments when your routine needs a tiny plot twist. It offers simple ideas for something fun, creative, relaxing, or spontaneous—without turning your day into a project.</p>
+        <p>Every quest is intentionally low-pressure. Try one, skip one, save one for later. The point is not to accomplish more; it is to notice how one small experience can make the day a little more interesting.</p>
+
+        <div class="about-values">
+          <article>
+            <span aria-hidden="true">01</span>
+            <h3>Small by design</h3>
+            <p>Easy ideas that fit into real days.</p>
+          </article>
+          <article>
+            <span aria-hidden="true">02</span>
+            <h3>Plenty of variety</h3>
+            <p>Make, wander, taste, rest, or be surprised.</p>
+          </article>
+          <article>
+            <span aria-hidden="true">03</span>
+            <h3>Zero pressure</h3>
+            <p>A suggestion, never another obligation.</p>
+          </article>
+        </div>
+      </section>
     </section>
   </main>
 
@@ -76,11 +74,11 @@
     <div class="site-footer-inner">
       <a class="footer-brand" href="index.html">Side<span>Quest.</span></a>
       <nav class="footer-nav" aria-label="Footer navigation">
-        <a href="index.html" aria-current="page">Home</a>
+        <a href="index.html">Home</a>
         <a href="quiz.html">Find My Quest</a>
         <a href="adventure-log.html">Adventure Log</a>
         <a href="saved-quests.html">Saved Quests</a>
-        <a href="about.html">About</a>
+        <a href="about.html" aria-current="page">About</a>
         <a href="categories.html">Quest Categories</a>
         <a href="how-it-works.html">How It Works</a>
       </nav>
