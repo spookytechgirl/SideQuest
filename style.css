@@ -59,7 +59,9 @@ body::before {
 }
 
 button,
-input {
+input,
+select,
+textarea {
   font: inherit;
 }
 
@@ -695,6 +697,93 @@ h1 span {
   color: var(--muted);
   font-size: 0.76rem;
   line-height: 1.55;
+}
+
+.suggestion-section {
+  margin-top: 1rem;
+}
+
+.suggestion-form {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.4rem;
+}
+
+.suggestion-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.suggestion-field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.suggestion-field label {
+  color: var(--ink);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.suggestion-field label span {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.suggestion-field :where(input, select, textarea) {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  background: rgba(8, 13, 10, 0.38);
+  transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.suggestion-field :where(input, select) {
+  min-height: 3rem;
+  padding: 0.7rem 0.85rem;
+}
+
+.suggestion-field textarea {
+  min-height: 7rem;
+  padding: 0.8rem 0.85rem;
+  line-height: 1.55;
+  resize: vertical;
+}
+
+.suggestion-field :where(input, select, textarea):hover {
+  border-color: rgba(244, 240, 229, 0.28);
+}
+
+.suggestion-field :where(input, select, textarea):focus-visible {
+  border-color: var(--accent);
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  background: rgba(8, 13, 10, 0.55);
+  box-shadow: 0 0 0 5px rgba(244, 134, 90, 0.07);
+}
+
+.suggestion-field select option {
+  color: var(--ink);
+  background: var(--background-soft);
+}
+
+.suggestion-submit {
+  margin-top: 0.15rem;
+}
+
+.info-surface > .suggestion-success {
+  margin: 1rem 0 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(192, 232, 141, 0.28);
+  border-radius: var(--radius-sm);
+  color: var(--green);
+  background: rgba(192, 232, 141, 0.08);
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
 }
 
 .category-grid {
@@ -1555,6 +1644,7 @@ h1 span {
   }
 
   .about-values,
+  .suggestion-form-grid,
   .category-grid {
     grid-template-columns: 1fr;
   }
