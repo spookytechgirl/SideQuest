@@ -152,6 +152,8 @@ a {
 .site-nav a:hover {
   color: var(--ink);
   background: rgba(244, 240, 229, 0.08);
+  box-shadow: 0 8px 18px rgba(3, 8, 5, 0.2);
+  transform: translateY(-1px) scale(1.01);
 }
 
 .site-nav a:active {
@@ -196,6 +198,8 @@ a {
 .info-nav a:hover {
   color: var(--ink);
   background: rgba(244, 240, 229, 0.07);
+  box-shadow: 0 8px 18px rgba(3, 8, 5, 0.18);
+  transform: translateY(-1px) scale(1.01);
 }
 
 .info-nav a:active {
@@ -235,7 +239,7 @@ a {
 
 .brand-link:hover {
   box-shadow: 0 18px 40px rgba(6, 13, 8, 0.42), 0 0 0 8px rgba(192, 232, 141, 0.07);
-  transform: rotate(-3deg) translateY(-2px);
+  transform: rotate(-3deg) translateY(-2px) scale(1.02);
 }
 
 .brand-link:active {
@@ -301,7 +305,7 @@ h1 span {
 .quest-button:hover {
   background: #ff976c;
   box-shadow: 0 20px 42px rgba(3, 8, 5, 0.42), 0 0 0 5px rgba(244, 134, 90, 0.08);
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.015);
 }
 
 .quest-button:active,
@@ -340,14 +344,15 @@ h1 span {
   font-size: 0.84rem;
   font-weight: 700;
   text-decoration: none;
-  transition: border-color 160ms ease, color 160ms ease, background 160ms ease, transform 160ms ease;
+  transition: border-color 160ms ease, color 160ms ease, background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
 
 .quiz-page-link:hover {
   border-color: rgba(244, 134, 90, 0.35);
   color: var(--accent-dark);
   background: rgba(244, 240, 229, 0.06);
-  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(3, 8, 5, 0.24);
+  transform: translateY(-1px) scale(1.01);
 }
 
 .home-cta-links {
@@ -446,7 +451,7 @@ h1 span {
   color: var(--accent-dark);
   background: rgba(244, 134, 90, 0.11);
   box-shadow: 0 8px 20px rgba(3, 8, 5, 0.25);
-  transform: translateY(-1px);
+  transform: translateY(-1px) scale(1.04);
 }
 
 .save-quest-button:active {
@@ -509,14 +514,15 @@ h1 span {
   cursor: pointer;
   font-size: 0.74rem;
   font-weight: 700;
-  transition: border-color 160ms ease, color 160ms ease, background 160ms ease, transform 160ms ease;
+  transition: border-color 160ms ease, color 160ms ease, background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
 
 .try-another-button:hover {
   border-color: rgba(244, 134, 90, 0.38);
   color: var(--accent-dark);
   background: rgba(244, 134, 90, 0.09);
-  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(3, 8, 5, 0.22);
+  transform: translateY(-1px) scale(1.01);
 }
 
 .try-another-button:active {
@@ -1007,7 +1013,7 @@ h1 span {
   color: var(--ink);
   background: rgba(244, 240, 229, 0.07);
   box-shadow: var(--shadow-sm);
-  transform: translateY(-1px);
+  transform: translateY(-1px) scale(1.01);
 }
 
 .quiz-options input:checked + span {
@@ -1028,7 +1034,7 @@ h1 span {
 .quiz-submit:hover {
   background: #ff976c;
   box-shadow: 0 18px 38px rgba(3, 8, 5, 0.4), 0 0 0 5px rgba(244, 134, 90, 0.07);
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.015);
 }
 
 .recent-quests,
@@ -1170,13 +1176,14 @@ h1 span {
   background: rgba(244, 134, 90, 0.08);
   cursor: pointer;
   font-size: 1.08rem;
-  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+  transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
 
 .saved-quest-remove:hover {
   border-color: rgba(244, 134, 90, 0.4);
   background: rgba(244, 134, 90, 0.16);
-  transform: translateY(-1px);
+  box-shadow: 0 9px 20px rgba(3, 8, 5, 0.24);
+  transform: translateY(-1px) scale(1.04);
 }
 
 .saved-quest-remove:active {
@@ -1299,6 +1306,7 @@ h1 span {
 .footer-nav a:hover {
   color: var(--ink);
   background: rgba(244, 240, 229, 0.06);
+  transform: translateY(-1px) scale(1.01);
 }
 
 .footer-nav a:active {
@@ -1450,7 +1458,7 @@ h1 span {
     border-color: rgba(192, 232, 141, 0.32);
     background: rgba(24, 33, 27, 0.96);
     box-shadow: var(--shadow-md);
-    transform: translateY(-1px);
+    transform: translateY(-1px) scale(1.01);
   }
 
   .nav-toggle:active {
@@ -1743,7 +1751,25 @@ h1 span {
   }
 }
 
+.scroll-reveal {
+  opacity: 0;
+  translate: 0 1rem;
+  transition: opacity 480ms ease, translate 480ms cubic-bezier(0.2, 0.75, 0.25, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+  translate: 0 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .scroll-reveal,
+  .scroll-reveal.is-visible {
+    opacity: 1;
+    translate: none;
+  }
+
   html {
     scroll-behavior: auto;
   }
