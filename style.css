@@ -348,6 +348,18 @@ h1 span {
   transform: translateY(-1px);
 }
 
+.home-cta-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 0.8rem auto 0;
+}
+
+.home-cta-links .quiz-page-link {
+  margin: 0;
+}
+
 .quest-card {
   position: relative;
   max-width: 36rem;
