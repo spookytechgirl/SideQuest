@@ -1,5 +1,5 @@
 const revealTargets = document.querySelectorAll(
-  ".info-surface, .category-card, .steps-list > li, .sidequest-quiz, .recent-quests, .saved-quests, .site-footer-inner"
+  ".info-surface, .category-card, .steps-list > li, .sidequest-quiz, .recent-quests, .saved-quests"
 );
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
