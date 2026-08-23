@@ -1,6 +1,8 @@
 (() => {
   "use strict";
 
+  const GOOGLE_OAUTH_REDIRECT_URL = "https://side-quest-ochre.vercel.app/admin.html";
+
   const state = {
     session: null,
     quests: [],
@@ -18,6 +20,7 @@
     elements.email = document.querySelector("#admin-email");
     elements.password = document.querySelector("#admin-password");
     elements.signInButton = document.querySelector("#admin-sign-in-button");
+    elements.googleSignInButton = document.querySelector("#admin-google-sign-in-button");
     elements.authMessage = document.querySelector("#admin-auth-message");
     elements.dashboard = document.querySelector("#admin-dashboard");
     elements.dashboardMessage = document.querySelector("#admin-dashboard-message");
@@ -214,6 +217,23 @@
     await applySession(data.session);
   }
 
+  async function handleGoogleSignIn() {
+    setMessage(elements.authMessage);
+    setFormBusy(elements.authForm, true);
+
+    const { error } = await client.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: GOOGLE_OAUTH_REDIRECT_URL
+      }
+    });
+
+    if (error) {
+      setFormBusy(elements.authForm, false);
+      setMessage(elements.authMessage, "Google sign-in could not be started. Please try again.", "error");
+    }
+  }
+
   async function handleSignOut() {
     elements.signOutButton.disabled = true;
     const { error } = await client.auth.signOut();
@@ -330,6 +350,7 @@
 
   function bindEvents() {
     elements.authForm.addEventListener("submit", handleSignIn);
+    elements.googleSignInButton.addEventListener("click", handleGoogleSignIn);
     elements.signOutButton.addEventListener("click", handleSignOut);
     elements.questForm.addEventListener("submit", handleQuestSubmit);
     elements.cancelEdit.addEventListener("click", resetEditor);

@@ -12,8 +12,8 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="supabase-config.js" defer></script>
   <script src="supabase-client.js" defer></script>
-  <link rel="stylesheet" href="style.css?v=supabase-admin">
-  <script src="admin.js" defer></script>
+  <link rel="stylesheet" href="style.css?v=google-admin-auth">
+  <script src="admin.js?v=google-admin-auth" defer></script>
   <script src="effects.js" defer></script>
 </head>
 <body>
@@ -44,7 +44,7 @@
       <section class="info-surface admin-auth-panel" id="admin-auth-panel" aria-labelledby="admin-sign-in-title">
         <p class="info-kicker">Authorized access only</p>
         <h2 id="admin-sign-in-title">Sign in to the quest desk</h2>
-        <p>Use the email and password for an authorized Supabase user.</p>
+        <p>Use an authorized Supabase account to continue.</p>
 
         <form class="admin-form" id="admin-sign-in-form">
           <div class="suggestion-field">
@@ -59,6 +59,15 @@
 
           <button class="quiz-submit" id="admin-sign-in-button" type="submit">
             Sign In <span aria-hidden="true">→</span>
+          </button>
+
+          <div class="admin-auth-divider" role="separator" aria-label="Or continue with Google">
+            <span>or</span>
+          </div>
+
+          <button class="admin-google-button" id="admin-google-sign-in-button" type="button">
+            <span class="admin-google-mark" aria-hidden="true">G</span>
+            Continue with Google
           </button>
         </form>
 
