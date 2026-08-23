@@ -56,6 +56,9 @@ const recentQuestsEmpty = document.querySelector("#recent-quests-empty");
 const savedQuestsSection = document.querySelector("#saved-quests");
 const savedQuestsList = document.querySelector("#saved-quests-list");
 const savedQuestsEmpty = document.querySelector("#saved-quests-empty");
+const savedQuestsSearch = document.querySelector("#saved-quests-search");
+const savedQuestsSearchStatus = document.querySelector("#saved-quests-search-status");
+const savedQuestsNoResults = document.querySelector("#saved-quests-no-results");
 
 let previousQuestIndex = -1;
 let currentQuest = null;
@@ -88,14 +91,48 @@ function loadRecentQuests() {
   }
 }
 
+function getSavedQuestSearchResults() {
+  const query = savedQuestsSearch?.value.trim().toLocaleLowerCase() || "";
+
+  if (!query) {
+    return { query, quests: savedQuests };
+  }
+
+  const matchingQuests = savedQuests.filter((quest) => (
+    [quest.title, quest.category, quest.effort]
+      .some((value) => value.toLocaleLowerCase().includes(query))
+  ));
+
+  return { query, quests: matchingQuests };
+}
+
+function updateSavedQuestSearchStatus(query, matchingCount) {
+  if (!savedQuestsSearchStatus) {
+    return;
+  }
+
+  if (!query || savedQuests.length === 0) {
+    savedQuestsSearchStatus.textContent = "";
+    savedQuestsSearchStatus.hidden = true;
+    return;
+  }
+
+  savedQuestsSearchStatus.textContent = `Showing ${matchingCount} of ${savedQuests.length} saved ${savedQuests.length === 1 ? "quest" : "quests"}.`;
+  savedQuestsSearchStatus.hidden = false;
+}
+
 function renderSavedQuests() {
   if (!savedQuestsSection || !savedQuestsList) {
     return;
   }
 
+  const { query, quests: matchingQuests } = getSavedQuestSearchResults();
+  const hasSavedQuests = savedQuests.length > 0;
+  const hasSearchResults = matchingQuests.length > 0;
+
   savedQuestsList.replaceChildren();
 
-  savedQuests.forEach((quest) => {
+  matchingQuests.forEach((quest) => {
     const item = document.createElement("li");
     const content = document.createElement("div");
     const meta = document.createElement("p");
@@ -119,8 +156,14 @@ function renderSavedQuests() {
     savedQuestsList.append(item);
   });
 
-  savedQuestsList.hidden = savedQuests.length === 0;
-  savedQuestsEmpty.hidden = savedQuests.length > 0;
+  savedQuestsList.hidden = !hasSearchResults;
+  savedQuestsEmpty.hidden = hasSavedQuests;
+
+  if (savedQuestsNoResults) {
+    savedQuestsNoResults.hidden = !hasSavedQuests || !query || hasSearchResults;
+  }
+
+  updateSavedQuestSearchStatus(query, matchingQuests.length);
 }
 
 function removeSavedQuest(quest) {
@@ -325,5 +368,6 @@ generateButton?.addEventListener("click", generateQuest);
 quiz?.addEventListener("submit", generateMatchedQuest);
 tryAnotherButton?.addEventListener("click", generateAnotherMatchedQuest);
 saveQuestButton?.addEventListener("click", toggleSavedQuest);
+savedQuestsSearch?.addEventListener("input", renderSavedQuests);
 renderRecentQuests();
 renderSavedQuests();

@@ -12,8 +12,8 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="supabase-config.js" defer></script>
   <script src="supabase-client.js" defer></script>
-  <link rel="stylesheet" href="style.css?v=week-2-polish">
-  <script src="script.js?v=saved-quests-page" defer></script>
+  <link rel="stylesheet" href="style.css?v=saved-quest-search">
+  <script src="script.js?v=saved-quest-search" defer></script>
   <script src="navigation.js?v=mobile-menu" defer></script>
   <script src="effects.js" defer></script>
 </head>
@@ -55,8 +55,25 @@
 
       <section class="saved-quests" id="saved-quests" aria-labelledby="saved-quests-title">
         <h2 class="visually-hidden" id="saved-quests-title">Saved SideQuests</h2>
+        <div class="saved-quests-search">
+          <label for="saved-quests-search">Search saved quests</label>
+          <div class="saved-quests-search-control">
+            <span class="saved-quests-search-icon" aria-hidden="true">⌕</span>
+            <input
+              id="saved-quests-search"
+              type="search"
+              placeholder="Try a quest, category, or effort level"
+              autocomplete="off"
+              aria-describedby="saved-quests-search-status"
+            >
+          </div>
+          <p class="saved-quests-search-status" id="saved-quests-search-status" role="status" aria-live="polite" hidden></p>
+        </div>
         <p class="saved-quests-empty" id="saved-quests-empty" hidden>
           No saved quests yet. <a href="index.html">Generate a SideQuest</a>, then heart the ones you want to keep.
+        </p>
+        <p class="saved-quests-no-results" id="saved-quests-no-results" hidden>
+          No saved quests match your search.
         </p>
         <ul class="saved-quests-list" id="saved-quests-list"></ul>
       </section>
