@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manage the SideQuest database from the private admin quest desk.">
+  <title>Quest Admin | SideQuest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <script src="theme.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="supabase-config.js" defer></script>
+  <script src="supabase-client.js" defer></script>
+  <link rel="stylesheet" href="style.css?v=supabase-admin">
+  <script src="admin.js" defer></script>
+  <script src="effects.js" defer></script>
+</head>
+<body>
+  <main class="page-shell admin-shell">
+    <section class="hero admin-page" aria-labelledby="page-title">
+      <header class="admin-topbar">
+        <a class="admin-home-link" href="index.html">
+          <span aria-hidden="true">←</span> Back to SideQuest
+        </a>
+        <button class="theme-toggle" type="button" aria-label="Switch to light mode" title="Switch to light mode" data-theme-toggle>
+          <span class="theme-toggle-icon" aria-hidden="true" data-theme-icon>☀</span>
+          <span class="theme-toggle-label" data-theme-label>Light</span>
+        </button>
+      </header>
+
+      <a class="brand-mark brand-link" href="index.html" aria-label="SideQuest home">
+        <span aria-hidden="true">↗</span>
+      </a>
+
+      <p class="eyebrow">Private quest desk</p>
+      <h1 id="page-title" class="info-page-title">Quest<br><span>Admin.</span></h1>
+      <p class="intro admin-intro">Add, revise, and organize the quests stored in Supabase.</p>
+
+      <p class="admin-connection-status" id="admin-connection-status" role="status" aria-live="polite">
+        Connecting to the quest database…
+      </p>
+
+      <section class="info-surface admin-auth-panel" id="admin-auth-panel" aria-labelledby="admin-sign-in-title">
+        <p class="info-kicker">Authorized access only</p>
+        <h2 id="admin-sign-in-title">Sign in to the quest desk</h2>
+        <p>Use the email and password for an authorized Supabase user.</p>
+
+        <form class="admin-form" id="admin-sign-in-form">
+          <div class="suggestion-field">
+            <label for="admin-email">Email address</label>
+            <input id="admin-email" name="email" type="email" autocomplete="email" required>
+          </div>
+
+          <div class="suggestion-field">
+            <label for="admin-password">Password</label>
+            <input id="admin-password" name="password" type="password" autocomplete="current-password" required>
+          </div>
+
+          <button class="quiz-submit" id="admin-sign-in-button" type="submit">
+            Sign In <span aria-hidden="true">→</span>
+          </button>
+        </form>
+
+        <p class="admin-message" id="admin-auth-message" role="alert" hidden></p>
+      </section>
+
+      <section class="admin-dashboard" id="admin-dashboard" aria-labelledby="admin-dashboard-title" hidden>
+        <div class="admin-dashboard-heading">
+          <div>
+            <p class="info-kicker">Supabase quest collection</p>
+            <h2 id="admin-dashboard-title">Manage quests</h2>
+            <p class="admin-user-line">Signed in as <strong id="admin-user-email"></strong></p>
+          </div>
+          <button class="admin-secondary-button" id="admin-sign-out-button" type="button">Sign Out</button>
+        </div>
+
+        <p class="admin-message" id="admin-dashboard-message" role="status" aria-live="polite" hidden></p>
+
+        <section class="info-surface admin-editor" aria-labelledby="admin-form-title">
+          <div class="admin-panel-heading">
+            <div>
+              <p class="info-kicker" id="admin-form-kicker">Create</p>
+              <h2 id="admin-form-title">Add a new quest</h2>
+            </div>
+            <button class="admin-secondary-button admin-cancel-edit" id="admin-cancel-edit" type="button" hidden>Cancel Edit</button>
+          </div>
+
+          <form class="admin-form" id="admin-quest-form">
+            <div class="suggestion-field">
+              <label for="admin-quest-text">Quest text</label>
+              <textarea id="admin-quest-text" name="quest_text" rows="4" maxlength="240" required></textarea>
+            </div>
+
+            <div class="admin-form-grid">
+              <div class="suggestion-field">
+                <label for="admin-category">Category</label>
+                <select id="admin-category" name="category" required>
+                  <option value="">Choose a category</option>
+                  <option value="Outdoors">Outdoors</option>
+                  <option value="Creative">Creative</option>
+                  <option value="Food">Food</option>
+                  <option value="Local Adventure">Local Adventure</option>
+                  <option value="Relaxing">Relaxing</option>
+                  <option value="Random">Random</option>
+                </select>
+              </div>
+
+              <div class="suggestion-field">
+                <label for="admin-effort">Effort level</label>
+                <select id="admin-effort" name="effort" required>
+                  <option value="">Choose an effort level</option>
+                  <option value="Quick">Quick</option>
+                  <option value="Easy">Easy</option>
+                  <option value="A Little Effort">A Little Effort</option>
+                  <option value="Adventure">Adventure</option>
+                </select>
+              </div>
+            </div>
+
+            <button class="quiz-submit" id="admin-save-button" type="submit">
+              Add Quest <span aria-hidden="true">→</span>
+            </button>
+          </form>
+        </section>
+
+        <section class="admin-collection" aria-labelledby="admin-collection-title">
+          <div class="admin-collection-heading">
+            <div>
+              <p class="info-kicker">Read, edit, or remove</p>
+              <h2 id="admin-collection-title">Database quests</h2>
+            </div>
+            <span class="admin-count" id="admin-quest-count" aria-live="polite">0 quests</span>
+          </div>
+
+          <div class="admin-quest-list" id="admin-quest-list" aria-live="polite"></div>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner admin-footer-inner">
+      <a class="footer-brand" href="index.html">Side<span>Quest.</span></a>
+      <a class="admin-footer-link" href="index.html">Return to the public site</a>
+      <p class="footer-note">Authorized adventurers only.</p>
+    </div>
+  </footer>
+
+  <div class="orb orb-one" aria-hidden="true"></div>
+  <div class="orb orb-two" aria-hidden="true"></div>
+</body>
+</html>
