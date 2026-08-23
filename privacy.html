@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn how SideQuest handles sign-in information and browser-saved quests.">
+  <title>Privacy | SideQuest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <script src="theme.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="supabase-config.js" defer></script>
+  <script src="supabase-client.js" defer></script>
+  <link rel="stylesheet" href="style.css?v=privacy-page">
+  <script src="navigation.js?v=mobile-menu" defer></script>
+  <script src="effects.js" defer></script>
+</head>
+<body>
+  <main class="page-shell info-page-shell">
+    <section class="hero info-page privacy-page" aria-labelledby="page-title">
+      <header class="site-header">
+      <button class="nav-toggle" type="button" aria-controls="mobile-navigation" aria-expanded="false" aria-label="Open navigation menu" data-nav-toggle>
+        <span>Menu</span>
+        <span class="nav-toggle-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+      <div class="top-nav-panel" id="mobile-navigation" data-mobile-nav data-open="false">
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="quiz.html">Find My Quest</a>
+        <a href="adventure-log.html">Adventure Log</a>
+        <a href="saved-quests.html">Saved Quests</a>
+      </nav>
+
+      <nav class="info-nav" aria-label="About SideQuest">
+        <a href="about.html">About</a>
+        <a href="categories.html">Quest Categories</a>
+        <a href="how-it-works.html">How It Works</a>
+      </nav>
+      </div>
+      <button class="theme-toggle" type="button" aria-label="Switch to light mode" title="Switch to light mode" data-theme-toggle>
+        <span class="theme-toggle-icon" aria-hidden="true" data-theme-icon>☀</span>
+        <span class="theme-toggle-label" data-theme-label>Light</span>
+      </button>
+      </header>
+
+      <a class="brand-mark brand-link" href="index.html" aria-label="SideQuest home">
+        <span aria-hidden="true">↗</span>
+      </a>
+
+      <p class="eyebrow">A simple privacy note</p>
+      <h1 id="page-title" class="info-page-title">Your<br><span>Privacy.</span></h1>
+      <p class="intro info-page-intro">A quick explanation of the information SideQuest may use and where your saved quests currently live.</p>
+
+      <section class="info-surface" aria-labelledby="privacy-details-title">
+        <p class="info-kicker">Privacy, kept simple</p>
+        <h2 id="privacy-details-title">Small adventures should not come with big surprises.</h2>
+        <p><strong>Signing in.</strong> SideQuest may use Google OAuth and Supabase Auth for account sign-in. If you choose to sign in, the authentication provider may give SideQuest basic account information such as your name and email address so your session can be identified.</p>
+        <p><strong>Saved quests.</strong> Saved Quests currently use localStorage in your browser. They remain associated with that browser and device and may be removed if you clear your browser data.</p>
+        <p><strong>No selling.</strong> SideQuest does not sell your personal information.</p>
+      </section>
+
+      <p class="intro">
+        <a class="admin-home-link" href="index.html">
+          <span aria-hidden="true">←</span> Back to SideQuest home
+        </a>
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <a class="footer-brand" href="index.html">Side<span>Quest.</span></a>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="index.html">Home</a>
+        <a href="quiz.html">Find My Quest</a>
+        <a href="adventure-log.html">Adventure Log</a>
+        <a href="saved-quests.html">Saved Quests</a>
+        <a href="about.html">About</a>
+        <a href="categories.html">Quest Categories</a>
+        <a href="how-it-works.html">How It Works</a>
+      </nav>
+      <p class="footer-note">Small adventures count.</p>
+    </div>
+  </footer>
+
+  <div class="orb orb-one" aria-hidden="true"></div>
+  <div class="orb orb-two" aria-hidden="true"></div>
+</body>
+</html>
