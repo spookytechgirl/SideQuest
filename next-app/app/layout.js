@@ -1,6 +1,8 @@
 import { DM_Sans, Manrope } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
 import RevealEffects from "@/components/reveal-effects";
+import { ToastProvider } from "@/components/toast-provider";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -81,8 +83,9 @@ export default function RootLayout({ children }) {
         <Script id="sidequest-theme" strategy="beforeInteractive">
           {themeScript}
         </Script>
-        {children}
+        <ToastProvider>{children}</ToastProvider>
         <RevealEffects />
+        <Analytics />
       </body>
     </html>
   );

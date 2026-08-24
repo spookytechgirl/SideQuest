@@ -1,23 +1,18 @@
 import BrandLink from "@/components/brand-link";
 import PageShell from "@/components/page-shell";
 import SavedQuestsView from "@/components/saved-quests-view";
+import { requireUser } from "@/lib/auth";
+import { createPrivateMetadata } from "@/lib/social-metadata";
 
-export const metadata = {
+export const metadata = createPrivateMetadata({
   title: "Saved Quests",
   description: "Review the SideQuests you saved for later.",
-  alternates: { canonical: "/saved-quests" },
-  robots: {
-    index: false,
-    follow: false,
-  },
-  openGraph: {
-    title: "Saved Quests | SideQuest",
-    description: "Review the SideQuests you saved for later.",
-    url: "/saved-quests",
-  },
-};
+  path: "/saved-quests",
+});
 
-export default function SavedQuestsPage() {
+export default async function SavedQuestsPage() {
+  await requireUser("/saved-quests");
+
   return (
     <PageShell shellClassName="saved-quests-shell" pageClassName="saved-quests-page">
       <BrandLink />

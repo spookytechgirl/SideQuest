@@ -4,12 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import MobileMenuToggle from "./mobile-menu-toggle";
 import NavigationLinks, {
+  getPrimaryLinks,
   informationLinks,
-  primaryLinks,
 } from "./navigation-links";
 import ThemeToggle from "./theme-toggle";
 
-export default function Header() {
+export default function Header({ isSignedIn = false, isAdmin = false }) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const headerRef = useRef(null);
@@ -57,7 +57,7 @@ export default function Header() {
       />
       <div className="top-nav-panel" id="site-navigation" data-open={isOpen}>
         <NavigationLinks
-          links={primaryLinks}
+          links={getPrimaryLinks(isSignedIn, isAdmin)}
           pathname={pathname}
           className="site-nav"
           label="Main navigation"

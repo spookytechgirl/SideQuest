@@ -2,11 +2,16 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import { getSafeReturnPath } from "@/lib/auth-paths";
 import { createClient } from "@/lib/supabase/client";
 
 const emptyMessage = { text: "", kind: "" };
 
-export default function LoginPanel({ initialSignedIn = false, initialError = "" }) {
+export default function LoginPanel({
+  initialSignedIn = false,
+  initialError = "",
+  returnTo = "/login",
+}) {
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
   const [isSignedIn, setIsSignedIn] = useState(initialSignedIn);
@@ -28,6 +33,7 @@ export default function LoginPanel({ initialSignedIn = false, initialError = "" 
   }, [supabase]);
 
   const isBusy = Boolean(pendingAction);
+  const safeReturnTo = getSafeReturnPath(returnTo, "/login");
 
   async function handleEmailSignIn(event) {
     event.preventDefault();
@@ -53,8 +59,16 @@ export default function LoginPanel({ initialSignedIn = false, initialError = "" 
     setEmail("");
     setPassword("");
     setIsSignedIn(Boolean(data.user));
-    setMessage({ text: "You are signed in and ready for your next quest.", kind: "success" });
-    router.refresh();
+    setMessage({
+      text: "You are signed in and ready for your next quest.",
+      kind: "success",
+    });
+
+    if (safeReturnTo !== "/login") {
+      router.replace(safeReturnTo);
+    } else {
+      router.refresh();
+    }
   }
 
   async function handleGoogleSignIn() {
@@ -64,7 +78,7 @@ export default function LoginPanel({ initialSignedIn = false, initialError = "" 
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(safeReturnTo)}`,
       },
     });
 

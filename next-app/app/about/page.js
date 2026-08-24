@@ -1,28 +1,14 @@
 import BrandLink from "@/components/brand-link";
 import PageShell from "@/components/page-shell";
 import SuggestionForm from "@/components/suggestion-form";
-import { openGraphImage, twitterImage } from "@/lib/social-metadata";
+import { createPublicMetadata } from "@/lib/social-metadata";
 
-export const metadata = {
+export const metadata = createPublicMetadata({
   title: "About SideQuest",
   description:
     "Learn why SideQuest turns ordinary days into small, low-pressure adventures.",
-  alternates: { canonical: "/about" },
-  openGraph: {
-    title: "About SideQuest | SideQuest",
-    description:
-      "Learn why SideQuest turns ordinary days into small, low-pressure adventures.",
-    url: "/about",
-    images: [openGraphImage],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "About SideQuest | SideQuest",
-    description:
-      "Learn why SideQuest turns ordinary days into small, low-pressure adventures.",
-    images: [twitterImage],
-  },
-};
+  path: "/about",
+});
 
 export default function AboutPage() {
   return (

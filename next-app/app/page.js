@@ -1,27 +1,13 @@
 import PageShell from "@/components/page-shell";
 import QuestGenerator from "@/components/quest-generator";
-import { openGraphImage, twitterImage } from "@/lib/social-metadata";
+import { createPublicMetadata } from "@/lib/social-metadata";
 
-export const metadata = {
-  title: { absolute: "SideQuest | Find Your Next Adventure" },
+export const metadata = createPublicMetadata({
+  absoluteTitle: "SideQuest | Find Your Next Adventure",
   description:
     "SideQuest generates quick, simple activities whenever you want to shake up your day.",
-  alternates: { canonical: "/" },
-  openGraph: {
-    title: "SideQuest | Find Your Next Adventure",
-    description:
-      "SideQuest generates quick, simple activities whenever you want to shake up your day.",
-    url: "/",
-    images: [openGraphImage],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "SideQuest | Find Your Next Adventure",
-    description:
-      "SideQuest generates quick, simple activities whenever you want to shake up your day.",
-    images: [twitterImage],
-  },
-};
+  path: "/",
+});
 
 export default function Home() {
   return (

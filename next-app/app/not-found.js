@@ -10,6 +10,19 @@ export const metadata = {
     index: false,
     follow: false,
   },
+  openGraph: {
+    title: "Page Not Found | SideQuest",
+    description:
+      "This SideQuest page could not be found. Return home to discover your next small adventure.",
+    images: [],
+  },
+  twitter: {
+    card: "summary",
+    title: "Page Not Found | SideQuest",
+    description:
+      "This SideQuest page could not be found. Return home to discover your next small adventure.",
+    images: [],
+  },
 };
 
 export default function NotFound() {

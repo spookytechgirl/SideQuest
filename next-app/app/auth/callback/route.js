@@ -1,13 +1,6 @@
 import { NextResponse } from "next/server";
+import { getSafeReturnPath } from "@/lib/auth-paths";
 import { createRouteClient } from "@/lib/supabase/server";
-
-function getSafeDestination(searchParams) {
-  const destination = searchParams.get("next") ?? "/login";
-
-  return destination.startsWith("/") && !destination.startsWith("//")
-    ? destination
-    : "/login";
-}
 
 function getRedirectOrigin(request, requestUrl) {
   const forwardedHost = request.headers.get("x-forwarded-host");
@@ -32,7 +25,10 @@ function getRedirectOrigin(request, requestUrl) {
 export async function GET(request) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
-  const destination = getSafeDestination(requestUrl.searchParams);
+  const destination = getSafeReturnPath(
+    requestUrl.searchParams.get("next"),
+    "/login",
+  );
 
   if (code) {
     const redirectUrl = `${getRedirectOrigin(request, requestUrl)}${destination}`;
@@ -47,5 +43,8 @@ export async function GET(request) {
 
   const errorUrl = new URL("/login", requestUrl.origin);
   errorUrl.searchParams.set("error", "oauth_callback");
+  if (destination !== "/login") {
+    errorUrl.searchParams.set("next", destination);
+  }
   return NextResponse.redirect(errorUrl);
 }

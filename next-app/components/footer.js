@@ -2,9 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import NavigationLinks, { footerLinks } from "./navigation-links";
+import NavigationLinks, { getFooterLinks } from "./navigation-links";
 
-export default function Footer({ note = "Small adventures count." }) {
+export default function Footer({
+  isSignedIn = false,
+  isAdmin = false,
+  note = "Small adventures count.",
+}) {
   const pathname = usePathname();
 
   return (
@@ -14,7 +18,7 @@ export default function Footer({ note = "Small adventures count." }) {
           Side<span>Quest.</span>
         </Link>
         <NavigationLinks
-          links={footerLinks}
+          links={getFooterLinks(isSignedIn, isAdmin)}
           pathname={pathname}
           className="footer-nav"
           label="Footer navigation"

@@ -1,28 +1,14 @@
 import BrandLink from "@/components/brand-link";
 import PageShell from "@/components/page-shell";
 import QuizExperience from "@/components/quiz-experience";
-import { openGraphImage, twitterImage } from "@/lib/social-metadata";
+import { createPublicMetadata } from "@/lib/social-metadata";
 
-export const metadata = {
+export const metadata = createPublicMetadata({
   title: "Quick Vibe Check",
   description:
     "Find a personalized SideQuest with a quick three-question vibe check.",
-  alternates: { canonical: "/quiz" },
-  openGraph: {
-    title: "Quick Vibe Check | SideQuest",
-    description:
-      "Find a personalized SideQuest with a quick three-question vibe check.",
-    url: "/quiz",
-    images: [openGraphImage],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Quick Vibe Check | SideQuest",
-    description:
-      "Find a personalized SideQuest with a quick three-question vibe check.",
-    images: [twitterImage],
-  },
-};
+  path: "/quiz",
+});
 
 export default function QuizPage() {
   return (

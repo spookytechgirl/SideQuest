@@ -1,27 +1,13 @@
 import BrandLink from "@/components/brand-link";
 import PageShell from "@/components/page-shell";
-import { openGraphImage, twitterImage } from "@/lib/social-metadata";
+import { createPublicMetadata } from "@/lib/social-metadata";
 
-export const metadata = {
+export const metadata = createPublicMetadata({
   title: "Quest Categories",
   description:
     "Explore the six categories of small adventures you can discover with SideQuest.",
-  alternates: { canonical: "/categories" },
-  openGraph: {
-    title: "Quest Categories | SideQuest",
-    description:
-      "Explore the six categories of small adventures you can discover with SideQuest.",
-    url: "/categories",
-    images: [openGraphImage],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Quest Categories | SideQuest",
-    description:
-      "Explore the six categories of small adventures you can discover with SideQuest.",
-    images: [twitterImage],
-  },
-};
+  path: "/categories",
+});
 
 const categories = [
   {

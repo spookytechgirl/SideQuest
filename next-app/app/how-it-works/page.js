@@ -1,25 +1,13 @@
 import Link from "next/link";
 import BrandLink from "@/components/brand-link";
 import PageShell from "@/components/page-shell";
-import { openGraphImage, twitterImage } from "@/lib/social-metadata";
+import { createPublicMetadata } from "@/lib/social-metadata";
 
-export const metadata = {
+export const metadata = createPublicMetadata({
   title: "How It Works",
   description: "See how to generate, match, save, and revisit SideQuests.",
-  alternates: { canonical: "/how-it-works" },
-  openGraph: {
-    title: "How It Works | SideQuest",
-    description: "See how to generate, match, save, and revisit SideQuests.",
-    url: "/how-it-works",
-    images: [openGraphImage],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "How It Works | SideQuest",
-    description: "See how to generate, match, save, and revisit SideQuests.",
-    images: [twitterImage],
-  },
-};
+  path: "/how-it-works",
+});
 
 export default function HowItWorksPage() {
   return (

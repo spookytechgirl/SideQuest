@@ -1,23 +1,22 @@
 import BrandLink from "@/components/brand-link";
 import LoginPanel from "@/components/login-panel";
 import PageShell from "@/components/page-shell";
-import { createClient } from "@/lib/supabase/server";
+import { getAuthContext } from "@/lib/auth";
+import { getSafeReturnPath } from "@/lib/auth-paths";
+import { createPrivateMetadata } from "@/lib/social-metadata";
 
-export const metadata = {
+export const metadata = createPrivateMetadata({
   title: "Sign In",
   description: "Sign in to your SideQuest account with email or Google.",
-  alternates: { canonical: "/login" },
-  robots: { index: false, follow: false },
-};
+  path: "/login",
+});
 
 export const dynamic = "force-dynamic";
 
 export default async function LoginPage({ searchParams }) {
   const params = await searchParams;
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { user } = await getAuthContext();
+  const returnTo = getSafeReturnPath(params?.next, "/login");
   const initialError =
     params?.error === "oauth_callback"
       ? "Google sign-in could not be completed. Please try again."
@@ -42,7 +41,11 @@ export default async function LoginPage({ searchParams }) {
         aria-label="SideQuest account sign in"
         data-server-auth={user ? "signed-in" : "signed-out"}
       >
-        <LoginPanel initialSignedIn={Boolean(user)} initialError={initialError} />
+        <LoginPanel
+          initialSignedIn={Boolean(user)}
+          initialError={initialError}
+          returnTo={returnTo}
+        />
       </section>
     </PageShell>
   );

@@ -1,28 +1,14 @@
 import Link from "next/link";
 import BrandLink from "@/components/brand-link";
 import PageShell from "@/components/page-shell";
-import { openGraphImage, twitterImage } from "@/lib/social-metadata";
+import { createPublicMetadata } from "@/lib/social-metadata";
 
-export const metadata = {
+export const metadata = createPublicMetadata({
   title: "Privacy",
   description:
     "Learn how SideQuest handles sign-in information and browser-saved quests.",
-  alternates: { canonical: "/privacy" },
-  openGraph: {
-    title: "Privacy | SideQuest",
-    description:
-      "Learn how SideQuest handles sign-in information and browser-saved quests.",
-    url: "/privacy",
-    images: [openGraphImage],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Privacy | SideQuest",
-    description:
-      "Learn how SideQuest handles sign-in information and browser-saved quests.",
-    images: [twitterImage],
-  },
-};
+  path: "/privacy",
+});
 
 export default function PrivacyPage() {
   return (
