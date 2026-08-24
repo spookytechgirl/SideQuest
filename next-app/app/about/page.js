@@ -1,5 +1,6 @@
 import BrandLink from "@/components/brand-link";
 import PageShell from "@/components/page-shell";
+import SuggestionForm from "@/components/suggestion-form";
 import { openGraphImage, twitterImage } from "@/lib/social-metadata";
 
 export const metadata = {
@@ -79,60 +80,7 @@ export default function AboutPage() {
           someone&apos;s next delightful detour.
         </p>
 
-        <form className="suggestion-form" aria-describedby="suggestion-phase-note">
-          <div className="suggestion-form-grid">
-            <div className="suggestion-field">
-              <label htmlFor="suggestion-name">
-                Name or nickname <span>(optional)</span>
-              </label>
-              <input
-                id="suggestion-name"
-                name="name"
-                type="text"
-                autoComplete="nickname"
-                maxLength="60"
-                disabled
-              />
-            </div>
-
-            <div className="suggestion-field">
-              <label htmlFor="suggestion-category">
-                Category <span>(optional)</span>
-              </label>
-              <select id="suggestion-category" name="category" disabled defaultValue="">
-                <option value="">Choose a category</option>
-                <option value="Creative">Creative</option>
-                <option value="Relaxing">Relaxing</option>
-                <option value="Food">Food</option>
-                <option value="Outdoors">Outdoors</option>
-                <option value="Local Adventure">Local Adventure</option>
-                <option value="Random">Random</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="suggestion-field">
-            <label htmlFor="suggestion-idea">
-              SideQuest idea <span>(required)</span>
-            </label>
-            <textarea
-              id="suggestion-idea"
-              name="idea"
-              rows="4"
-              maxLength="240"
-              required
-              disabled
-            />
-          </div>
-
-          <button className="quiz-submit suggestion-submit" type="submit" disabled>
-            Submit SideQuest Idea <span aria-hidden="true">→</span>
-          </button>
-        </form>
-
-        <p className="phase-note phase-note-left" id="suggestion-phase-note">
-          Quest suggestions will be reconnected in a later migration phase.
-        </p>
+        <SuggestionForm />
       </section>
     </PageShell>
   );

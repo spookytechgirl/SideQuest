@@ -1,5 +1,5 @@
-import Link from "next/link";
 import PageShell from "@/components/page-shell";
+import QuestGenerator from "@/components/quest-generator";
 import { openGraphImage, twitterImage } from "@/lib/social-metadata";
 
 export const metadata = {
@@ -39,34 +39,8 @@ export default function Home() {
         only a click away.
       </p>
 
-      <button
-        className="quest-button"
-        type="button"
-        disabled
-        aria-describedby="home-phase-note"
-      >
-        <span>Generate a SideQuest</span>
-        <span className="button-arrow" aria-hidden="true">
-          →
-        </span>
-      </button>
+      <QuestGenerator />
 
-      <div className="home-cta-links" aria-label="More ways to explore SideQuest">
-        <Link className="quiz-page-link" href="/quiz">
-          <span aria-hidden="true">✦</span>
-          Find My Perfect Quest
-          <span aria-hidden="true">→</span>
-        </Link>
-        <span className="quiz-page-link is-disabled" aria-disabled="true">
-          <span aria-hidden="true">↗</span>
-          Explore My Adventure Log
-          <span aria-hidden="true">→</span>
-        </span>
-      </div>
-
-      <p className="phase-note" id="home-phase-note">
-        Quest generation and Adventure Log access arrive in a later migration phase.
-      </p>
       <p className="hint">No planning. No pressure. Just try something new.</p>
     </PageShell>
   );

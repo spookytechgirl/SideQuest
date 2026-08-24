@@ -2934,3 +2934,20 @@ h1,
   box-shadow: none;
   transform: none;
 }
+
+.info-surface > .suggestion-error {
+  margin: 1rem 0 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(244, 134, 90, 0.34);
+  border-radius: var(--radius-sm);
+  color: var(--accent-dark);
+  background: rgba(244, 134, 90, 0.08);
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.adventure-log-list .recent-quests-list li::before,
+.recent-quests-heading h2 {
+  font-family: var(--font-manrope), sans-serif;
+}

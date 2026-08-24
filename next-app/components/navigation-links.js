@@ -3,6 +3,8 @@ import Link from "next/link";
 export const primaryLinks = [
   { href: "/", label: "Home" },
   { href: "/quiz", label: "Find My Quest" },
+  { href: "/adventure-log", label: "Adventure Log" },
+  { href: "/saved-quests", label: "Saved Quests" },
 ];
 
 export const informationLinks = [

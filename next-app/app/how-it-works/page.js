@@ -69,8 +69,8 @@ export default function HowItWorksPage() {
           <div>
             <h2>Follow the trail</h2>
             <p>
-              Visit the <span className="pending-feature-label">Adventure Log</span>
-              {" "}to see the quests that recently found you.
+              Visit the <Link href="/adventure-log">Adventure Log</Link> to see the
+              quests that recently found you.
             </p>
           </div>
         </li>
@@ -79,16 +79,12 @@ export default function HowItWorksPage() {
           <div>
             <h2>Revisit your favorites</h2>
             <p>
-              Return to <span className="pending-feature-label">Saved Quests</span>
-              {" "}whenever you are ready for an encore.
+              Return to <Link href="/saved-quests">Saved Quests</Link> whenever you
+              are ready for an encore.
             </p>
           </div>
         </li>
       </ol>
-      <p className="phase-note">
-        Saved Quests and Adventure Log routes will return with authenticated browser
-        behavior in a later phase.
-      </p>
     </PageShell>
   );
 }
