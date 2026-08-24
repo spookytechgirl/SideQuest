@@ -1,0 +1,106 @@
+.page {
+  position: relative;
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  overflow: hidden;
+  padding: 2rem;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(190, 228, 135, 0.11), transparent 26rem),
+    linear-gradient(145deg, #101712 0%, #17231a 100%);
+}
+
+.glow {
+  position: absolute;
+  width: 24rem;
+  height: 24rem;
+  border: 1px solid rgba(239, 132, 70, 0.16);
+  border-radius: 50%;
+  transform: translate(42vw, -32vh);
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 42rem;
+  padding: clamp(2rem, 6vw, 4.5rem);
+  border: 1px solid rgba(245, 237, 219, 0.12);
+  border-radius: 2rem;
+  background: rgba(23, 35, 26, 0.92);
+  box-shadow: 0 2rem 5rem rgba(3, 8, 4, 0.38);
+}
+
+.eyebrow {
+  margin-bottom: 1.4rem;
+  color: #ef8446;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.mark {
+  display: grid;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-bottom: 2rem;
+  place-items: center;
+  border-radius: 1rem;
+  color: #101712;
+  background: #bee487;
+  font-size: 1.7rem;
+  font-weight: 800;
+}
+
+.card h1 {
+  font-size: clamp(3.25rem, 11vw, 6.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.07em;
+  text-wrap: balance;
+}
+
+.card h1 span {
+  color: #bee487;
+}
+
+.intro {
+  max-width: 35rem;
+  margin-top: 1.75rem;
+  color: #c7c2b6;
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
+  line-height: 1.75;
+  text-wrap: balance;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 2rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(190, 228, 135, 0.2);
+  border-radius: 999px;
+  color: #e3ddcf;
+  background: rgba(190, 228, 135, 0.08);
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+
+.status span {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: #bee487;
+  box-shadow: 0 0 0 0.3rem rgba(190, 228, 135, 0.1);
+}
+
+@media (max-width: 36rem) {
+  .page {
+    padding: 1rem;
+  }
+
+  .card {
+    border-radius: 1.4rem;
+  }
+}
