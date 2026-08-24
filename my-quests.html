@@ -18,9 +18,9 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="supabase-config.js" defer></script>
   <script src="supabase-client.js" defer></script>
-  <link rel="stylesheet" href="style.css?v=user-quests-foundation">
+  <link rel="stylesheet" href="style.css?v=week5-polish">
   <script src="auth-gate.js?v=rbac-foundation" defer></script>
-  <script src="my-quests.js?v=user-quests-foundation" defer></script>
+  <script src="my-quests.js?v=week5-polish" defer></script>
   <script src="navigation.js?v=mobile-menu" defer></script>
   <script src="effects.js?v=footer-visibility" defer></script>
 </head>
@@ -129,7 +129,8 @@
           <form class="admin-form user-quest-form" id="user-quest-form">
             <div class="suggestion-field">
               <label for="user-quest-text">Quest text</label>
-              <textarea id="user-quest-text" maxlength="240" required placeholder="What small adventure should future-you try?"></textarea>
+              <textarea id="user-quest-text" maxlength="240" required placeholder="What small adventure should future-you try?" aria-describedby="user-quest-text-help"></textarea>
+              <p class="field-help" id="user-quest-text-help">Keep it specific and inviting—up to 240 characters.</p>
             </div>
 
             <div class="admin-form-grid">

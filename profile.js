@@ -41,6 +41,8 @@
   function setMessage(message = "", kind = "") {
     elements.message.textContent = message;
     elements.message.dataset.kind = kind;
+    elements.message.setAttribute("role", kind === "error" ? "alert" : "status");
+    elements.message.setAttribute("aria-live", kind === "error" ? "assertive" : "polite");
     elements.message.hidden = !message;
   }
 
@@ -106,6 +108,7 @@
     state.session = null;
     state.profile = null;
     state.selectedAvatar = null;
+    elements.signOutButton.disabled = false;
     clearPreviewUrl();
     elements.form.reset();
     elements.email.value = "";

@@ -206,7 +206,7 @@ a {
   right: 0;
   display: inline-flex;
   min-width: 5.9rem;
-  min-height: 2.65rem;
+  min-height: 2.75rem;
   align-items: center;
   justify-content: center;
   gap: 0.45rem;
@@ -277,7 +277,7 @@ a {
 }
 
 .site-nav a {
-  min-height: 2.35rem;
+  min-height: 2.75rem;
   padding: 0.58rem 0.9rem;
   border-radius: 999px;
   color: var(--muted);
@@ -323,7 +323,7 @@ a {
 }
 
 .info-nav a {
-  min-height: 2.15rem;
+  min-height: 2.75rem;
   padding: 0.42rem 0.7rem;
   border-radius: 999px;
   color: var(--muted);
@@ -473,7 +473,7 @@ h1 span {
 .quiz-page-link {
   display: flex;
   width: fit-content;
-  min-height: 2.7rem;
+  min-height: 2.75rem;
   align-items: center;
   gap: 0.5rem;
   margin: 0.8rem auto 0;
@@ -571,8 +571,8 @@ h1 span {
 
 .save-quest-button {
   display: grid;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.75rem;
+  height: 2.75rem;
   margin-left: 0.1rem;
   padding: 0;
   place-items: center;
@@ -642,7 +642,7 @@ h1 span {
 
 .try-another-button {
   display: inline-flex;
-  min-height: 2.6rem;
+  min-height: 2.75rem;
   align-items: center;
   gap: 0.38rem;
   margin-top: 1rem;
@@ -1375,8 +1375,8 @@ h1 span {
 
 .saved-quest-remove {
   display: grid;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.75rem;
+  height: 2.75rem;
   flex: 0 0 auto;
   padding: 0;
   place-items: center;
@@ -1478,6 +1478,9 @@ h1 span {
 }
 
 .footer-brand {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
   color: var(--ink);
   font-family: "Manrope", sans-serif;
   font-size: 0.92rem;
@@ -1501,7 +1504,7 @@ h1 span {
 
 .footer-nav a {
   display: inline-flex;
-  min-height: 2.2rem;
+  min-height: 2.75rem;
   align-items: center;
   justify-content: center;
   padding: 0.45rem 0.6rem;
@@ -1559,6 +1562,9 @@ h1 span {
 
 .admin-home-link,
 .admin-footer-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
   color: var(--muted);
   font-size: 0.78rem;
   font-weight: 700;
@@ -1567,9 +1573,6 @@ h1 span {
 }
 
 .admin-home-link {
-  display: inline-flex;
-  min-height: 2.75rem;
-  align-items: center;
   gap: 0.45rem;
   padding: 0.5rem 0.85rem;
   border: 1px solid var(--line-strong);
@@ -1866,7 +1869,7 @@ h1 span {
 
 .member-nav a {
   display: inline-flex;
-  min-height: 2.5rem;
+  min-height: 2.75rem;
   align-items: center;
   justify-content: center;
   padding: 0.52rem 0.85rem;
@@ -2039,6 +2042,13 @@ h1 span {
   line-height: 1.5;
 }
 
+.field-help {
+  margin: -0.1rem 0 0;
+  color: var(--hint);
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
 .profile-fields {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2190,7 +2200,7 @@ h1 span {
 
 .admin-action-button {
   min-width: 4.5rem;
-  min-height: 2.6rem;
+  min-height: 2.75rem;
 }
 
 .admin-delete-button {

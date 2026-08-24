@@ -18,8 +18,8 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="supabase-config.js" defer></script>
   <script src="supabase-client.js" defer></script>
-  <link rel="stylesheet" href="style.css?v=rbac-foundation">
-  <script src="admin.js?v=rbac-foundation" defer></script>
+  <link rel="stylesheet" href="style.css?v=week5-polish">
+  <script src="admin.js?v=week5-polish" defer></script>
   <script src="effects.js" defer></script>
 </head>
 <body>
@@ -113,7 +113,8 @@
           <form class="admin-form" id="admin-quest-form">
             <div class="suggestion-field">
               <label for="admin-quest-text">Quest text</label>
-              <textarea id="admin-quest-text" name="quest_text" rows="4" maxlength="240" required></textarea>
+              <textarea id="admin-quest-text" name="quest_text" rows="4" maxlength="240" required aria-describedby="admin-quest-text-help"></textarea>
+              <p class="field-help" id="admin-quest-text-help">Describe one clear activity in 240 characters or fewer.</p>
             </div>
 
             <div class="admin-form-grid">

@@ -47,6 +47,8 @@
   function setMessage(element, message = "", kind = "") {
     element.textContent = message;
     element.dataset.kind = kind;
+    element.setAttribute("role", kind === "error" ? "alert" : "status");
+    element.setAttribute("aria-live", kind === "error" ? "assertive" : "polite");
     element.hidden = !message;
   }
 
