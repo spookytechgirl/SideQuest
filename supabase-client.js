@@ -4,6 +4,11 @@
   const config = window.SIDEQUEST_SUPABASE_CONFIG;
   const sdk = window.supabase;
 
+  if (window.sideQuestSupabase) {
+    window.sideQuestSupabaseReady ??= Promise.resolve(true);
+    return;
+  }
+
   if (!config?.projectUrl || !config?.publishableKey) {
     console.error("[SideQuest] Supabase public configuration is missing.");
     return;
@@ -16,28 +21,6 @@
 
   const client = sdk.createClient(config.projectUrl, config.publishableKey);
   window.sideQuestSupabase = client;
-
-  async function verifySupabaseConnection() {
-    try {
-      const response = await fetch(`${config.projectUrl}/auth/v1/settings`, {
-        headers: {
-          apikey: config.publishableKey
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error(`Supabase responded with status ${response.status}.`);
-      }
-
-      document.documentElement.dataset.supabaseConnection = "connected";
-      console.info("[SideQuest] Supabase connection verified.");
-      return true;
-    } catch (error) {
-      document.documentElement.dataset.supabaseConnection = "error";
-      console.error("[SideQuest] Supabase connection check failed.", error);
-      return false;
-    }
-  }
-
-  window.sideQuestSupabaseReady = verifySupabaseConnection();
+  document.documentElement.dataset.supabaseConnection = "initialized";
+  window.sideQuestSupabaseReady = Promise.resolve(true);
 })();

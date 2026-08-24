@@ -1,4 +1,7 @@
-const quests = [
+const generateButton = document.querySelector("#generate-quest");
+const quiz = document.querySelector("#sidequest-quiz");
+
+const quests = (generateButton || quiz) ? [
   { title: "Take a 15-minute walk without your phone.", category: "Outdoors", effort: "Easy", energy: ["low", "medium"], moods: ["outside", "relax"], times: ["medium"] },
   { title: "Try a snack or drink you have never had before.", category: "Food", effort: "Quick", energy: ["low", "medium"], moods: ["treat", "explore"], times: ["short"] },
   { title: "Write and send a kind note to someone you appreciate.", category: "Random", effort: "Quick", energy: ["low", "medium"], moods: ["relax"], times: ["short"] },
@@ -14,7 +17,7 @@ const quests = [
   { title: "Learn one simple magic trick.", category: "Creative", effort: "A Little Effort", energy: ["medium"], moods: ["create", "explore"], times: ["medium", "long"] },
   { title: "Leave a positive review for a local place you enjoy.", category: "Local Adventure", effort: "Quick", energy: ["low"], moods: ["treat", "explore"], times: ["short"] },
   { title: "Make a three-song playlist for your current mood.", category: "Relaxing", effort: "Easy", energy: ["low", "medium"], moods: ["create", "relax", "treat"], times: ["short", "medium"] }
-];
+] : [];
 
 const SAVED_QUESTS_KEY = "sidequest-saved-quests";
 const RECENT_QUESTS_KEY = "sidequest-recent-quests";
@@ -39,7 +42,6 @@ const QUIZ_EXPLANATION_PHRASES = {
   }
 };
 
-const generateButton = document.querySelector("#generate-quest");
 const questCard = document.querySelector("#quest-card");
 const questCategory = document.querySelector("#quest-category");
 const questEffort = document.querySelector("#quest-effort");
@@ -49,7 +51,6 @@ const questExplanationText = document.querySelector("#quest-explanation-text");
 const tryAnotherButton = document.querySelector("#try-another-quest");
 const saveQuestButton = document.querySelector("#save-quest");
 const saveQuestIcon = document.querySelector("#save-quest-icon");
-const quiz = document.querySelector("#sidequest-quiz");
 const recentQuestsSection = document.querySelector("#recent-quests");
 const recentQuestsList = document.querySelector("#recent-quests-list");
 const recentQuestsEmpty = document.querySelector("#recent-quests-empty");
@@ -63,8 +64,8 @@ const savedQuestsNoResults = document.querySelector("#saved-quests-no-results");
 let previousQuestIndex = -1;
 let currentQuest = null;
 let currentQuizAnswers = null;
-let savedQuests = loadSavedQuests();
-let recentQuests = loadRecentQuests();
+let savedQuests = (saveQuestButton || savedQuestsSection) ? loadSavedQuests() : [];
+let recentQuests = (generateButton || quiz || recentQuestsSection) ? loadRecentQuests() : [];
 
 function isValidSavedQuest(quest) {
   return quest
@@ -130,7 +131,7 @@ function renderSavedQuests() {
   const hasSavedQuests = savedQuests.length > 0;
   const hasSearchResults = matchingQuests.length > 0;
 
-  savedQuestsList.replaceChildren();
+  const fragment = document.createDocumentFragment();
 
   matchingQuests.forEach((quest) => {
     const item = document.createElement("li");
@@ -148,13 +149,15 @@ function renderSavedQuests() {
     removeButton.type = "button";
     removeButton.setAttribute("aria-label", `Unsave quest: ${quest.title}`);
     removeButton.title = "Unsave quest";
+    removeButton.dataset.savedQuestIndex = String(savedQuests.indexOf(quest));
     removeButton.innerHTML = '<span aria-hidden="true">♥</span>';
-    removeButton.addEventListener("click", () => removeSavedQuest(quest));
 
     content.append(meta, title);
     item.append(content, removeButton);
-    savedQuestsList.append(item);
+    fragment.append(item);
   });
+
+  savedQuestsList.replaceChildren(fragment);
 
   savedQuestsList.hidden = !hasSearchResults;
   savedQuestsEmpty.hidden = hasSavedQuests;
@@ -164,6 +167,22 @@ function renderSavedQuests() {
   }
 
   updateSavedQuestSearchStatus(query, matchingQuests.length);
+}
+
+function handleSavedQuestListClick(event) {
+  const removeButton = event.target instanceof Element
+    ? event.target.closest(".saved-quest-remove")
+    : null;
+
+  if (!removeButton) {
+    return;
+  }
+
+  const quest = savedQuests[Number(removeButton.dataset.savedQuestIndex)];
+
+  if (quest) {
+    removeSavedQuest(quest);
+  }
 }
 
 function removeSavedQuest(quest) {
@@ -187,7 +206,7 @@ function renderRecentQuests() {
     return;
   }
 
-  recentQuestsList.replaceChildren();
+  const fragment = document.createDocumentFragment();
 
   recentQuests.forEach((quest) => {
     const item = document.createElement("li");
@@ -199,8 +218,10 @@ function renderRecentQuests() {
     title.className = "recent-quest-title";
     title.textContent = quest.title;
     item.append(meta, title);
-    recentQuestsList.append(item);
+    fragment.append(item);
   });
+
+  recentQuestsList.replaceChildren(fragment);
 
   recentQuestsList.hidden = recentQuests.length === 0;
   if (recentQuestsEmpty) {
@@ -369,5 +390,6 @@ quiz?.addEventListener("submit", generateMatchedQuest);
 tryAnotherButton?.addEventListener("click", generateAnotherMatchedQuest);
 saveQuestButton?.addEventListener("click", toggleSavedQuest);
 savedQuestsSearch?.addEventListener("input", renderSavedQuests);
+savedQuestsList?.addEventListener("click", handleSavedQuestListClick);
 renderRecentQuests();
 renderSavedQuests();

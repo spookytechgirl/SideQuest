@@ -22,10 +22,31 @@
   let initialSessionResolved = false;
   let latestAuthSession = null;
   let resolveInitialAuthEvent;
+  let resolveSharedAuth;
+  let sharedAuthResolved = false;
 
   const initialAuthEvent = new Promise((resolve) => {
     resolveInitialAuthEvent = resolve;
   });
+
+  window.sideQuestAuthReady = new Promise((resolve) => {
+    resolveSharedAuth = resolve;
+  });
+
+  function resolveSharedAuthState(session, error = null) {
+    if (sharedAuthResolved) {
+      return;
+    }
+
+    sharedAuthResolved = true;
+    resolveSharedAuth({ session, error });
+  }
+
+  function announceAuthChange(session) {
+    window.dispatchEvent(new CustomEvent("sidequest:authchange", {
+      detail: { session }
+    }));
+  }
 
   function setMessage(message = "", kind = "") {
     elements.message.textContent = message;
@@ -127,6 +148,7 @@
 
     window.setTimeout(() => {
       applySession(session);
+      announceAuthChange(session);
     }, 0);
   }
 
@@ -166,6 +188,7 @@
 
     if (!client) {
       initialSessionResolved = true;
+      resolveSharedAuthState(null, new Error("Supabase client initialization failed."));
       showConnectionError("Sign-in is unavailable because the Supabase client could not be initialized.");
       return;
     }
@@ -176,6 +199,7 @@
 
     if (!connectionReady) {
       initialSessionResolved = true;
+      resolveSharedAuthState(null, new Error("Supabase connection initialization failed."));
       showConnectionError("Sign-in is temporarily unavailable. Please refresh and try again.");
       return;
     }
@@ -184,11 +208,13 @@
     initialSessionResolved = true;
 
     if (error) {
+      resolveSharedAuthState(null, error);
       showSignedOutState("Your sign-in status could not be checked. Please refresh and try again.", "error");
       return;
     }
 
     applySession(session);
+    resolveSharedAuthState(session);
   }
 
   if (document.readyState === "loading") {

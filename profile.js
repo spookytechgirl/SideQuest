@@ -15,13 +15,6 @@
 
   const elements = {};
   let client;
-  let initialSessionResolved = false;
-  let latestAuthSession = null;
-  let resolveInitialAuthEvent;
-
-  const initialAuthEvent = new Promise((resolve) => {
-    resolveInitialAuthEvent = resolve;
-  });
 
   function cacheElements() {
     elements.form = document.querySelector("#profile-form");
@@ -349,47 +342,8 @@
     elements.signOutButton.addEventListener("click", handleSignOut);
   }
 
-  function handleAuthStateChange(event, session) {
-    latestAuthSession = session;
-
-    if (!initialSessionResolved) {
-      if (event === "INITIAL_SESSION" || session?.user) {
-        resolveInitialAuthEvent(session);
-      }
-      return;
-    }
-
-    window.setTimeout(() => {
-      void applySession(session);
-    }, 0);
-  }
-
-  async function resolveExistingSession() {
-    const sessionRequest = client.auth.getSession();
-    const sessionFromEvent = await Promise.race([
-      initialAuthEvent,
-      new Promise((resolve) => window.setTimeout(() => resolve(null), 750))
-    ]);
-    const { data, error } = await sessionRequest;
-
-    if (error) {
-      return { session: null, error };
-    }
-
-    let session = data.session || sessionFromEvent || latestAuthSession;
-
-    if (!session) {
-      await new Promise((resolve) => window.setTimeout(resolve, 150));
-      const retry = await client.auth.getSession();
-
-      if (retry.error) {
-        return { session: null, error: retry.error };
-      }
-
-      session = retry.data.session || latestAuthSession;
-    }
-
-    return { session, error: null };
+  function handleSharedAuthChange(event) {
+    void applySession(event.detail?.session || null);
   }
 
   async function initialize() {
@@ -403,19 +357,22 @@
       return;
     }
 
-    client.auth.onAuthStateChange(handleAuthStateChange);
-
     const connectionReady = await window.sideQuestSupabaseReady;
 
     if (!connectionReady) {
-      initialSessionResolved = true;
       setFormBusy(true);
       setMessage("Profile editing is temporarily unavailable. Please refresh and try again.", "error");
       return;
     }
 
-    const { session, error } = await resolveExistingSession();
-    initialSessionResolved = true;
+    if (!window.sideQuestAuthReady) {
+      setFormBusy(true);
+      setMessage("Your sign-in status could not be checked. Please refresh and try again.", "error");
+      return;
+    }
+
+    window.addEventListener("sidequest:authchange", handleSharedAuthChange);
+    const { session, error } = await window.sideQuestAuthReady;
 
     if (error) {
       setFormBusy(true);

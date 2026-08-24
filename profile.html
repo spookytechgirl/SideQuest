@@ -14,13 +14,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=week5-performance">
   <script src="theme.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="supabase-config.js" defer></script>
-  <script src="supabase-client.js" defer></script>
-  <link rel="stylesheet" href="style.css?v=week5-polish">
-  <script src="auth-gate.js?v=rbac-foundation" defer></script>
-  <script src="profile.js?v=week5-polish" defer></script>
+  <script src="supabase-client.js?v=week5-performance" defer></script>
+  <script src="auth-gate.js?v=week5-performance" defer></script>
+  <script src="profile.js?v=week5-performance" defer></script>
   <script src="navigation.js?v=mobile-menu" defer></script>
   <script src="effects.js?v=footer-visibility" defer></script>
 </head>
@@ -120,7 +120,7 @@
         <form class="profile-form" id="profile-form">
           <div class="profile-avatar-editor">
             <div class="profile-avatar-frame" id="profile-avatar-frame" role="img" aria-label="SideQuest avatar preview">
-              <img id="profile-avatar-image" alt="" hidden>
+              <img id="profile-avatar-image" width="128" height="128" decoding="async" alt="" hidden>
               <span id="profile-avatar-placeholder" aria-hidden="true">SQ</span>
             </div>
 
