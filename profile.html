@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Update your SideQuest profile and adventure avatar.">
+  <title>Profile | SideQuest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <script src="theme.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="supabase-config.js" defer></script>
+  <script src="supabase-client.js" defer></script>
+  <link rel="stylesheet" href="style.css?v=profile-foundation">
+  <script src="auth-gate.js?v=rbac-foundation" defer></script>
+  <script src="profile.js?v=profile-foundation" defer></script>
+  <script src="navigation.js?v=mobile-menu" defer></script>
+  <script src="effects.js?v=footer-visibility" defer></script>
+</head>
+<body>
+  <main class="page-shell profile-shell">
+    <section class="hero profile-page" aria-labelledby="page-title">
+      <header class="site-header">
+        <button class="nav-toggle" type="button" aria-controls="mobile-navigation" aria-expanded="false" aria-label="Open navigation menu" data-nav-toggle>
+          <span>Menu</span>
+          <span class="nav-toggle-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+        </button>
+        <div class="top-nav-panel" id="mobile-navigation" data-mobile-nav data-open="false">
+          <nav class="site-nav" aria-label="Main navigation">
+            <a href="index.html">Home</a>
+            <a href="quiz.html">Find My Quest</a>
+            <a href="adventure-log.html">Adventure Log</a>
+            <a href="saved-quests.html">Saved Quests</a>
+            <a href="profile.html" aria-current="page">Profile</a>
+          </nav>
+
+          <nav class="info-nav" aria-label="About SideQuest">
+            <a href="about.html">About</a>
+            <a href="categories.html">Quest Categories</a>
+            <a href="how-it-works.html">How It Works</a>
+          </nav>
+        </div>
+        <button class="theme-toggle" type="button" aria-label="Switch to light mode" title="Switch to light mode" data-theme-toggle>
+          <span class="theme-toggle-icon" aria-hidden="true" data-theme-icon>☀</span>
+          <span class="theme-toggle-label" data-theme-label>Light</span>
+        </button>
+      </header>
+
+      <a class="brand-mark brand-link" href="index.html" aria-label="SideQuest home">
+        <span aria-hidden="true">↗</span>
+      </a>
+
+      <p class="eyebrow">Your trail identity</p>
+      <h1 id="page-title" class="info-page-title profile-title">Your<br><span>Profile.</span></h1>
+      <p class="intro profile-intro">A small corner of SideQuest that feels like you.</p>
+
+      <section class="info-surface protected-auth-gate" data-auth-gate aria-label="Profile access">
+        <div data-auth-loading>
+          <p class="info-kicker">Checking your trail</p>
+          <h2>Confirming your sign-in…</h2>
+          <p>One moment while SideQuest checks your session.</p>
+        </div>
+
+        <div data-auth-required hidden>
+          <p class="info-kicker">Sign-in required</p>
+          <h2>Sign in to view your profile</h2>
+          <p>Your profile belongs to your Supabase account, so only you can edit it.</p>
+
+          <form class="admin-form protected-auth-form" data-auth-form>
+            <div class="suggestion-field">
+              <label for="profile-auth-email">Email address</label>
+              <input id="profile-auth-email" type="email" autocomplete="email" required data-auth-email>
+            </div>
+
+            <div class="suggestion-field">
+              <label for="profile-auth-password">Password</label>
+              <input id="profile-auth-password" type="password" autocomplete="current-password" required data-auth-password>
+            </div>
+
+            <button class="quiz-submit" type="submit">
+              Sign In <span aria-hidden="true">→</span>
+            </button>
+
+            <div class="admin-auth-divider" role="separator" aria-label="Or continue with Google">
+              <span>or</span>
+            </div>
+
+            <button class="admin-google-button" type="button" data-auth-google>
+              <span class="admin-google-mark" aria-hidden="true">G</span>
+              Continue with Google
+            </button>
+          </form>
+
+          <p class="admin-message" role="alert" hidden data-auth-message></p>
+        </div>
+      </section>
+
+      <section class="info-surface profile-dashboard" aria-labelledby="profile-editor-title" hidden data-protected-content>
+        <div class="profile-account-bar">
+          <div>
+            <p class="info-kicker">Signed-in adventurer</p>
+            <h2 id="profile-editor-title">Edit your profile</h2>
+            <p class="profile-account-email">Signed in as <strong id="profile-account-email"></strong></p>
+          </div>
+          <button class="admin-secondary-button profile-sign-out" id="profile-sign-out-button" type="button">Sign Out</button>
+        </div>
+
+        <form class="profile-form" id="profile-form">
+          <div class="profile-avatar-editor">
+            <div class="profile-avatar-frame" id="profile-avatar-frame" role="img" aria-label="SideQuest avatar preview">
+              <img id="profile-avatar-image" alt="" hidden>
+              <span id="profile-avatar-placeholder" aria-hidden="true">SQ</span>
+            </div>
+
+            <div class="profile-avatar-copy">
+              <h3>Adventure avatar</h3>
+              <p>Choose a PNG, JPEG, or WebP image up to 2 MB.</p>
+              <div class="suggestion-field">
+                <label for="profile-avatar-input">Upload or replace avatar</label>
+                <input
+                  class="profile-file-input"
+                  id="profile-avatar-input"
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp"
+                  aria-describedby="profile-avatar-help"
+                >
+                <span class="profile-field-help" id="profile-avatar-help">Your image is uploaded only when you save changes.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-fields">
+            <div class="suggestion-field">
+              <label for="profile-display-name">Display name</label>
+              <input id="profile-display-name" type="text" autocomplete="nickname" maxlength="80" placeholder="How should SideQuest greet you?">
+            </div>
+
+            <div class="suggestion-field profile-email-field">
+              <label for="profile-email">Email address <span>read-only</span></label>
+              <input id="profile-email" type="email" readonly aria-readonly="true">
+            </div>
+
+            <div class="suggestion-field profile-bio-field">
+              <label for="profile-bio">Short bio <span>up to 280 characters</span></label>
+              <textarea id="profile-bio" maxlength="280" placeholder="Share the kind of tiny adventures you enjoy."></textarea>
+            </div>
+          </div>
+
+          <button class="quiz-submit profile-save-button" id="profile-save-button" type="submit">
+            Save Changes <span aria-hidden="true">→</span>
+          </button>
+        </form>
+
+        <p class="admin-message profile-message" id="profile-message" role="status" aria-live="polite" hidden></p>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <a class="footer-brand" href="index.html">Side<span>Quest.</span></a>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="index.html">Home</a>
+        <a href="quiz.html">Find My Quest</a>
+        <a href="adventure-log.html">Adventure Log</a>
+        <a href="saved-quests.html">Saved Quests</a>
+        <a href="profile.html" aria-current="page">Profile</a>
+        <a href="about.html">About</a>
+        <a href="categories.html">Quest Categories</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </nav>
+      <p class="footer-note">Small adventures count.</p>
+    </div>
+  </footer>
+
+  <div class="orb orb-one" aria-hidden="true"></div>
+  <div class="orb orb-two" aria-hidden="true"></div>
+</body>
+</html>

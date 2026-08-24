@@ -1843,10 +1843,180 @@ h1 span {
 
 .admin-secondary-button:disabled,
 .admin-action-button:disabled,
-.admin-form :disabled {
+.admin-form :disabled,
+.profile-form :disabled {
   cursor: wait;
   opacity: 0.58;
   transform: none;
+}
+
+.profile-page {
+  width: min(100%, 54rem);
+}
+
+.profile-intro {
+  max-width: 33rem;
+  margin-bottom: 1.8rem;
+}
+
+.profile-dashboard {
+  width: 100%;
+  max-width: 48rem;
+  margin-top: 2rem;
+}
+
+.profile-account-bar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1.3rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.profile-account-bar h2 {
+  margin: 0;
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(1.45rem, 4vw, 2rem);
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+}
+
+.profile-account-email {
+  margin: 0.4rem 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.profile-account-email strong {
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.profile-sign-out {
+  flex: 0 0 auto;
+}
+
+.profile-form {
+  display: grid;
+  gap: 1.35rem;
+  margin-top: 1.35rem;
+}
+
+.profile-avatar-editor {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: 1.35rem;
+  padding: 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--subtle-surface);
+  box-shadow: inset 0 1px 0 var(--inset-highlight-soft);
+}
+
+.profile-avatar-frame {
+  display: grid;
+  width: 8rem;
+  height: 8rem;
+  place-items: center;
+  overflow: hidden;
+  border: 2px solid rgba(192, 232, 141, 0.38);
+  border-radius: 50%;
+  color: var(--deep-ink);
+  background:
+    radial-gradient(circle at 28% 24%, rgba(255, 255, 255, 0.36), transparent 32%),
+    linear-gradient(145deg, var(--green), var(--green-deep));
+  box-shadow: var(--shadow-sm), 0 0 0 6px rgba(192, 232, 141, 0.06);
+}
+
+.profile-avatar-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-avatar-placeholder {
+  font-family: "Manrope", sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+}
+
+.profile-avatar-copy {
+  min-width: 0;
+}
+
+.profile-avatar-copy h3 {
+  margin: 0;
+  font-family: "Manrope", sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: -0.025em;
+}
+
+.profile-avatar-copy > p {
+  margin: 0.35rem 0 0.9rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.profile-file-input {
+  min-height: 3.25rem;
+  padding: 0.35rem;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.76rem;
+}
+
+.profile-file-input::file-selector-button {
+  min-height: 2.45rem;
+  margin-right: 0.7rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--ink);
+  background: var(--nav-hover-soft);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+.profile-file-input:hover::file-selector-button {
+  border-color: rgba(192, 232, 141, 0.36);
+  background: var(--nav-hover);
+}
+
+.profile-field-help {
+  color: var(--hint);
+  font-size: 0.68rem;
+  line-height: 1.5;
+}
+
+.profile-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.profile-email-field input[readonly] {
+  color: var(--muted);
+  background: var(--subtle-surface-soft);
+  cursor: default;
+}
+
+.profile-bio-field {
+  grid-column: 1 / -1;
+}
+
+.profile-save-button {
+  width: min(100%, 18rem);
+  justify-self: end;
+}
+
+.profile-message {
+  margin: 1.1rem 0 0;
 }
 
 .admin-editor {
@@ -2224,6 +2394,10 @@ h1 span {
     white-space: normal;
   }
 
+  .site-header .site-nav a:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
   .site-header .info-nav a:last-child:nth-child(odd) {
     grid-column: 1 / -1;
   }
@@ -2329,6 +2503,38 @@ h1 span {
 
   .info-surface {
     padding: 1.4rem 1.2rem;
+  }
+
+  .profile-account-bar {
+    flex-direction: column;
+  }
+
+  .profile-sign-out {
+    width: 100%;
+  }
+
+  .profile-avatar-editor {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .profile-avatar-copy,
+  .profile-avatar-copy .suggestion-field {
+    width: 100%;
+    text-align: left;
+  }
+
+  .profile-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-bio-field {
+    grid-column: auto;
+  }
+
+  .profile-save-button {
+    width: 100%;
   }
 
   .about-values,
