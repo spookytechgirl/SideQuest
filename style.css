@@ -1844,10 +1844,55 @@ h1 span {
 .admin-secondary-button:disabled,
 .admin-action-button:disabled,
 .admin-form :disabled,
-.profile-form :disabled {
+.profile-form :disabled,
+.user-quest-form :disabled {
   cursor: wait;
   opacity: 0.58;
   transform: none;
+}
+
+.member-nav {
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 0 auto 1rem;
+  padding: 0.3rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--subtle-surface);
+}
+
+.member-nav a {
+  display: inline-flex;
+  min-height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.52rem 0.85rem;
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 160ms ease, background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.member-nav a:hover {
+  color: var(--ink);
+  background: var(--nav-hover);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.member-nav a:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.member-nav a[aria-current="page"] {
+  color: var(--deep-ink);
+  background: var(--green);
+  box-shadow: 0 6px 16px rgba(5, 10, 6, 0.24);
 }
 
 .profile-page {
@@ -2017,6 +2062,51 @@ h1 span {
 
 .profile-message {
   margin: 1.1rem 0 0;
+}
+
+.my-quests-page {
+  width: min(100%, 58rem);
+}
+
+.my-quests-intro {
+  max-width: 34rem;
+  margin-bottom: 1.8rem;
+}
+
+.my-quests-dashboard {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.my-quests-dashboard[hidden] {
+  display: none;
+}
+
+.my-quests-account-bar {
+  width: 100%;
+}
+
+.user-quest-editor {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+.user-quest-form .quiz-submit {
+  width: min(100%, 18rem);
+  justify-self: end;
+}
+
+.user-quest-message {
+  margin: 1rem 0 0;
+}
+
+.user-quest-date {
+  color: var(--hint);
+  font-size: 0.7rem;
+  font-weight: 600;
 }
 
 .admin-editor {
@@ -2640,6 +2730,18 @@ h1 span {
     min-height: 3.25rem;
   }
 
+  .member-nav {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-radius: var(--radius-md);
+  }
+
+  .member-nav a {
+    min-height: 2.8rem;
+    border-radius: var(--radius-sm);
+  }
+
   .admin-form-grid,
   .admin-quest-list {
     grid-template-columns: 1fr;
@@ -2677,6 +2779,10 @@ h1 span {
   .admin-action-button {
     width: 100%;
     min-height: 2.8rem;
+  }
+
+  .user-quest-form .quiz-submit {
+    width: 100%;
   }
 
   .admin-footer-inner {

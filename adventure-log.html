@@ -12,7 +12,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="supabase-config.js" defer></script>
   <script src="supabase-client.js" defer></script>
-  <link rel="stylesheet" href="style.css?v=profile-foundation">
+  <link rel="stylesheet" href="style.css?v=user-quests-foundation">
   <script src="auth-gate.js?v=rbac-foundation" defer></script>
   <script src="script.js?v=saved-quests-page" defer></script>
   <script src="navigation.js?v=mobile-menu" defer></script>
@@ -97,6 +97,11 @@
       </section>
 
       <section class="recent-quests adventure-log-list" id="recent-quests" aria-labelledby="recent-quests-title" hidden data-protected-content>
+        <nav class="member-nav" aria-label="Signed-in navigation">
+          <a href="profile.html">Profile</a>
+          <a href="my-quests.html">My Quests</a>
+        </nav>
+
         <h2 class="visually-hidden" id="recent-quests-title">Recent SideQuests</h2>
         <p class="recent-quests-empty" id="recent-quests-empty" hidden>
           No adventures logged yet. <a href="index.html">Generate your first SideQuest</a> to start the trail.

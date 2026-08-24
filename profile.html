@@ -12,7 +12,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="supabase-config.js" defer></script>
   <script src="supabase-client.js" defer></script>
-  <link rel="stylesheet" href="style.css?v=profile-foundation">
+  <link rel="stylesheet" href="style.css?v=user-quests-foundation">
   <script src="auth-gate.js?v=rbac-foundation" defer></script>
   <script src="profile.js?v=profile-foundation" defer></script>
   <script src="navigation.js?v=mobile-menu" defer></script>
@@ -97,6 +97,11 @@
       </section>
 
       <section class="info-surface profile-dashboard" aria-labelledby="profile-editor-title" hidden data-protected-content>
+        <nav class="member-nav" aria-label="Signed-in navigation">
+          <a href="profile.html" aria-current="page">Profile</a>
+          <a href="my-quests.html">My Quests</a>
+        </nav>
+
         <div class="profile-account-bar">
           <div>
             <p class="info-kicker">Signed-in adventurer</p>
