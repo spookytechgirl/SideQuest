@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin.html
+Disallow: /profile.html
+Disallow: /my-quests.html
+Disallow: /saved-quests.html
+Disallow: /adventure-log.html
+
+Sitemap: https://side-quest-ochre.vercel.app/sitemap.xml
