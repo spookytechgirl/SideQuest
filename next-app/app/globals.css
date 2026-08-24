@@ -1766,6 +1766,58 @@ h1 span {
   font-weight: 800;
 }
 
+.login-panel {
+  max-width: 31rem;
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.login-panel h2 {
+  margin: 0;
+  font-family: var(--font-manrope), sans-serif;
+  font-size: clamp(1.45rem, 4vw, 2rem);
+  letter-spacing: -0.04em;
+  line-height: 1.18;
+}
+
+.login-panel-copy {
+  margin: 0.7rem 0 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.login-form .quiz-submit,
+.login-sign-out {
+  width: 100%;
+}
+
+.login-signed-in-actions {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.35rem;
+}
+
+.login-session-status {
+  display: flex;
+  min-height: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(192, 232, 141, 0.28);
+  border-radius: var(--radius-sm);
+  color: var(--green-text);
+  background: rgba(192, 232, 141, 0.08);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.login-message {
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+
 .admin-form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
