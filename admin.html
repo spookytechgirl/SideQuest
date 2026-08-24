@@ -12,8 +12,8 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="supabase-config.js" defer></script>
   <script src="supabase-client.js" defer></script>
-  <link rel="stylesheet" href="style.css?v=google-admin-auth">
-  <script src="admin.js?v=google-admin-auth" defer></script>
+  <link rel="stylesheet" href="style.css?v=rbac-foundation">
+  <script src="admin.js?v=rbac-foundation" defer></script>
   <script src="effects.js" defer></script>
 </head>
 <body>
@@ -72,6 +72,15 @@
         </form>
 
         <p class="admin-message" id="admin-auth-message" role="alert" hidden></p>
+      </section>
+
+      <section class="info-surface admin-access-panel" id="admin-access-panel" aria-labelledby="admin-access-title" hidden>
+        <p class="info-kicker">Admin access required</p>
+        <h2 id="admin-access-title">This quest desk is for admins.</h2>
+        <p>Your account is signed in, but it does not have the required admin role.</p>
+        <p class="admin-user-line">Signed in as <strong id="admin-access-user"></strong></p>
+        <p class="admin-message" id="admin-access-message" role="alert" hidden></p>
+        <button class="admin-secondary-button admin-access-sign-out" id="admin-access-sign-out-button" type="button">Sign Out</button>
       </section>
 
       <section class="admin-dashboard" id="admin-dashboard" aria-labelledby="admin-dashboard-title" hidden>

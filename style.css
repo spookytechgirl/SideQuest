@@ -1630,6 +1630,53 @@ h1 span {
   max-width: 31rem;
 }
 
+.admin-access-panel,
+.protected-auth-gate {
+  max-width: 31rem;
+  text-align: left;
+}
+
+.protected-auth-gate {
+  margin-top: 2rem;
+}
+
+.protected-auth-gate h2,
+.admin-access-panel h2 {
+  margin: 0;
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(1.35rem, 4vw, 1.85rem);
+  letter-spacing: -0.035em;
+  line-height: 1.2;
+}
+
+.protected-auth-gate p,
+.admin-access-panel > p {
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.protected-auth-gate .info-kicker,
+.admin-access-panel .info-kicker {
+  color: var(--accent);
+}
+
+.protected-auth-gate [data-auth-loading] {
+  text-align: center;
+}
+
+.protected-auth-form {
+  margin-top: 1.25rem;
+}
+
+.admin-access-panel .admin-user-line {
+  margin-top: 1rem;
+}
+
+.admin-access-sign-out {
+  width: 100%;
+  margin-top: 1.1rem;
+}
+
 .admin-form {
   display: grid;
   gap: 1rem;

@@ -12,7 +12,8 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="supabase-config.js" defer></script>
   <script src="supabase-client.js" defer></script>
-  <link rel="stylesheet" href="style.css?v=saved-quest-search">
+  <link rel="stylesheet" href="style.css?v=rbac-foundation">
+  <script src="auth-gate.js?v=rbac-foundation" defer></script>
   <script src="script.js?v=saved-quest-search" defer></script>
   <script src="navigation.js?v=mobile-menu" defer></script>
   <script src="effects.js?v=footer-visibility" defer></script>
@@ -53,7 +54,48 @@
       <h1 id="page-title" class="saved-quests-title">Saved<br><span>SideQuests.</span></h1>
       <p class="intro saved-quests-intro">The little adventures you wanted to hold onto.</p>
 
-      <section class="saved-quests" id="saved-quests" aria-labelledby="saved-quests-title">
+      <section class="info-surface protected-auth-gate" data-auth-gate aria-label="Saved Quests access">
+        <div data-auth-loading>
+          <p class="info-kicker">Checking your trail</p>
+          <h2>Confirming your sign-in…</h2>
+          <p>One moment while SideQuest checks your session.</p>
+        </div>
+
+        <div data-auth-required hidden>
+          <p class="info-kicker">Sign-in required</p>
+          <h2>Sign in to view saved quests</h2>
+          <p>Your saved quests stay in this browser, with access reserved for signed-in adventurers.</p>
+
+          <form class="admin-form protected-auth-form" data-auth-form>
+            <div class="suggestion-field">
+              <label for="saved-auth-email">Email address</label>
+              <input id="saved-auth-email" type="email" autocomplete="email" required data-auth-email>
+            </div>
+
+            <div class="suggestion-field">
+              <label for="saved-auth-password">Password</label>
+              <input id="saved-auth-password" type="password" autocomplete="current-password" required data-auth-password>
+            </div>
+
+            <button class="quiz-submit" type="submit">
+              Sign In <span aria-hidden="true">→</span>
+            </button>
+
+            <div class="admin-auth-divider" role="separator" aria-label="Or continue with Google">
+              <span>or</span>
+            </div>
+
+            <button class="admin-google-button" type="button" data-auth-google>
+              <span class="admin-google-mark" aria-hidden="true">G</span>
+              Continue with Google
+            </button>
+          </form>
+
+          <p class="admin-message" role="alert" hidden data-auth-message></p>
+        </div>
+      </section>
+
+      <section class="saved-quests" id="saved-quests" aria-labelledby="saved-quests-title" hidden data-protected-content>
         <h2 class="visually-hidden" id="saved-quests-title">Saved SideQuests</h2>
         <div class="saved-quests-search">
           <label for="saved-quests-search">Search saved quests</label>

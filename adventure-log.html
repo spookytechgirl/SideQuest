@@ -12,7 +12,8 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="supabase-config.js" defer></script>
   <script src="supabase-client.js" defer></script>
-  <link rel="stylesheet" href="style.css?v=week-2-polish">
+  <link rel="stylesheet" href="style.css?v=rbac-foundation">
+  <script src="auth-gate.js?v=rbac-foundation" defer></script>
   <script src="script.js?v=saved-quests-page" defer></script>
   <script src="navigation.js?v=mobile-menu" defer></script>
   <script src="effects.js?v=footer-visibility" defer></script>
@@ -53,7 +54,48 @@
       <h1 id="page-title" class="adventure-log-title">Recent<br><span>SideQuests.</span></h1>
       <p class="intro adventure-log-intro">A look back at the little adventures that found you.</p>
 
-      <section class="recent-quests adventure-log-list" id="recent-quests" aria-labelledby="recent-quests-title">
+      <section class="info-surface protected-auth-gate" data-auth-gate aria-label="Adventure Log access">
+        <div data-auth-loading>
+          <p class="info-kicker">Checking your trail</p>
+          <h2>Confirming your sign-in…</h2>
+          <p>One moment while SideQuest checks your session.</p>
+        </div>
+
+        <div data-auth-required hidden>
+          <p class="info-kicker">Sign-in required</p>
+          <h2>Sign in to view your Adventure Log</h2>
+          <p>Your recent quests stay in this browser, with access reserved for signed-in adventurers.</p>
+
+          <form class="admin-form protected-auth-form" data-auth-form>
+            <div class="suggestion-field">
+              <label for="adventure-auth-email">Email address</label>
+              <input id="adventure-auth-email" type="email" autocomplete="email" required data-auth-email>
+            </div>
+
+            <div class="suggestion-field">
+              <label for="adventure-auth-password">Password</label>
+              <input id="adventure-auth-password" type="password" autocomplete="current-password" required data-auth-password>
+            </div>
+
+            <button class="quiz-submit" type="submit">
+              Sign In <span aria-hidden="true">→</span>
+            </button>
+
+            <div class="admin-auth-divider" role="separator" aria-label="Or continue with Google">
+              <span>or</span>
+            </div>
+
+            <button class="admin-google-button" type="button" data-auth-google>
+              <span class="admin-google-mark" aria-hidden="true">G</span>
+              Continue with Google
+            </button>
+          </form>
+
+          <p class="admin-message" role="alert" hidden data-auth-message></p>
+        </div>
+      </section>
+
+      <section class="recent-quests adventure-log-list" id="recent-quests" aria-labelledby="recent-quests-title" hidden data-protected-content>
         <h2 class="visually-hidden" id="recent-quests-title">Recent SideQuests</h2>
         <p class="recent-quests-empty" id="recent-quests-empty" hidden>
           No adventures logged yet. <a href="index.html">Generate your first SideQuest</a> to start the trail.

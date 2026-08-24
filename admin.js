@@ -5,9 +5,11 @@
 
   const state = {
     session: null,
+    role: null,
     quests: [],
     editingId: null,
-    loading: false
+    loading: false,
+    accessCheckId: 0
   };
 
   const elements = {};
@@ -22,6 +24,10 @@
     elements.signInButton = document.querySelector("#admin-sign-in-button");
     elements.googleSignInButton = document.querySelector("#admin-google-sign-in-button");
     elements.authMessage = document.querySelector("#admin-auth-message");
+    elements.accessPanel = document.querySelector("#admin-access-panel");
+    elements.accessUser = document.querySelector("#admin-access-user");
+    elements.accessMessage = document.querySelector("#admin-access-message");
+    elements.accessSignOutButton = document.querySelector("#admin-access-sign-out-button");
     elements.dashboard = document.querySelector("#admin-dashboard");
     elements.dashboardMessage = document.querySelector("#admin-dashboard-message");
     elements.userEmail = document.querySelector("#admin-user-email");
@@ -66,18 +72,53 @@
   }
 
   function showSignedOutState() {
+    state.accessCheckId += 1;
     state.session = null;
+    state.role = null;
     state.quests = [];
     elements.authPanel.hidden = false;
+    elements.accessPanel.hidden = true;
     elements.dashboard.hidden = true;
+    elements.accessUser.textContent = "";
     elements.userEmail.textContent = "";
     elements.questList.replaceChildren();
     elements.questCount.textContent = "0 quests";
+    setMessage(elements.accessMessage);
     setMessage(elements.dashboardMessage);
     resetEditor();
   }
 
+  function showUnauthorizedState(session, message = "") {
+    state.session = session;
+    state.role = null;
+    state.quests = [];
+    elements.authPanel.hidden = true;
+    elements.accessPanel.hidden = false;
+    elements.dashboard.hidden = true;
+    elements.accessUser.textContent = session.user.email || "authenticated user";
+    elements.userEmail.textContent = "";
+    elements.questList.replaceChildren();
+    elements.questCount.textContent = "0 quests";
+    setMessage(elements.authMessage);
+    setMessage(elements.accessMessage, message, message ? "error" : "");
+    setMessage(elements.dashboardMessage);
+    resetEditor();
+  }
+
+  function showAdminState(session) {
+    state.session = session;
+    state.role = "admin";
+    elements.authPanel.hidden = true;
+    elements.accessPanel.hidden = true;
+    elements.dashboard.hidden = false;
+    elements.accessUser.textContent = "";
+    elements.userEmail.textContent = session.user.email || "authenticated user";
+    setMessage(elements.authMessage);
+    setMessage(elements.accessMessage);
+  }
+
   async function applySession(session) {
+    const accessCheckId = ++state.accessCheckId;
     const previousUserId = state.session?.user?.id || null;
     const nextUserId = session?.user?.id || null;
     state.session = session;
@@ -88,9 +129,36 @@
     }
 
     elements.authPanel.hidden = true;
-    elements.dashboard.hidden = false;
-    elements.userEmail.textContent = session.user.email || "authenticated user";
-    setMessage(elements.authMessage);
+    elements.accessPanel.hidden = true;
+    elements.dashboard.hidden = true;
+    setMessage(elements.connectionStatus, "Checking admin access…");
+
+    const { data: roleRecord, error: roleError } = await client
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", session.user.id)
+      .maybeSingle();
+
+    if (accessCheckId !== state.accessCheckId) {
+      return;
+    }
+
+    setMessage(elements.connectionStatus, "Connected to the SideQuest database.", "success");
+
+    if (roleError) {
+      showUnauthorizedState(
+        session,
+        "Admin access could not be verified. Confirm that the role SQL has been run in Supabase."
+      );
+      return;
+    }
+
+    if (roleRecord?.role !== "admin") {
+      showUnauthorizedState(session);
+      return;
+    }
+
+    showAdminState(session);
 
     if (previousUserId !== nextUserId || state.quests.length === 0) {
       await loadQuests();
@@ -164,7 +232,7 @@
   }
 
   async function loadQuests() {
-    if (!state.session) {
+    if (!state.session || state.role !== "admin") {
       return;
     }
 
@@ -234,13 +302,15 @@
     }
   }
 
-  async function handleSignOut() {
-    elements.signOutButton.disabled = true;
+  async function handleSignOut(event) {
+    const signOutButton = event.currentTarget;
+    signOutButton.disabled = true;
     const { error } = await client.auth.signOut();
-    elements.signOutButton.disabled = false;
+    signOutButton.disabled = false;
 
     if (error) {
-      setMessage(elements.dashboardMessage, "Unable to sign out right now. Please try again.", "error");
+      const messageTarget = elements.dashboard.hidden ? elements.accessMessage : elements.dashboardMessage;
+      setMessage(messageTarget, "Unable to sign out right now. Please try again.", "error");
       return;
     }
 
@@ -251,7 +321,7 @@
   async function handleQuestSubmit(event) {
     event.preventDefault();
 
-    if (!state.session || state.loading) {
+    if (!state.session || state.role !== "admin" || state.loading) {
       return;
     }
 
@@ -331,7 +401,7 @@
   async function handleQuestListClick(event) {
     const button = event.target.closest("button[data-action]");
 
-    if (!button || !state.session || state.loading) {
+    if (!button || !state.session || state.role !== "admin" || state.loading) {
       return;
     }
 
@@ -352,6 +422,7 @@
     elements.authForm.addEventListener("submit", handleSignIn);
     elements.googleSignInButton.addEventListener("click", handleGoogleSignIn);
     elements.signOutButton.addEventListener("click", handleSignOut);
+    elements.accessSignOutButton.addEventListener("click", handleSignOut);
     elements.questForm.addEventListener("submit", handleQuestSubmit);
     elements.cancelEdit.addEventListener("click", resetEditor);
     elements.questList.addEventListener("click", handleQuestListClick);
