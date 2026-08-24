@@ -1177,6 +1177,15 @@ h1 span {
   transform: translateY(-2px) scale(1.015);
 }
 
+.error-home-link {
+  width: fit-content;
+  min-width: 13rem;
+  margin: 1.5rem auto 0;
+  padding-inline: 1.5rem;
+  color: var(--deep-ink);
+  text-decoration: none;
+}
+
 .recent-quests,
 .saved-quests {
   max-width: 38rem;
