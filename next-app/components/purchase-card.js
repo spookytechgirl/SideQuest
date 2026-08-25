@@ -1,46 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
+import SupportPackCheckoutButton from "@/components/support-pack-checkout-button";
+import { getLoginPath } from "@/lib/auth-paths";
 
-const CHECKOUT_HOST = "checkout.stripe.com";
-
-export default function PurchaseCard() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  const startCheckout = async () => {
-    setIsLoading(true);
-    setError("");
-
-    try {
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({}),
-      });
-      const data = await response.json().catch(() => ({}));
-
-      if (!response.ok) {
-        throw new Error(data.error || "Test checkout could not start.");
-      }
-
-      const checkoutUrl = new URL(data.url);
-
-      if (checkoutUrl.protocol !== "https:" || checkoutUrl.hostname !== CHECKOUT_HOST) {
-        throw new Error("Stripe returned an unexpected checkout address.");
-      }
-
-      window.location.assign(checkoutUrl.toString());
-    } catch (checkoutError) {
-      setError(
-        checkoutError instanceof Error
-          ? checkoutError.message
-          : "Test checkout could not start. Please try again.",
-      );
-      setIsLoading(false);
-    }
-  };
-
+export default function PurchaseCard({ access }) {
   return (
     <section
       className="support-pack"
@@ -51,8 +15,7 @@ export default function PurchaseCard() {
         <p className="info-kicker">Optional test-mode checkout</p>
         <h2 id="support-pack-title">SideQuest Support Pack</h2>
         <p>
-          Support the spirit of small adventures with one simple Stripe test
-          purchase.
+          Unlock AI Quest Remix with one simple Stripe test purchase.
         </p>
       </div>
 
@@ -62,32 +25,32 @@ export default function PurchaseCard() {
         <span>USD</span>
       </p>
 
-      <button
-        className="quest-button support-pack-button"
-        type="button"
-        onClick={startCheckout}
-        disabled={isLoading}
-        aria-busy={isLoading}
-      >
-        <span>{isLoading ? "Opening Stripe…" : "Buy Now"}</span>
-        <span className="button-arrow" aria-hidden="true">
-          {isLoading ? "…" : "→"}
-        </span>
-      </button>
+      {access?.isEntitled ? (
+        <div className="support-pack-unlocked" role="status">
+          <span aria-hidden="true">✓</span>
+          AI Quest Remix unlocked
+        </div>
+      ) : !access?.isAvailable ? (
+        <p className="support-pack-error" role="alert">
+          Unlock status is temporarily unavailable. Please try again later.
+        </p>
+      ) : access?.isSignedIn ? (
+        <SupportPackCheckoutButton label="Unlock with Support Pack — $5" />
+      ) : (
+        <Link
+          className="quest-button support-pack-button"
+          href={getLoginPath("/#support-sidequest")}
+        >
+          <span>Sign in to unlock</span>
+          <span className="button-arrow" aria-hidden="true">→</span>
+        </Link>
+      )}
 
       <p className="support-pack-note">
-        Secure hosted checkout. Stripe test cards only—no real charge will be made.
+        {access?.isEntitled
+          ? "Your unlock is tied securely to this SideQuest account."
+          : "Secure hosted checkout. Stripe test cards only—no real charge will be made."}
       </p>
-
-      <div className="support-pack-status" aria-live="polite" aria-atomic="true">
-        {isLoading ? <p>Preparing secure Stripe Checkout…</p> : null}
-      </div>
-
-      {error ? (
-        <p className="support-pack-error" role="alert">
-          {error}
-        </p>
-      ) : null}
     </section>
   );
 }

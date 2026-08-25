@@ -720,6 +720,53 @@ h1 span {
   background: rgba(244, 134, 90, 0.08);
 }
 
+.quest-remix-locked {
+  padding: 1rem;
+  border-style: dashed;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(192, 232, 141, 0.08), transparent 9rem),
+    var(--subtle-surface-soft);
+}
+
+.quest-remix-lock-copy h2,
+.quest-remix-lock-copy p {
+  margin: 0;
+}
+
+.quest-remix-lock-copy h2 {
+  margin-top: 0.2rem;
+  font-family: var(--font-manrope), sans-serif;
+  font-size: 1rem;
+  letter-spacing: -0.025em;
+}
+
+.quest-remix-lock-copy > p:last-child {
+  margin-top: 0.35rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  line-height: 1.55;
+}
+
+.quest-remix-lock-copy .quest-remix-kicker {
+  color: var(--accent-dark);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.quest-remix-unlock {
+  width: 100%;
+  margin-top: 0.8rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+.quest-remix-locked .support-pack-status,
+.quest-remix-locked .support-pack-error {
+  margin-top: 0.65rem;
+}
+
 @media (max-width: 32rem) {
   .quest-remix-actions {
     grid-template-columns: 1fr;
@@ -3826,6 +3873,32 @@ h1,
   background: rgba(244, 134, 90, 0.08);
 }
 
+.support-pack-unlocked {
+  display: inline-flex;
+  min-height: 3.25rem;
+  grid-column: 1 / -1;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid rgba(192, 232, 141, 0.3);
+  border-radius: var(--radius-sm);
+  color: var(--green-text);
+  background: rgba(192, 232, 141, 0.08);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.support-pack-unlocked span {
+  display: grid;
+  width: 1.35rem;
+  height: 1.35rem;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--deep-ink);
+  background: var(--green);
+}
+
 .purchase-result-page {
   width: min(100%, 44rem);
 }
@@ -3867,6 +3940,7 @@ h1,
   }
 
   .support-pack-button,
+  .support-pack-unlocked,
   .support-pack-note,
   .support-pack-status,
   .support-pack-error {

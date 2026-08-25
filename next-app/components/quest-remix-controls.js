@@ -1,19 +1,54 @@
 "use client";
 
+import Link from "next/link";
 import { useId, useState } from "react";
+import SupportPackCheckoutButton from "@/components/support-pack-checkout-button";
+import { getLoginPath } from "@/lib/auth-paths";
 import {
   createRemixedQuest,
   getRemixStyleLabel,
   REMIX_STYLES,
 } from "@/lib/remix-options";
 
-export default function QuestRemixControls({ quest, onRemixed }) {
+export default function QuestRemixControls({ quest, onRemixed, access }) {
   const selectId = useId();
   const [isOpen, setIsOpen] = useState(false);
   const [style, setStyle] = useState(REMIX_STYLES[0].value);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [status, setStatus] = useState("");
+
+  if (!access?.isEntitled) {
+    return (
+      <section className="quest-remix quest-remix-locked" aria-labelledby="quest-remix-locked-title">
+        <div className="quest-remix-lock-copy">
+          <p className="quest-remix-kicker">AI Quest Remix</p>
+          <h2 id="quest-remix-locked-title">A plot twist awaits.</h2>
+          <p>AI Quest Remix is part of the SideQuest Support Pack.</p>
+        </div>
+
+        {!access?.isAvailable ? (
+          <p className="quest-remix-error" role="alert">
+            Unlock status is temporarily unavailable. Please try again later.
+          </p>
+        ) : access?.isSignedIn ? (
+          <SupportPackCheckoutButton
+            className="quest-remix-submit quest-remix-unlock"
+            label="Unlock with Support Pack — $5"
+            loadingLabel="Opening Stripe…"
+          />
+        ) : (
+          <Link
+            className="quest-remix-submit quest-remix-unlock"
+            href={getLoginPath("/#support-sidequest")}
+          >
+            Sign in to unlock
+            <span aria-hidden="true">→</span>
+          </Link>
+        )}
+      </section>
+    );
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();

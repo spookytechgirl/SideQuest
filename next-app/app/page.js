@@ -1,6 +1,8 @@
 import PageShell from "@/components/page-shell";
 import PurchaseCard from "@/components/purchase-card";
 import QuestGenerator from "@/components/quest-generator";
+import { getAuthContext } from "@/lib/auth";
+import { getEntitlementState } from "@/lib/entitlements";
 import { createPublicMetadata } from "@/lib/social-metadata";
 
 export const metadata = createPublicMetadata({
@@ -10,7 +12,19 @@ export const metadata = createPublicMetadata({
   path: "/",
 });
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const { supabase, user } = await getAuthContext();
+  const entitlement = user
+    ? await getEntitlementState(supabase, user.id)
+    : { isEntitled: false, error: null };
+  const access = {
+    isSignedIn: Boolean(user),
+    isEntitled: entitlement.isEntitled,
+    isAvailable: !entitlement.error,
+  };
+
   return (
     <PageShell shellClassName="home-shell" pageClassName="home-hero">
       <div className="brand-mark" aria-hidden="true">
@@ -26,11 +40,11 @@ export default function Home() {
         only a click away.
       </p>
 
-      <QuestGenerator />
+      <QuestGenerator remixAccess={access} />
 
       <p className="hint">No planning. No pressure. Just try something new.</p>
 
-      <PurchaseCard />
+      <PurchaseCard access={access} />
     </PageShell>
   );
 }

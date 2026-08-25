@@ -1,4 +1,6 @@
 import OpenAI from "openai";
+import { getAuthContext } from "@/lib/auth";
+import { getEntitlementState } from "@/lib/entitlements";
 import {
   createQuestRemix,
   validateQuestRemixInput,
@@ -19,6 +21,34 @@ function jsonResponse(body, status = 200) {
 }
 
 export async function POST(request) {
+  const { supabase, user } = await getAuthContext();
+
+  if (!user) {
+    return jsonResponse(
+      { error: "Sign in and unlock AI Quest Remix before using it." },
+      401,
+    );
+  }
+
+  const entitlement = await getEntitlementState(supabase, user.id);
+
+  if (entitlement.error) {
+    return jsonResponse(
+      { error: "AI Quest Remix access could not be checked right now." },
+      503,
+    );
+  }
+
+  if (!entitlement.isEntitled) {
+    return jsonResponse(
+      {
+        error:
+          "AI Quest Remix is part of the SideQuest Support Pack. Unlock it to continue.",
+      },
+      403,
+    );
+  }
+
   let rateLimit;
 
   try {

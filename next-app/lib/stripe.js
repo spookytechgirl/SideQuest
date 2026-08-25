@@ -1,5 +1,6 @@
 import "server-only";
 import Stripe from "stripe";
+import { AI_QUEST_REMIX_ENTITLEMENT } from "@/lib/entitlements";
 import { SITE_URL } from "@/lib/social-metadata";
 
 export const SUPPORT_PACK = Object.freeze({
@@ -7,7 +8,8 @@ export const SUPPORT_PACK = Object.freeze({
   description: "A small test-mode purchase that supports the SideQuest adventure.",
   amount: 500,
   currency: "usd",
-  metadataKey: "sidequest-support-pack",
+  productKey: "sidequest_support_pack",
+  entitlementKey: AI_QUEST_REMIX_ENTITLEMENT,
 });
 
 let stripeClient;
@@ -33,23 +35,53 @@ export function getStripeClient() {
   return stripeClient;
 }
 
+function getFirstHeaderValue(value) {
+  return value?.split(",")[0]?.trim() || "";
+}
+
 export function getCheckoutReturnOrigin(request) {
   const requestUrl = new URL(request.url);
-  const isLocal =
-    requestUrl.hostname === "127.0.0.1" || requestUrl.hostname === "localhost";
-  const isVercelDeployment = requestUrl.hostname.endsWith(".vercel.app");
+  const requestHost =
+    getFirstHeaderValue(request.headers.get("x-forwarded-host")) ||
+    getFirstHeaderValue(request.headers.get("host"));
+  const forwardedProtocol = getFirstHeaderValue(
+    request.headers.get("x-forwarded-proto"),
+  );
+  const protocol = ["http", "https"].includes(forwardedProtocol)
+    ? forwardedProtocol
+    : requestUrl.protocol.slice(0, -1);
+  let returnUrl = requestUrl;
 
-  if (isLocal || requestUrl.origin === SITE_URL || isVercelDeployment) {
-    return requestUrl.origin;
+  if (/^[a-z0-9.-]+(?::\d+)?$/i.test(requestHost)) {
+    returnUrl = new URL(`${protocol}://${requestHost}`);
+  }
+
+  const requestIsLocal =
+    requestUrl.hostname === "127.0.0.1" || requestUrl.hostname === "localhost";
+  const returnIsLocal =
+    returnUrl.hostname === "127.0.0.1" || returnUrl.hostname === "localhost";
+  const vercelHost = process.env.VERCEL_URL?.trim()
+    .replace(/^https?:\/\//, "")
+    .replace(/\/$/, "");
+  const isCurrentVercelDeployment =
+    Boolean(vercelHost) && returnUrl.host === vercelHost;
+
+  if (
+    (requestIsLocal && returnIsLocal) ||
+    returnUrl.origin === SITE_URL ||
+    isCurrentVercelDeployment
+  ) {
+    return returnUrl.origin;
   }
 
   return SITE_URL;
 }
 
-export async function createSupportPackCheckout(origin) {
+export async function createSupportPackCheckout(origin, userId) {
   const stripe = getStripeClient();
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
+    client_reference_id: userId,
     line_items: [
       {
         price_data: {
@@ -64,7 +96,9 @@ export async function createSupportPackCheckout(origin) {
       },
     ],
     metadata: {
-      purchase: SUPPORT_PACK.metadataKey,
+      user_id: userId,
+      entitlement_key: SUPPORT_PACK.entitlementKey,
+      product_key: SUPPORT_PACK.productKey,
     },
     success_url: `${origin}/purchase-success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/purchase-cancelled`,
@@ -77,21 +111,25 @@ export async function createSupportPackCheckout(origin) {
   return session.url;
 }
 
-export async function verifySupportPackCheckout(sessionId) {
+export async function verifySupportPackCheckout(sessionId, userId) {
   if (!/^cs_test_[A-Za-z0-9]+$/.test(sessionId || "")) {
-    return false;
+    return null;
   }
 
   const stripe = getStripeClient();
   const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-  return (
+  const isVerified =
     session.livemode === false &&
     session.mode === "payment" &&
     session.status === "complete" &&
     session.payment_status === "paid" &&
     session.amount_total === SUPPORT_PACK.amount &&
     session.currency === SUPPORT_PACK.currency &&
-    session.metadata?.purchase === SUPPORT_PACK.metadataKey
-  );
+    session.client_reference_id === userId &&
+    session.metadata?.user_id === userId &&
+    session.metadata?.product_key === SUPPORT_PACK.productKey &&
+    session.metadata?.entitlement_key === SUPPORT_PACK.entitlementKey;
+
+  return isVerified ? session : null;
 }

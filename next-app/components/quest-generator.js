@@ -7,7 +7,7 @@ import QuestRemixControls from "./quest-remix-controls";
 import { recordRecentQuest } from "@/lib/quest-storage";
 import { getRandomQuestIndex, quests } from "@/lib/quests";
 
-export default function QuestGenerator() {
+export default function QuestGenerator({ remixAccess }) {
   const [currentQuest, setCurrentQuest] = useState(null);
   const [questVersion, setQuestVersion] = useState(0);
   const previousQuestIndex = useRef(-1);
@@ -56,6 +56,7 @@ export default function QuestGenerator() {
             key={questVersion}
             quest={currentQuest}
             onRemixed={handleRemixed}
+            access={remixAccess}
           />
         </div>
       ) : null}

@@ -2,6 +2,7 @@ import {
   createSupportPackCheckout,
   getCheckoutReturnOrigin,
 } from "@/lib/stripe";
+import { getAuthContext } from "@/lib/auth";
 
 export const runtime = "nodejs";
 
@@ -13,6 +14,15 @@ function jsonResponse(body, status = 200) {
 }
 
 export async function POST(request) {
+  const { user } = await getAuthContext();
+
+  if (!user) {
+    return jsonResponse(
+      { error: "Sign in before unlocking AI Quest Remix." },
+      401,
+    );
+  }
+
   const contentLength = Number(request.headers.get("content-length") || 0);
 
   if (!Number.isFinite(contentLength) || contentLength > 1024) {
@@ -45,7 +55,7 @@ export async function POST(request) {
 
   try {
     const origin = getCheckoutReturnOrigin(request);
-    const url = await createSupportPackCheckout(origin);
+    const url = await createSupportPackCheckout(origin, user.id);
     return jsonResponse({ url });
   } catch (error) {
     if (error?.code === "missing_stripe_key") {

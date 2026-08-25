@@ -1,6 +1,10 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import BrandLink from "@/components/brand-link";
 import PageShell from "@/components/page-shell";
+import { getAuthContext } from "@/lib/auth";
+import { getLoginPath } from "@/lib/auth-paths";
+import { grantEntitlement } from "@/lib/entitlements";
 import { createPrivateMetadata } from "@/lib/social-metadata";
 import { verifySupportPackCheckout } from "@/lib/stripe";
 
@@ -15,12 +19,29 @@ export default async function PurchaseSuccessPage({ searchParams }) {
   const sessionId = Array.isArray(query.session_id)
     ? query.session_id[0]
     : query.session_id;
-  let isVerified = false;
+  const { user } = await getAuthContext();
+
+  if (!user) {
+    const returnPath = sessionId
+      ? `/purchase-success?session_id=${encodeURIComponent(sessionId)}`
+      : "/purchase-success";
+    redirect(getLoginPath(returnPath));
+  }
+
+  let isUnlocked = false;
 
   try {
-    isVerified = await verifySupportPackCheckout(sessionId);
+    const session = await verifySupportPackCheckout(sessionId, user.id);
+
+    if (session) {
+      await grantEntitlement({
+        userId: user.id,
+        checkoutSessionId: session.id,
+      });
+      isUnlocked = true;
+    }
   } catch {
-    isVerified = false;
+    isUnlocked = false;
   }
 
   return (
@@ -28,14 +49,14 @@ export default async function PurchaseSuccessPage({ searchParams }) {
       <BrandLink />
 
       <p className="eyebrow">
-        {isVerified ? "Test purchase complete" : "Purchase status unavailable"}
+        {isUnlocked ? "AI Quest Remix unlocked" : "Purchase status unavailable"}
       </p>
       <h1 id="page-title" className="info-page-title purchase-result-title">
-        {isVerified ? (
+        {isUnlocked ? (
           <>
-            Quest
+            Remix
             <br />
-            <span>Supported.</span>
+            <span>Unlocked.</span>
           </>
         ) : (
           <>
@@ -46,14 +67,14 @@ export default async function PurchaseSuccessPage({ searchParams }) {
         )}
       </h1>
       <p className="intro info-page-intro">
-        {isVerified
-          ? "Your SideQuest Support Pack test payment was confirmed. Thanks for adding a little fuel to the adventure."
-          : "SideQuest could not verify a completed test payment from this link. No sensitive payment details are shown here."}
+        {isUnlocked
+          ? "Your SideQuest Support Pack test payment was confirmed. AI Quest Remix is ready whenever your next quest needs a plot twist."
+          : "SideQuest could not verify and save an AI Quest Remix unlock from this link. No access was granted, and no sensitive payment details are shown here."}
       </p>
 
       <div className="purchase-result-actions">
-        <Link className="quest-button purchase-result-link" href="/">
-          <span>Back to SideQuest</span>
+        <Link className="quest-button purchase-result-link" href="/#page-title">
+          <span>{isUnlocked ? "Remix a SideQuest" : "Back to SideQuest"}</span>
           <span className="button-arrow" aria-hidden="true">
             →
           </span>
