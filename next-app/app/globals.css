@@ -186,6 +186,7 @@ a {
 
 .hero {
   width: min(100%, 48rem);
+  min-width: 0;
   margin: 0 auto;
   text-align: center;
   animation: page-enter 520ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
@@ -774,6 +775,218 @@ h1 span {
 
   .quest-remix-submit {
     width: 100%;
+  }
+}
+
+/* Stripe test subscription */
+.subscription-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  width: min(100%, 38rem);
+  margin: 1.25rem auto 0;
+  padding: 1.35rem 1.45rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 0% 100%, rgba(244, 134, 90, 0.1), transparent 12rem),
+    linear-gradient(145deg, var(--panel-start), var(--panel-end));
+  box-shadow: var(--shadow-md), inset 0 1px 0 var(--inset-highlight);
+  text-align: left;
+}
+
+.subscription-copy {
+  min-width: 0;
+}
+
+.subscription-copy .info-kicker,
+.subscription-copy h2,
+.subscription-copy > p,
+.subscription-price,
+.subscription-note,
+.subscription-feedback p,
+.subscription-error,
+.subscription-active p,
+.subscription-cancel-confirmation p {
+  margin: 0;
+}
+
+.subscription-copy h2 {
+  margin-top: 0.15rem;
+  font-family: var(--font-manrope), sans-serif;
+  font-size: clamp(1.25rem, 4vw, 1.65rem);
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+}
+
+.subscription-copy > p:last-child {
+  margin-top: 0.45rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.subscription-price {
+  display: grid;
+  justify-items: end;
+  color: var(--accent-dark);
+  line-height: 1;
+}
+
+.subscription-price strong {
+  font-family: var(--font-manrope), sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: -0.04em;
+}
+
+.subscription-price > span:last-child {
+  margin-top: 0.25rem;
+  color: var(--muted);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.subscription-button,
+.subscription-active,
+.subscription-cancel-controls,
+.subscription-note,
+.subscription-feedback,
+.subscription-error {
+  grid-column: 1 / -1;
+}
+
+.subscription-button {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.subscription-active {
+  display: flex;
+  min-height: 3.5rem;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid rgba(192, 232, 141, 0.3);
+  border-radius: var(--radius-sm);
+  color: var(--green-text);
+  background: rgba(192, 232, 141, 0.08);
+}
+
+.subscription-active > span {
+  display: grid;
+  width: 1.45rem;
+  height: 1.45rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--deep-ink);
+  background: var(--green);
+  font-weight: 900;
+}
+
+.subscription-active strong {
+  font-size: 0.8rem;
+}
+
+.subscription-active p {
+  margin-top: 0.2rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+  line-height: 1.45;
+}
+
+.subscription-cancel-controls {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.subscription-cancel-button {
+  width: 100%;
+  min-height: 3rem;
+}
+
+.subscription-cancel-confirmation {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.85rem;
+  border: 1px solid rgba(244, 134, 90, 0.3);
+  border-radius: var(--radius-sm);
+  background: rgba(244, 134, 90, 0.07);
+}
+
+.subscription-cancel-confirmation p {
+  color: var(--muted);
+  font-size: 0.74rem;
+  line-height: 1.5;
+}
+
+.subscription-cancel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.subscription-cancel-actions button {
+  min-height: 2.75rem;
+  flex: 1 1 10rem;
+}
+
+.subscription-note {
+  color: var(--hint);
+  font-size: 0.68rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.subscription-feedback,
+.subscription-error {
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.subscription-feedback {
+  min-height: 0;
+  color: var(--green-text);
+}
+
+.subscription-error {
+  padding: 0.65rem 0.75rem;
+  border: 1px solid rgba(244, 134, 90, 0.36);
+  border-radius: var(--radius-sm);
+  color: var(--accent-dark);
+  background: rgba(244, 134, 90, 0.08);
+}
+
+@media (max-width: 32rem) {
+  .subscription-card {
+    grid-template-columns: 1fr;
+    padding: 1.2rem;
+  }
+
+  .subscription-price {
+    justify-items: start;
+  }
+
+  .subscription-button,
+  .subscription-active,
+  .subscription-cancel-controls,
+  .subscription-note,
+  .subscription-feedback,
+  .subscription-error {
+    grid-column: auto;
+  }
+
+  .subscription-cancel-actions {
+    flex-direction: column;
+  }
+
+  .subscription-cancel-actions button {
+    width: 100%;
+    flex-basis: auto;
   }
 }
 

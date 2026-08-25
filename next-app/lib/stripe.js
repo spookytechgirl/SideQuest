@@ -2,6 +2,7 @@ import "server-only";
 import Stripe from "stripe";
 import { AI_QUEST_REMIX_ENTITLEMENT } from "@/lib/entitlements";
 import { SITE_URL } from "@/lib/social-metadata";
+import { SIDEQUEST_PLUS_SUBSCRIPTION } from "@/lib/subscriptions";
 
 export const SUPPORT_PACK = Object.freeze({
   name: "SideQuest Support Pack",
@@ -10,6 +11,16 @@ export const SUPPORT_PACK = Object.freeze({
   currency: "usd",
   productKey: "sidequest_support_pack",
   entitlementKey: AI_QUEST_REMIX_ENTITLEMENT,
+});
+
+export const SIDEQUEST_PLUS = Object.freeze({
+  name: "SideQuest Plus",
+  description: "A monthly subscription for more SideQuest adventures.",
+  amount: 300,
+  currency: "usd",
+  interval: "month",
+  productKey: "sidequest_plus",
+  subscriptionKey: SIDEQUEST_PLUS_SUBSCRIPTION,
 });
 
 let stripeClient;
@@ -132,4 +143,145 @@ export async function verifySupportPackCheckout(sessionId, userId) {
     session.metadata?.entitlement_key === SUPPORT_PACK.entitlementKey;
 
   return isVerified ? session : null;
+}
+
+function getStripeId(value) {
+  return typeof value === "string" ? value : value?.id || null;
+}
+
+function isExpectedSideQuestPlusSubscription(subscription, userId) {
+  const items = subscription?.items?.data || [];
+
+  if (
+    subscription?.livemode !== false ||
+    !["active", "trialing"].includes(subscription.status) ||
+    subscription.metadata?.user_id !== userId ||
+    subscription.metadata?.product_key !== SIDEQUEST_PLUS.productKey ||
+    subscription.metadata?.subscription_key !== SIDEQUEST_PLUS.subscriptionKey ||
+    items.length !== 1
+  ) {
+    return false;
+  }
+
+  const item = items[0];
+  const price = item.price;
+  const product = price?.product;
+
+  return (
+    item.quantity === 1 &&
+    price?.type === "recurring" &&
+    price?.unit_amount === SIDEQUEST_PLUS.amount &&
+    price?.currency === SIDEQUEST_PLUS.currency &&
+    price?.recurring?.interval === SIDEQUEST_PLUS.interval &&
+    price?.recurring?.interval_count === 1 &&
+    typeof product === "object" &&
+    product?.deleted !== true &&
+    product?.name === SIDEQUEST_PLUS.name
+  );
+}
+
+export async function createSideQuestPlusCheckout(origin, userId) {
+  const stripe = getStripeClient();
+  const metadata = {
+    user_id: userId,
+    subscription_key: SIDEQUEST_PLUS.subscriptionKey,
+    product_key: SIDEQUEST_PLUS.productKey,
+  };
+  const session = await stripe.checkout.sessions.create({
+    mode: "subscription",
+    client_reference_id: userId,
+    line_items: [
+      {
+        price_data: {
+          currency: SIDEQUEST_PLUS.currency,
+          product_data: {
+            name: SIDEQUEST_PLUS.name,
+            description: SIDEQUEST_PLUS.description,
+          },
+          unit_amount: SIDEQUEST_PLUS.amount,
+          recurring: { interval: SIDEQUEST_PLUS.interval },
+        },
+        quantity: 1,
+      },
+    ],
+    metadata,
+    subscription_data: { metadata },
+    success_url: `${origin}/subscription-success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${origin}/subscription-cancelled`,
+  });
+
+  if (!session.url) {
+    throw new Error("Stripe did not return a subscription Checkout URL.");
+  }
+
+  return session.url;
+}
+
+export async function verifySideQuestPlusCheckout(sessionId, userId) {
+  if (!/^cs_test_[A-Za-z0-9]+$/.test(sessionId || "")) {
+    return null;
+  }
+
+  const stripe = getStripeClient();
+  const session = await stripe.checkout.sessions.retrieve(sessionId);
+  const subscriptionId = getStripeId(session.subscription);
+
+  if (!subscriptionId) {
+    return null;
+  }
+
+  const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
+    expand: ["items.data.price.product"],
+  });
+  const sessionCustomerId = getStripeId(session.customer);
+  const subscriptionCustomerId = getStripeId(subscription.customer);
+  const sessionIsVerified =
+    session.livemode === false &&
+    session.mode === "subscription" &&
+    session.status === "complete" &&
+    session.payment_status === "paid" &&
+    session.amount_total === SIDEQUEST_PLUS.amount &&
+    session.currency === SIDEQUEST_PLUS.currency &&
+    session.client_reference_id === userId &&
+    session.metadata?.user_id === userId &&
+    session.metadata?.product_key === SIDEQUEST_PLUS.productKey &&
+    session.metadata?.subscription_key === SIDEQUEST_PLUS.subscriptionKey &&
+    sessionCustomerId &&
+    sessionCustomerId === subscriptionCustomerId;
+
+  if (
+    !sessionIsVerified ||
+    !isExpectedSideQuestPlusSubscription(subscription, userId)
+  ) {
+    return null;
+  }
+
+  return { session, subscription };
+}
+
+export async function cancelSideQuestPlusSubscription(
+  stripeSubscriptionId,
+  userId,
+) {
+  if (!/^sub_[A-Za-z0-9]+$/.test(stripeSubscriptionId || "")) {
+    return null;
+  }
+
+  const stripe = getStripeClient();
+  const subscription = await stripe.subscriptions.retrieve(
+    stripeSubscriptionId,
+    { expand: ["items.data.price.product"] },
+  );
+
+  if (!isExpectedSideQuestPlusSubscription(subscription, userId)) {
+    return null;
+  }
+
+  if (subscription.cancel_at_period_end) {
+    return subscription;
+  }
+
+  return stripe.subscriptions.update(stripeSubscriptionId, {
+    cancel_at_period_end: true,
+  });
 }
