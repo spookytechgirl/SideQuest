@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import QuestCard from "./quest-card";
+import QuestRemixControls from "./quest-remix-controls";
 import { recordRecentQuest } from "@/lib/quest-storage";
 import { getRandomQuestIndex, quests } from "@/lib/quests";
 
 export default function QuestGenerator() {
   const [currentQuest, setCurrentQuest] = useState(null);
+  const [questVersion, setQuestVersion] = useState(0);
   const previousQuestIndex = useRef(-1);
 
   const generateQuest = () => {
@@ -16,7 +18,13 @@ export default function QuestGenerator() {
 
     previousQuestIndex.current = nextIndex;
     setCurrentQuest(nextQuest);
+    setQuestVersion((current) => current + 1);
     recordRecentQuest(nextQuest);
+  };
+
+  const handleRemixed = (remixedQuest) => {
+    setCurrentQuest(remixedQuest);
+    recordRecentQuest(remixedQuest);
   };
 
   return (
@@ -42,7 +50,14 @@ export default function QuestGenerator() {
       </div>
 
       {currentQuest ? (
-        <QuestCard key={currentQuest.title} quest={currentQuest} />
+        <div className="generated-quest">
+          <QuestCard key={currentQuest.title} quest={currentQuest} />
+          <QuestRemixControls
+            key={questVersion}
+            quest={currentQuest}
+            onRemixed={handleRemixed}
+          />
+        </div>
       ) : null}
     </>
   );
