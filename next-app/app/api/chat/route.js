@@ -3,10 +3,27 @@ import {
   createGuideReply,
   validateChatMessages,
 } from "@/lib/sidequest-guide";
+import {
+  checkAiRateLimit,
+  createRateLimitResponse,
+  createRateLimitUnavailableResponse,
+} from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 
 export async function POST(request) {
+  let rateLimit;
+
+  try {
+    rateLimit = await checkAiRateLimit(request, "chat");
+  } catch {
+    return createRateLimitUnavailableResponse();
+  }
+
+  if (!rateLimit.success) {
+    return createRateLimitResponse(rateLimit);
+  }
+
   let body;
 
   try {

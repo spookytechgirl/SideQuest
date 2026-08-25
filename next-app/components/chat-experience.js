@@ -60,7 +60,11 @@ export default function ChatExperience() {
       const data = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        throw new Error(data.error || "The guide could not answer right now.");
+        throw new Error(
+          response.status === 429
+            ? "You’ve sent a lot of requests. Please wait a moment and try again."
+            : data.error || "The guide could not answer right now.",
+        );
       }
 
       if (typeof data.message !== "string" || !data.message.trim()) {

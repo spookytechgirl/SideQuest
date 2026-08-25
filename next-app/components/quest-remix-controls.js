@@ -35,7 +35,11 @@ export default function QuestRemixControls({ quest, onRemixed }) {
       const data = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        throw new Error(data.error || "This quest could not be remixed right now.");
+        throw new Error(
+          response.status === 429
+            ? "You’ve remixed several quests. Please wait a moment and try again."
+            : data.error || "This quest could not be remixed right now.",
+        );
       }
 
       if (typeof data.quest !== "string" || !data.quest.trim()) {

@@ -3,6 +3,11 @@ import {
   createQuestRemix,
   validateQuestRemixInput,
 } from "@/lib/quest-remix";
+import {
+  checkAiRateLimit,
+  createRateLimitResponse,
+  createRateLimitUnavailableResponse,
+} from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 
@@ -14,6 +19,18 @@ function jsonResponse(body, status = 200) {
 }
 
 export async function POST(request) {
+  let rateLimit;
+
+  try {
+    rateLimit = await checkAiRateLimit(request, "remix");
+  } catch {
+    return createRateLimitUnavailableResponse();
+  }
+
+  if (!rateLimit.success) {
+    return createRateLimitResponse(rateLimit);
+  }
+
   let body;
 
   try {
