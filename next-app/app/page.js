@@ -1,4 +1,5 @@
 import PageShell from "@/components/page-shell";
+import PurchaseCard from "@/components/purchase-card";
 import QuestGenerator from "@/components/quest-generator";
 import { createPublicMetadata } from "@/lib/social-metadata";
 
@@ -28,6 +29,8 @@ export default function Home() {
       <QuestGenerator />
 
       <p className="hint">No planning. No pressure. Just try something new.</p>
+
+      <PurchaseCard />
     </PageShell>
   );
 }
