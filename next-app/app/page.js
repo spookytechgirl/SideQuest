@@ -1,3 +1,4 @@
+import Link from "next/link";
 import PageShell from "@/components/page-shell";
 import PurchaseCard from "@/components/purchase-card";
 import QuestGenerator from "@/components/quest-generator";
@@ -64,6 +65,22 @@ export default async function Home() {
       <QuestGenerator remixAccess={access} />
 
       <p className="hint">No planning. No pressure. Just try something new.</p>
+
+      <section className="home-discovery scroll-reveal" aria-labelledby="home-discovery-title">
+        <div>
+          <p className="info-kicker">More ways to begin</p>
+          <h2 id="home-discovery-title">Start with the kind of day you are having.</h2>
+          <p>
+            Browse ideas by mood and setting, explore a little inspiration, or ask
+            the Guide for help narrowing it down.
+          </p>
+        </div>
+        <div className="home-discovery-actions">
+          <Link href="/ideas">Browse SideQuest Ideas</Link>
+          <Link href="/explore">Explore inspiration</Link>
+          <Link href="/chat">Ask the SideQuest Guide</Link>
+        </div>
+      </section>
 
       <PurchaseCard access={access} />
       <SubscriptionCard subscription={subscription} />

@@ -30,13 +30,14 @@ export const informationLinks = [
   { href: "/about", label: "About" },
   { href: "/categories", label: "Quest Categories" },
   { href: "/how-it-works", label: "How It Works" },
-  { href: "/explore", label: "Explore" },
+  { href: "/ideas", label: "Ideas" },
 ];
 
 export function getFooterLinks(isSignedIn, isAdmin = false) {
   return [
     ...getPrimaryLinks(isSignedIn, isAdmin),
     ...informationLinks,
+    { href: "/explore", label: "Explore" },
     { href: "/terms", label: "Terms of Use" },
     { href: "/privacy", label: "Privacy Policy" },
   ];

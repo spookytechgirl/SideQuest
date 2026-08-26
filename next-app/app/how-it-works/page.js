@@ -73,6 +73,29 @@ export default function HowItWorksPage() {
           </div>
         </li>
       </ol>
+
+      <section className="content-next-step scroll-reveal" aria-labelledby="how-next-title">
+        <div>
+          <p className="info-kicker">Ready when you are</p>
+          <h2 id="how-next-title">Take the smallest interesting next step.</h2>
+          <p>
+            Generate a surprise, browse ideas for the moment you are in, or ask the
+            SideQuest Guide to help you narrow it down.
+          </p>
+        </div>
+        <div className="content-next-actions">
+          <Link className="quest-button" href="/">
+            <span>Generate a SideQuest</span>
+            <span className="button-arrow" aria-hidden="true">→</span>
+          </Link>
+          <Link className="admin-secondary-button" href="/ideas">
+            Browse SideQuest Ideas
+          </Link>
+          <Link className="admin-secondary-button" href="/chat">
+            Ask the SideQuest Guide
+          </Link>
+        </div>
+      </section>
     </PageShell>
   );
 }

@@ -5,6 +5,7 @@ const publicRoutes = [
   { path: "/quiz", priority: 0.9 },
   { path: "/chat", priority: 0.8 },
   { path: "/pricing", priority: 0.8 },
+  { path: "/ideas", priority: 0.9 },
   { path: "/explore", priority: 0.8 },
   { path: "/side-quests-for-boredom", priority: 0.8 },
   { path: "/creative-side-quests", priority: 0.8 },

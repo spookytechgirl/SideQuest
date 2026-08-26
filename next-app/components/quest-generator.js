@@ -39,12 +39,12 @@ export default function QuestGenerator({ remixAccess }) {
       <div className="home-cta-links" aria-label="More ways to explore SideQuest">
         <Link className="quiz-page-link" href="/quiz">
           <span aria-hidden="true">✦</span>
-          Find My Perfect Quest
+          Find My Quest
           <span aria-hidden="true">→</span>
         </Link>
-        <Link className="quiz-page-link" href="/adventure-log">
+        <Link className="quiz-page-link" href="/ideas">
           <span aria-hidden="true">↗</span>
-          Explore My Adventure Log
+          Browse SideQuest Ideas
           <span aria-hidden="true">→</span>
         </Link>
       </div>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import BrandLink from "@/components/brand-link";
 import PageShell from "@/components/page-shell";
 import { createPublicMetadata } from "@/lib/social-metadata";
@@ -73,6 +74,29 @@ export default function CategoriesPage() {
             <p>{category.description}</p>
           </article>
         ))}
+      </section>
+
+      <section className="content-next-step scroll-reveal" aria-labelledby="categories-next-title">
+        <div>
+          <p className="info-kicker">Choose your next step</p>
+          <h2 id="categories-next-title">Use a category—or let SideQuest surprise you.</h2>
+          <p>
+            Browse idea collections when you want a little direction, or go straight
+            to the generator for one unexpected prompt.
+          </p>
+        </div>
+        <div className="content-next-actions">
+          <Link className="quest-button" href="/">
+            <span>Generate a SideQuest</span>
+            <span className="button-arrow" aria-hidden="true">→</span>
+          </Link>
+          <Link className="admin-secondary-button" href="/ideas">
+            Browse SideQuest Ideas
+          </Link>
+          <Link className="admin-secondary-button" href="/quiz">
+            Find My Quest
+          </Link>
+        </div>
       </section>
     </PageShell>
   );

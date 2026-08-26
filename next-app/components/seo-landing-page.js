@@ -33,6 +33,12 @@ function StructuredData({ page }) {
           {
             "@type": "ListItem",
             position: 2,
+            name: "SideQuest Ideas",
+            item: `${SITE_URL}/ideas`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
             name: page.title,
             item: url,
           },
@@ -72,6 +78,8 @@ export default function SeoLandingPage({ page }) {
 
       <nav className="seo-breadcrumbs" aria-label="Breadcrumb">
         <Link href="/">Home</Link>
+        <span aria-hidden="true">/</span>
+        <Link href="/ideas">Ideas</Link>
         <span aria-hidden="true">/</span>
         <span aria-current="page">{page.title}</span>
       </nav>
@@ -159,11 +167,11 @@ export default function SeoLandingPage({ page }) {
         </div>
         <div className="seo-cta-actions">
           <Link className="quest-button" href="/">
-            <span>{page.cta.primary}</span>
+            <span>Generate a SideQuest</span>
             <span className="button-arrow" aria-hidden="true">→</span>
           </Link>
           <Link className="admin-secondary-button" href="/quiz">
-            {page.cta.secondary}
+            Find My Quest
           </Link>
         </div>
       </section>
@@ -190,6 +198,7 @@ export default function SeoLandingPage({ page }) {
           ))}
         </div>
         <nav className="seo-resource-links" aria-label="More SideQuest resources">
+          <Link href="/ideas">Browse all SideQuest ideas</Link>
           {page.resourceLinks.map((link) => (
             <Link href={link.href} key={link.href}>{link.label}</Link>
           ))}

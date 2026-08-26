@@ -1,6 +1,7 @@
 import Link from "next/link";
 import BrandLink from "@/components/brand-link";
 import PageShell from "@/components/page-shell";
+import { exploreCollectionLinks } from "@/lib/content-paths";
 import { createPublicMetadata } from "@/lib/social-metadata";
 
 export const metadata = createPublicMetadata({
@@ -83,6 +84,32 @@ export default function ExplorePage() {
           <p className="explore-embed-source">Public city-level map from Google Maps.</p>
         </section>
       </div>
+
+      <section className="explore-collections" aria-labelledby="explore-collections-title">
+        <div className="explore-collections-heading scroll-reveal">
+          <p className="info-kicker">Follow the spark</p>
+          <h2 id="explore-collections-title">Choose an idea collection next.</h2>
+          <p>
+            Use the inspiration above as a starting point, then browse a path that
+            fits your setting or available time.
+          </p>
+        </div>
+        <div className="explore-collection-grid">
+          {exploreCollectionLinks.map((collection) => (
+            <article className="explore-collection-card scroll-reveal" key={collection.href}>
+              <span aria-hidden="true">{collection.symbol}</span>
+              <h3>{collection.title}</h3>
+              <p>{collection.description}</p>
+              <Link className="ideas-card-link" href={collection.href}>
+                Explore {collection.title} <span aria-hidden="true">→</span>
+              </Link>
+            </article>
+          ))}
+        </div>
+        <Link className="explore-ideas-link" href="/ideas">
+          Browse all SideQuest Ideas <span aria-hidden="true">→</span>
+        </Link>
+      </section>
 
       <section className="explore-next-step scroll-reveal" aria-labelledby="explore-next-title">
         <div>
