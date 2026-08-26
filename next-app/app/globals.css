@@ -1269,6 +1269,64 @@ h1 span {
   line-height: 1.75;
 }
 
+.legal-surface {
+  width: min(100%, 44rem);
+}
+
+.legal-stack {
+  display: grid;
+  gap: 0;
+}
+
+.legal-section {
+  padding: 1.15rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.legal-section:first-child {
+  margin-top: 0.3rem;
+}
+
+.legal-section h3 {
+  margin: 0 0 0.45rem;
+  color: var(--ink);
+  font-family: var(--font-manrope), sans-serif;
+  font-size: 1rem;
+  letter-spacing: -0.025em;
+  line-height: 1.35;
+}
+
+.legal-section p,
+.legal-section li {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.72;
+}
+
+.legal-section p {
+  margin: 0;
+}
+
+.legal-section p + p {
+  margin-top: 0.7rem;
+}
+
+.legal-section ul {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0.65rem 0 0;
+  padding-left: 1.2rem;
+}
+
+.legal-contact span {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.legal-home-link {
+  margin-top: 1.15rem;
+}
+
 .about-values {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

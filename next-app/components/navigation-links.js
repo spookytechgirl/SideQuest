@@ -35,6 +35,7 @@ export function getFooterLinks(isSignedIn, isAdmin = false) {
   return [
     ...getPrimaryLinks(isSignedIn, isAdmin),
     ...informationLinks,
+    { href: "/terms", label: "Terms of Use" },
     { href: "/privacy", label: "Privacy Policy" },
   ];
 }
