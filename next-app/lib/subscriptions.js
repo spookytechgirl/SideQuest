@@ -74,6 +74,26 @@ export async function saveSubscriptionRecord({
 }) {
   const supabase = getSupabaseAdminClient();
   const stripeCustomerId = getStripeId(subscription.customer);
+  let storedCheckoutSessionId = checkoutSessionId;
+
+  if (checkoutSessionId === undefined) {
+    const { data: existing, error: lookupError } = await supabase
+      .from("user_subscriptions")
+      .select("stripe_checkout_session_id")
+      .eq("user_id", userId)
+      .eq("subscription_key", subscriptionKey)
+      .maybeSingle();
+
+    if (lookupError) {
+      const subscriptionError = new Error(
+        "The existing subscription record could not be checked.",
+      );
+      subscriptionError.code = "subscription_lookup_failed";
+      throw subscriptionError;
+    }
+
+    storedCheckoutSessionId = existing?.stripe_checkout_session_id || null;
+  }
 
   const { error } = await supabase.from("user_subscriptions").upsert(
     {
@@ -81,7 +101,7 @@ export async function saveSubscriptionRecord({
       subscription_key: subscriptionKey,
       stripe_customer_id: stripeCustomerId,
       stripe_subscription_id: subscription.id,
-      stripe_checkout_session_id: checkoutSessionId || null,
+      stripe_checkout_session_id: storedCheckoutSessionId || null,
       status: subscription.status,
       current_period_end: getCurrentPeriodEnd(subscription),
       cancel_at_period_end: subscription.cancel_at_period_end === true,

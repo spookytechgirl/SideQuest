@@ -18,7 +18,7 @@ const manrope = Manrope({
 });
 
 export const metadata = {
-  metadataBase: new URL("https://side-quest-ochre.vercel.app"),
+  metadataBase: new URL("https://sidequest-next-preview.vercel.app"),
   title: {
     default: "SideQuest | Find Your Next Adventure",
     template: "%s | SideQuest",

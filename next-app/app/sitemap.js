@@ -4,6 +4,7 @@ const publicRoutes = [
   { path: "/", priority: 1 },
   { path: "/quiz", priority: 0.9 },
   { path: "/chat", priority: 0.8 },
+  { path: "/pricing", priority: 0.8 },
   { path: "/about", priority: 0.7 },
   { path: "/categories", priority: 0.7 },
   { path: "/how-it-works", priority: 0.7 },

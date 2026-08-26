@@ -7,7 +7,7 @@ export const openGraphImage = {
 
 export const twitterImage = "/og-image.png";
 
-export const SITE_URL = "https://side-quest-ochre.vercel.app";
+export const SITE_URL = "https://sidequest-next-preview.vercel.app";
 
 export function createPublicMetadata({
   title,

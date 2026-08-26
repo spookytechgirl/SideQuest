@@ -34,7 +34,7 @@ export default function SubscriptionCard({ subscription }) {
       <div className="subscription-copy">
         <p className="info-kicker">Monthly test subscription</p>
         <h2 id="sidequest-plus-title">SideQuest Plus</h2>
-        <p>A lightweight monthly membership for your next chapter of quests.</p>
+        <p>A Stripe Sandbox subscription demo for your SideQuest account.</p>
       </div>
 
       <p className="subscription-price">
@@ -79,7 +79,7 @@ export default function SubscriptionCard({ subscription }) {
       <p className="subscription-note">
         {subscription?.isActive
           ? "Subscription status is tied securely to this SideQuest account."
-          : "Stripe test mode only. Cancel securely from SideQuest at any time."}
+          : "Stripe test mode only. No additional app features are currently tied to Plus."}
       </p>
     </section>
   );

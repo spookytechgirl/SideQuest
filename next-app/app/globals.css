@@ -1327,6 +1327,168 @@ h1 span {
   margin-top: 1.15rem;
 }
 
+.pricing-page {
+  width: min(100%, 72rem);
+}
+
+.pricing-intro {
+  max-width: 44rem;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 1rem;
+  width: 100%;
+}
+
+.pricing-grid > :where(.pricing-free-card, .support-pack, .subscription-card) {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.pricing-grid > :where(.support-pack, .subscription-card) {
+  grid-template-columns: 1fr;
+  align-content: start;
+}
+
+.pricing-grid > :where(.support-pack, .subscription-card) :where(.support-pack-price, .subscription-price) {
+  justify-items: start;
+}
+
+.pricing-free-card {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+  padding: 1.35rem 1.45rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 0% 100%, rgba(244, 134, 90, 0.08), transparent 12rem),
+    linear-gradient(145deg, var(--panel-start), var(--panel-end));
+  box-shadow: var(--shadow-md), inset 0 1px 0 var(--inset-highlight);
+  text-align: left;
+}
+
+.pricing-free-copy :where(.info-kicker, h2, p),
+.pricing-free-price {
+  margin: 0;
+}
+
+.pricing-free-copy h2 {
+  margin-top: 0.15rem;
+  font-family: var(--font-manrope), sans-serif;
+  font-size: clamp(1.25rem, 4vw, 1.65rem);
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+}
+
+.pricing-free-copy > p:last-child {
+  margin-top: 0.45rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.pricing-free-price {
+  display: grid;
+  justify-items: start;
+  color: var(--accent-dark);
+  line-height: 1;
+}
+
+.pricing-free-price strong {
+  font-family: var(--font-manrope), sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: -0.04em;
+}
+
+.pricing-free-price > span:last-child {
+  margin-top: 0.25rem;
+  color: var(--muted);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pricing-feature-list {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pricing-feature-list li {
+  position: relative;
+  padding-left: 1.25rem;
+  color: var(--muted);
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.pricing-feature-list li::before {
+  position: absolute;
+  top: 0.25rem;
+  left: 0;
+  color: var(--green-text);
+  content: "✓";
+  font-weight: 900;
+}
+
+.pricing-free-link {
+  display: inline-flex;
+  width: 100%;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  text-decoration: none;
+}
+
+.pricing-disclosure {
+  width: min(100%, 48rem);
+  margin: 1.2rem auto 0;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  color: var(--muted);
+  background: var(--subtle-surface-soft);
+  font-size: 0.76rem;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.pricing-disclosure p {
+  margin: 0;
+}
+
+.pricing-disclosure p + p {
+  margin-top: 0.55rem;
+}
+
+.pricing-disclosure a {
+  color: var(--green-text);
+  font-weight: 800;
+}
+
+@media (max-width: 64rem) {
+  .pricing-grid {
+    width: min(100%, 38rem);
+    grid-template-columns: 1fr;
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 32rem) {
+  .pricing-free-card {
+    padding: 1.2rem;
+  }
+}
+
 .about-values {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

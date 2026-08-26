@@ -149,12 +149,30 @@ function getStripeId(value) {
   return typeof value === "string" ? value : value?.id || null;
 }
 
-function isExpectedSideQuestPlusSubscription(subscription, userId) {
+const SIDEQUEST_PLUS_STATUSES = new Set([
+  "incomplete",
+  "incomplete_expired",
+  "trialing",
+  "active",
+  "past_due",
+  "canceled",
+  "unpaid",
+  "paused",
+]);
+
+export function isExpectedSideQuestPlusSubscription(
+  subscription,
+  userId,
+  { requireActive = true } = {},
+) {
   const items = subscription?.items?.data || [];
+  const hasExpectedStatus = requireActive
+    ? ["active", "trialing"].includes(subscription?.status)
+    : SIDEQUEST_PLUS_STATUSES.has(subscription?.status);
 
   if (
     subscription?.livemode !== false ||
-    !["active", "trialing"].includes(subscription.status) ||
+    !hasExpectedStatus ||
     subscription.metadata?.user_id !== userId ||
     subscription.metadata?.product_key !== SIDEQUEST_PLUS.productKey ||
     subscription.metadata?.subscription_key !== SIDEQUEST_PLUS.subscriptionKey ||
@@ -178,6 +196,27 @@ function isExpectedSideQuestPlusSubscription(subscription, userId) {
     product?.deleted !== true &&
     product?.name === SIDEQUEST_PLUS.name
   );
+}
+
+export async function retrieveSideQuestPlusSubscription(
+  subscriptionId,
+  userId,
+  { requireActive = false } = {},
+) {
+  if (!/^sub_[A-Za-z0-9]+$/.test(subscriptionId || "")) {
+    return null;
+  }
+
+  const stripe = getStripeClient();
+  const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
+    expand: ["items.data.price.product"],
+  });
+
+  return isExpectedSideQuestPlusSubscription(subscription, userId, {
+    requireActive,
+  })
+    ? subscription
+    : null;
 }
 
 export async function createSideQuestPlusCheckout(origin, userId) {
@@ -263,17 +302,13 @@ export async function cancelSideQuestPlusSubscription(
   stripeSubscriptionId,
   userId,
 ) {
-  if (!/^sub_[A-Za-z0-9]+$/.test(stripeSubscriptionId || "")) {
-    return null;
-  }
-
-  const stripe = getStripeClient();
-  const subscription = await stripe.subscriptions.retrieve(
+  const subscription = await retrieveSideQuestPlusSubscription(
     stripeSubscriptionId,
-    { expand: ["items.data.price.product"] },
+    userId,
+    { requireActive: true },
   );
 
-  if (!isExpectedSideQuestPlusSubscription(subscription, userId)) {
+  if (!subscription) {
     return null;
   }
 
@@ -281,7 +316,7 @@ export async function cancelSideQuestPlusSubscription(
     return subscription;
   }
 
-  return stripe.subscriptions.update(stripeSubscriptionId, {
+  return getStripeClient().subscriptions.update(stripeSubscriptionId, {
     cancel_at_period_end: true,
   });
 }

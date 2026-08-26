@@ -4,6 +4,7 @@ export const publicLinks = [
   { href: "/", label: "Home" },
   { href: "/quiz", label: "Find My Quest" },
   { href: "/chat", label: "SideQuest Guide" },
+  { href: "/pricing", label: "Pricing" },
 ];
 
 const memberLinks = [
