@@ -44,6 +44,9 @@ export const metadata = {
     card: "summary_large_image",
     images: ["/og-image.png"],
   },
+  verification: {
+    google: "c8jGHrZjk7QVSgmZnAU4VMGnRoJ6J3ys8nwcHhNxFVs",
+  },
   robots: {
     index: true,
     follow: true,
