@@ -30,6 +30,7 @@ export const informationLinks = [
   { href: "/about", label: "About" },
   { href: "/categories", label: "Quest Categories" },
   { href: "/how-it-works", label: "How It Works" },
+  { href: "/explore", label: "Explore" },
 ];
 
 export function getFooterLinks(isSignedIn, isAdmin = false) {
