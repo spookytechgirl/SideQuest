@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 const revealSelector =
-  ".info-surface, .category-card, .steps-list > li, .sidequest-quiz, .recent-quests, .saved-quests, .support-pack";
+  ".scroll-reveal, .info-surface, .category-card, .steps-list > li, .sidequest-quiz, .recent-quests, .saved-quests, .support-pack";
 
 export default function RevealEffects() {
   const pathname = usePathname();

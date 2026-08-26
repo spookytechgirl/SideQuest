@@ -5,6 +5,11 @@ const publicRoutes = [
   { path: "/quiz", priority: 0.9 },
   { path: "/chat", priority: 0.8 },
   { path: "/pricing", priority: 0.8 },
+  { path: "/side-quests-for-boredom", priority: 0.8 },
+  { path: "/creative-side-quests", priority: 0.8 },
+  { path: "/low-energy-side-quests", priority: 0.8 },
+  { path: "/indoor-side-quests", priority: 0.8 },
+  { path: "/weekend-side-quests", priority: 0.8 },
   { path: "/about", priority: 0.7 },
   { path: "/categories", priority: 0.7 },
   { path: "/how-it-works", priority: 0.7 },
@@ -15,7 +20,7 @@ const publicRoutes = [
 export default function sitemap() {
   return publicRoutes.map(({ path, priority }) => ({
     url: `${SITE_URL}${path}`,
-    lastModified: new Date("2026-08-25"),
+    lastModified: new Date("2026-08-26"),
     changeFrequency:
       path === "/" || path === "/quiz" || path === "/chat"
         ? "weekly"

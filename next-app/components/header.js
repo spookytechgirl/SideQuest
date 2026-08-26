@@ -15,7 +15,7 @@ export default function Header({ isSignedIn = false, isAdmin = false }) {
   const headerRef = useRef(null);
 
   useEffect(() => {
-    const mobileQuery = window.matchMedia("(max-width: 42rem)");
+    const mobileQuery = window.matchMedia("(max-width: 60rem)");
 
     const handlePointerDown = (event) => {
       if (isOpen && headerRef.current && !headerRef.current.contains(event.target)) {
