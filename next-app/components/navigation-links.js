@@ -31,6 +31,7 @@ export const informationLinks = [
   { href: "/categories", label: "Quest Categories" },
   { href: "/how-it-works", label: "How It Works" },
   { href: "/ideas", label: "Ideas" },
+  { href: "/quests", label: "Quests" },
 ];
 
 export function getFooterLinks(isSignedIn, isAdmin = false) {
@@ -53,7 +54,9 @@ export default function NavigationLinks({
   return (
     <nav className={className} aria-label={label}>
       {links.map((link) => {
-        const isActive = pathname === link.href;
+        const isActive =
+          pathname === link.href ||
+          (link.href !== "/" && pathname.startsWith(`${link.href}/`));
 
         return (
           <Link

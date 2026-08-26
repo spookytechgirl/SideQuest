@@ -1,6 +1,7 @@
 import Link from "next/link";
 import BrandLink from "@/components/brand-link";
 import PageShell from "@/components/page-shell";
+import PublicPageJsonLd from "@/components/public-page-json-ld";
 import { exploreCollectionLinks } from "@/lib/content-paths";
 import { createPublicMetadata } from "@/lib/social-metadata";
 
@@ -14,6 +15,15 @@ export const metadata = createPublicMetadata({
 export default function ExplorePage() {
   return (
     <PageShell pageClassName="info-page explore-page">
+      <PublicPageJsonLd
+        path="/explore"
+        title="Explore SideQuest Inspiration | SideQuest"
+        description="Watch a quick try-something-new talk and explore a public Tampa map for ideas that can spark your next small adventure."
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Explore", path: "/explore" },
+        ]}
+      />
       <BrandLink />
 
       <p className="eyebrow">Inspiration beyond the generator</p>

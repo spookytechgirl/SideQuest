@@ -1,6 +1,7 @@
 import BrandLink from "@/components/brand-link";
 import ChatExperience from "@/components/chat-experience";
 import PageShell from "@/components/page-shell";
+import PublicPageJsonLd from "@/components/public-page-json-ld";
 import { createPublicMetadata } from "@/lib/social-metadata";
 
 export const metadata = createPublicMetadata({
@@ -13,6 +14,15 @@ export const metadata = createPublicMetadata({
 export default function ChatPage() {
   return (
     <PageShell pageClassName="info-page chat-page">
+      <PublicPageJsonLd
+        path="/chat"
+        title="SideQuest Guide | SideQuest"
+        description="Chat with the SideQuest Guide for one friendly, realistic activity matched to your mood, energy, time, and interests."
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "SideQuest Guide", path: "/chat" },
+        ]}
+      />
       <BrandLink />
 
       <p className="eyebrow">A friendly nudge toward something new</p>

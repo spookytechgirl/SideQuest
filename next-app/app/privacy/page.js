@@ -1,6 +1,7 @@
 import Link from "next/link";
 import BrandLink from "@/components/brand-link";
 import PageShell from "@/components/page-shell";
+import PublicPageJsonLd from "@/components/public-page-json-ld";
 import { createPublicMetadata } from "@/lib/social-metadata";
 
 export const metadata = createPublicMetadata({
@@ -13,6 +14,15 @@ export const metadata = createPublicMetadata({
 export default function PrivacyPage() {
   return (
     <PageShell pageClassName="info-page privacy-page">
+      <PublicPageJsonLd
+        path="/privacy"
+        title="Privacy Policy | SideQuest"
+        description="Learn how SideQuest handles account, profile, quest, AI, payment, analytics, and browser-storage data."
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Privacy Policy", path: "/privacy" },
+        ]}
+      />
       <BrandLink />
 
       <p className="eyebrow">A plain-language privacy guide</p>

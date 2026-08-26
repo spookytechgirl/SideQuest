@@ -2,6 +2,7 @@ import Link from "next/link";
 import BrandLink from "@/components/brand-link";
 import PageShell from "@/components/page-shell";
 import PurchaseCard from "@/components/purchase-card";
+import PublicPageJsonLd from "@/components/public-page-json-ld";
 import SubscriptionCard from "@/components/subscription-card";
 import { getAuthContext } from "@/lib/auth";
 import { getEntitlementState } from "@/lib/entitlements";
@@ -49,6 +50,15 @@ export default async function PricingPage() {
 
   return (
     <PageShell pageClassName="info-page pricing-page">
+      <PublicPageJsonLd
+        path="/pricing"
+        title="Pricing | SideQuest"
+        description="Compare free SideQuest features, the $5 Support Pack, and the $3 monthly SideQuest Plus Stripe Sandbox demo."
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Pricing", path: "/pricing" },
+        ]}
+      />
       <BrandLink />
 
       <p className="eyebrow">Choose your trail</p>

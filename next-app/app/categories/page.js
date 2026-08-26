@@ -1,6 +1,7 @@
 import Link from "next/link";
 import BrandLink from "@/components/brand-link";
 import PageShell from "@/components/page-shell";
+import PublicPageJsonLd from "@/components/public-page-json-ld";
 import { createPublicMetadata } from "@/lib/social-metadata";
 
 export const metadata = createPublicMetadata({
@@ -52,6 +53,16 @@ const categories = [
 export default function CategoriesPage() {
   return (
     <PageShell pageClassName="info-page categories-page">
+      <PublicPageJsonLd
+        type="CollectionPage"
+        path="/categories"
+        title="Quest Categories | SideQuest"
+        description="Explore the six categories of small adventures you can discover with SideQuest."
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Quest Categories", path: "/categories" },
+        ]}
+      />
       <BrandLink />
 
       <p className="eyebrow">Pick a path—or don&apos;t</p>
@@ -92,6 +103,9 @@ export default function CategoriesPage() {
           </Link>
           <Link className="admin-secondary-button" href="/ideas">
             Browse SideQuest Ideas
+          </Link>
+          <Link className="admin-secondary-button" href="/quests">
+            Browse Quest Directory
           </Link>
           <Link className="admin-secondary-button" href="/quiz">
             Find My Quest

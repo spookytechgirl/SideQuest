@@ -1,8 +1,10 @@
 import { DM_Sans, Manrope } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
+import JsonLd from "@/components/json-ld";
 import RevealEffects from "@/components/reveal-effects";
 import { ToastProvider } from "@/components/toast-provider";
+import { createWebsiteStructuredData } from "@/lib/structured-data";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -83,6 +85,7 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
     >
       <body>
+        <JsonLd data={createWebsiteStructuredData()} />
         <Script id="sidequest-theme" strategy="beforeInteractive">
           {themeScript}
         </Script>

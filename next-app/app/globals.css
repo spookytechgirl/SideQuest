@@ -778,6 +778,478 @@ h1 span {
   }
 }
 
+/* Database quest directory and generated quest pages */
+.quest-directory-page,
+.database-quest-page,
+.comparison-page {
+  width: min(100%, 72rem);
+}
+
+.quest-directory-title,
+.comparison-title {
+  font-size: clamp(3.2rem, 10vw, 7rem);
+}
+
+.quest-directory-intro,
+.comparison-intro {
+  max-width: 48rem;
+}
+
+.quest-directory-section,
+.related-database-quests {
+  margin-top: clamp(2.5rem, 7vw, 5rem);
+  text-align: left;
+}
+
+.quest-directory-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-bottom: 1.35rem;
+}
+
+.quest-directory-heading h2,
+.quest-directory-heading p,
+.database-quest-card h2,
+.database-quest-card h3,
+.database-quest-card h4,
+.database-quest-hero p,
+.database-quest-title,
+.quest-effort-guide p,
+.comparison-column h2,
+.comparison-column h3,
+.comparison-column h4,
+.comparison-column p,
+.comparison-guidance h2,
+.comparison-guidance p,
+.comparison-next h2,
+.comparison-next p {
+  margin: 0;
+}
+
+.quest-directory-heading h2,
+.comparison-guidance h2,
+.comparison-next h2 {
+  max-width: 34rem;
+  font-family: var(--font-manrope), sans-serif;
+  font-size: clamp(1.5rem, 4vw, 2.3rem);
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+}
+
+.quest-directory-count {
+  flex: 0 0 auto;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--green-text);
+  background: var(--subtle-surface);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.database-quest-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.database-quest-card {
+  display: flex;
+  min-width: 0;
+  min-height: 13.5rem;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(192, 232, 141, 0.08), transparent 9rem),
+    linear-gradient(145deg, var(--panel-start), var(--panel-end));
+  box-shadow: var(--shadow-sm), inset 0 1px 0 var(--inset-highlight);
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.database-quest-card:hover {
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-md), inset 0 1px 0 var(--inset-highlight);
+  transform: translateY(-2px);
+}
+
+.database-quest-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.database-quest-meta span {
+  display: inline-flex;
+  min-height: 1.85rem;
+  align-items: center;
+  padding: 0.3rem 0.62rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--green-text);
+  background: var(--subtle-surface-soft);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.database-quest-meta span:last-child {
+  color: var(--accent-dark);
+}
+
+.database-quest-card h2,
+.database-quest-card h3,
+.database-quest-card h4 {
+  margin-top: 1rem;
+  font-family: var(--font-manrope), sans-serif;
+  font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+  letter-spacing: -0.03em;
+  line-height: 1.28;
+}
+
+.database-quest-card h2 a,
+.database-quest-card h3 a,
+.database-quest-card h4 a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.database-quest-card h2 a:hover,
+.database-quest-card h3 a:hover,
+.database-quest-card h4 a:hover {
+  color: var(--accent-dark);
+}
+
+.database-quest-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  color: var(--green-text);
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.database-quest-link:hover {
+  color: var(--accent-dark);
+}
+
+.catalog-state {
+  max-width: 48rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.quest-directory-next,
+.comparison-next {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1.5rem 2rem;
+  margin-top: clamp(2.5rem, 7vw, 5rem);
+  padding: clamp(1.4rem, 4vw, 2rem);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(145deg, var(--panel-start), var(--panel-end));
+  box-shadow: var(--shadow-md), inset 0 1px 0 var(--inset-highlight);
+  text-align: left;
+}
+
+.quest-directory-next > div > p:not(.info-kicker),
+.comparison-next > div > p:not(.info-kicker) {
+  max-width: 42rem;
+  margin: 0.65rem 0 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.database-quest-hero {
+  width: min(100%, 58rem);
+  margin: clamp(2rem, 5vw, 3.5rem) auto 0;
+  padding: clamp(1.5rem, 5vw, 2.8rem);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 95% 0%, rgba(244, 134, 90, 0.12), transparent 16rem),
+    linear-gradient(145deg, var(--panel-start), var(--panel-end));
+  box-shadow: var(--shadow-lg), inset 0 1px 0 var(--inset-highlight);
+  text-align: left;
+}
+
+.database-quest-title {
+  max-width: 18ch;
+  margin-top: 1.15rem;
+  font-family: var(--font-manrope), sans-serif;
+  font-size: clamp(2.2rem, 7vw, 5.4rem);
+  letter-spacing: -0.065em;
+  line-height: 0.98;
+  overflow-wrap: anywhere;
+}
+
+.database-quest-intro {
+  max-width: 44rem;
+  margin-top: 1.2rem !important;
+  color: var(--muted);
+  font-size: clamp(0.92rem, 2vw, 1.06rem);
+  line-height: 1.7;
+}
+
+.quest-guidance-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.quest-guidance-grid .info-surface {
+  height: 100%;
+  margin: 0;
+  text-align: left;
+}
+
+.quest-effort-guide,
+.comparison-guidance {
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  gap: 1.5rem 2.5rem;
+  margin-top: 1rem;
+  padding: clamp(1.4rem, 4vw, 2rem);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-md);
+  background: var(--subtle-surface-soft);
+  text-align: left;
+}
+
+.quest-effort-guide > p {
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.related-quest-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* SideQuest comparison guides */
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: clamp(2.5rem, 7vw, 4.5rem);
+  text-align: left;
+}
+
+.comparison-column {
+  min-width: 0;
+  padding: clamp(1.35rem, 4vw, 2rem);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(145deg, var(--panel-start), var(--panel-end));
+  box-shadow: var(--shadow-md), inset 0 1px 0 var(--inset-highlight);
+}
+
+.comparison-symbol {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  place-items: center;
+  border: 1px solid rgba(192, 232, 141, 0.25);
+  border-radius: 1rem;
+  color: var(--deep-ink);
+  background: var(--green);
+  font-family: var(--font-manrope), sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.comparison-column h2 {
+  margin-top: 1rem;
+  font-family: var(--font-manrope), sans-serif;
+  font-size: clamp(1.55rem, 4vw, 2.35rem);
+  letter-spacing: -0.045em;
+}
+
+.comparison-summary {
+  margin-top: 0.65rem !important;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.comparison-details {
+  display: grid;
+  gap: 0;
+  margin: 1.35rem 0 0;
+}
+
+.comparison-details > div {
+  display: grid;
+  grid-template-columns: minmax(7rem, 0.42fr) minmax(0, 1fr);
+  gap: 0.75rem;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.comparison-details dt {
+  color: var(--green-text);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.comparison-details dd {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.comparison-examples {
+  margin-top: 1.5rem;
+}
+
+.comparison-examples > h3 {
+  margin-bottom: 0.8rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.comparison-examples .database-quest-card {
+  min-height: 0;
+  margin-top: 0.7rem;
+  padding: 1rem;
+}
+
+.comparison-examples .database-quest-card h4 {
+  font-size: 1rem;
+}
+
+.catalog-unavailable {
+  padding: 1rem;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  background: var(--subtle-surface-soft);
+  font-size: 0.8rem;
+  line-height: 1.65;
+}
+
+.comparison-guidance {
+  margin-top: 1rem;
+}
+
+.comparison-guidance ul {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding-left: 1.15rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.comparison-next {
+  grid-template-columns: 1fr;
+}
+
+.comparison-related-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--line);
+}
+
+.comparison-related-links a,
+.quest-directory-heading > a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  color: var(--green-text);
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+
+.ideas-comparison-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 62rem) {
+  .database-quest-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .related-quest-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 48rem) {
+  .quest-directory-heading,
+  .quest-directory-next,
+  .comparison-grid,
+  .comparison-guidance,
+  .quest-effort-guide,
+  .quest-guidance-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quest-directory-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .comparison-grid {
+    display: grid;
+  }
+
+  .related-quest-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 38rem) {
+  .database-quest-grid,
+  .ideas-comparison-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .database-quest-card {
+    min-height: 0;
+  }
+
+  .comparison-details > div {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+
+  .quest-directory-next .content-next-actions,
+  .comparison-next .content-next-actions,
+  .quest-directory-next .quest-button,
+  .quest-directory-next .admin-secondary-button,
+  .comparison-next .quest-button,
+  .comparison-next .admin-secondary-button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .database-quest-card {
+    transition: none;
+  }
+
+  .database-quest-card:hover {
+    transform: none;
+  }
+}
+
 /* Search-intent landing pages */
 .seo-landing-page {
   width: min(100%, 66rem);

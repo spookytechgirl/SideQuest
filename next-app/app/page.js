@@ -1,5 +1,6 @@
 import Link from "next/link";
 import PageShell from "@/components/page-shell";
+import PublicPageJsonLd from "@/components/public-page-json-ld";
 import PurchaseCard from "@/components/purchase-card";
 import QuestGenerator from "@/components/quest-generator";
 import SubscriptionCard from "@/components/subscription-card";
@@ -49,6 +50,11 @@ export default async function Home() {
 
   return (
     <PageShell shellClassName="home-shell" pageClassName="home-hero">
+      <PublicPageJsonLd
+        path="/"
+        title="SideQuest | Find Your Next Adventure"
+        description="SideQuest generates quick, simple activities whenever you want to shake up your day."
+      />
       <div className="brand-mark" aria-hidden="true">
         <span>↗</span>
       </div>
@@ -76,6 +82,7 @@ export default async function Home() {
           </p>
         </div>
         <div className="home-discovery-actions">
+          <Link href="/quests">Browse the Quest Directory</Link>
           <Link href="/ideas">Browse SideQuest Ideas</Link>
           <Link href="/explore">Explore inspiration</Link>
           <Link href="/chat">Ask the SideQuest Guide</Link>

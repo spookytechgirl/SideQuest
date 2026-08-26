@@ -1,6 +1,7 @@
 import Link from "next/link";
 import BrandLink from "@/components/brand-link";
 import PageShell from "@/components/page-shell";
+import PublicPageJsonLd from "@/components/public-page-json-ld";
 import { createPublicMetadata } from "@/lib/social-metadata";
 
 export const metadata = createPublicMetadata({
@@ -12,6 +13,15 @@ export const metadata = createPublicMetadata({
 export default function HowItWorksPage() {
   return (
     <PageShell pageClassName="info-page how-page">
+      <PublicPageJsonLd
+        path="/how-it-works"
+        title="How It Works | SideQuest"
+        description="See how to generate, match, save, and revisit SideQuests."
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "How It Works", path: "/how-it-works" },
+        ]}
+      />
       <BrandLink />
 
       <p className="eyebrow">Your quest, your pace</p>

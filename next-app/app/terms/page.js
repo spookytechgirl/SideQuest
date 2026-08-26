@@ -1,6 +1,7 @@
 import Link from "next/link";
 import BrandLink from "@/components/brand-link";
 import PageShell from "@/components/page-shell";
+import PublicPageJsonLd from "@/components/public-page-json-ld";
 import { createPublicMetadata } from "@/lib/social-metadata";
 
 export const metadata = createPublicMetadata({
@@ -13,6 +14,15 @@ export const metadata = createPublicMetadata({
 export default function TermsPage() {
   return (
     <PageShell pageClassName="info-page terms-page">
+      <PublicPageJsonLd
+        path="/terms"
+        title="Terms of Use | SideQuest"
+        description="Read the plain-language terms for accounts, quests, AI features, and Stripe Sandbox flows in SideQuest."
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Terms of Use", path: "/terms" },
+        ]}
+      />
       <BrandLink />
 
       <p className="eyebrow">Rules for the trail</p>

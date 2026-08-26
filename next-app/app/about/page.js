@@ -1,5 +1,6 @@
 import BrandLink from "@/components/brand-link";
 import PageShell from "@/components/page-shell";
+import PublicPageJsonLd from "@/components/public-page-json-ld";
 import SuggestionForm from "@/components/suggestion-form";
 import { createPublicMetadata } from "@/lib/social-metadata";
 
@@ -13,6 +14,16 @@ export const metadata = createPublicMetadata({
 export default function AboutPage() {
   return (
     <PageShell pageClassName="info-page about-page">
+      <PublicPageJsonLd
+        type="AboutPage"
+        path="/about"
+        title="About SideQuest | SideQuest"
+        description="Learn why SideQuest turns ordinary days into small, low-pressure adventures."
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "About SideQuest", path: "/about" },
+        ]}
+      />
       <BrandLink />
 
       <p className="eyebrow">The story behind the spark</p>

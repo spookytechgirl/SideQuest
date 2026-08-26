@@ -1,71 +1,28 @@
 import Link from "next/link";
 import BrandLink from "@/components/brand-link";
+import JsonLd from "@/components/json-ld";
 import PageShell from "@/components/page-shell";
-import { SITE_URL } from "@/lib/social-metadata";
+import {
+  appendFaqStructuredData,
+  createPageStructuredData,
+} from "@/lib/structured-data";
 
 function StructuredData({ page }) {
-  const url = `${SITE_URL}/${page.slug}`;
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebPage",
-        "@id": `${url}#webpage`,
-        url,
-        name: `${page.title} | SideQuest`,
-        description: page.description,
-        inLanguage: "en",
-        isPartOf: {
-          "@type": "WebSite",
-          name: "SideQuest",
-          url: SITE_URL,
-        },
-      },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Home",
-            item: SITE_URL,
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: "SideQuest Ideas",
-            item: `${SITE_URL}/ideas`,
-          },
-          {
-            "@type": "ListItem",
-            position: 3,
-            name: page.title,
-            item: url,
-          },
-        ],
-      },
-      {
-        "@type": "FAQPage",
-        mainEntity: page.faqs.map((faq) => ({
-          "@type": "Question",
-          name: faq.question,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: faq.answer,
-          },
-        })),
-      },
-    ],
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
-      }}
-    />
+  const jsonLd = appendFaqStructuredData(
+    createPageStructuredData({
+      path: `/${page.slug}`,
+      title: `${page.title} | SideQuest`,
+      description: page.description,
+      breadcrumbs: [
+        { name: "Home", path: "/" },
+        { name: "SideQuest Ideas", path: "/ideas" },
+        { name: page.title, path: `/${page.slug}` },
+      ],
+    }),
+    page.faqs,
   );
+
+  return <JsonLd data={jsonLd} />;
 }
 
 export default function SeoLandingPage({ page }) {

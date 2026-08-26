@@ -1,6 +1,7 @@
 import Link from "next/link";
 import BrandLink from "@/components/brand-link";
 import PageShell from "@/components/page-shell";
+import PublicPageJsonLd from "@/components/public-page-json-ld";
 import { ideaCollections } from "@/lib/content-paths";
 import { createPublicMetadata } from "@/lib/social-metadata";
 
@@ -14,6 +15,16 @@ export const metadata = createPublicMetadata({
 export default function IdeasPage() {
   return (
     <PageShell pageClassName="info-page ideas-page">
+      <PublicPageJsonLd
+        type="CollectionPage"
+        path="/ideas"
+        title="SideQuest Ideas | SideQuest"
+        description="Browse SideQuest ideas by mood, energy, setting, and available time, then generate or match a small adventure that fits your day."
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "SideQuest Ideas", path: "/ideas" },
+        ]}
+      />
       <BrandLink />
 
       <p className="eyebrow">A trail map for small adventures</p>
@@ -55,6 +66,55 @@ export default function IdeasPage() {
               </Link>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section
+        className="ideas-explore-card scroll-reveal"
+        aria-labelledby="ideas-catalog-title"
+      >
+        <div>
+          <p className="info-kicker">Browse the live catalog</p>
+          <h2 id="ideas-catalog-title">Open a quest and make it your own.</h2>
+          <p>
+            The Quest Directory turns the current database catalog into useful,
+            shareable guides with category, effort, and practical adaptation ideas.
+          </p>
+        </div>
+        <Link className="admin-secondary-button" href="/quests">
+          Browse Quest Directory
+        </Link>
+      </section>
+
+      <section className="ideas-section" aria-labelledby="idea-comparisons-title">
+        <div className="ideas-section-heading scroll-reveal">
+          <p className="info-kicker">Compare two paths</p>
+          <h2 id="idea-comparisons-title">Choose by setting or by the kind of reset you need.</h2>
+          <p>Use a side-by-side guide when two kinds of small adventure both sound possible.</p>
+        </div>
+        <div className="ideas-collection-grid ideas-comparison-grid">
+          <article className="ideas-collection-card scroll-reveal">
+            <div className="ideas-card-heading">
+              <span aria-hidden="true">⌂</span>
+              <p>Setting</p>
+            </div>
+            <h3>Indoor vs. Outdoor SideQuests</h3>
+            <p>Compare setup, energy, flexibility, and real catalog examples.</p>
+            <Link className="ideas-card-link" href="/compare/indoor-vs-outdoor-side-quests">
+              Compare settings <span aria-hidden="true">→</span>
+            </Link>
+          </article>
+          <article className="ideas-collection-card scroll-reveal">
+            <div className="ideas-card-heading">
+              <span aria-hidden="true">✎</span>
+              <p>Focus</p>
+            </div>
+            <h3>Creative vs. Relaxing SideQuests</h3>
+            <p>Compare playful focus with a gentler, quieter kind of reset.</p>
+            <Link className="ideas-card-link" href="/compare/creative-vs-relaxing-side-quests">
+              Compare quest styles <span aria-hidden="true">→</span>
+            </Link>
+          </article>
         </div>
       </section>
 
