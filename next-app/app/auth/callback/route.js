@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 import { getSafeReturnPath } from "@/lib/auth-paths";
+import {
+  reportWelcomeEmailFailure,
+  sendWelcomeEmailIfNeeded,
+} from "@/lib/email/welcome";
 import { createRouteClient } from "@/lib/supabase/server";
 
 function getRedirectOrigin(request, requestUrl) {
@@ -37,6 +41,12 @@ export async function GET(request) {
     const { data, error } = await supabase.auth.exchangeCodeForSession(code);
 
     if (!error && data.session) {
+      try {
+        await sendWelcomeEmailIfNeeded(data.user || data.session.user);
+      } catch (emailError) {
+        reportWelcomeEmailFailure(emailError);
+      }
+
       return response;
     }
   }
