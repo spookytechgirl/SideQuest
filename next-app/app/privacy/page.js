@@ -7,7 +7,7 @@ import { createPublicMetadata } from "@/lib/social-metadata";
 export const metadata = createPublicMetadata({
   title: "Privacy Policy",
   description:
-    "Learn how SideQuest handles account data, quests, AI requests, payments, analytics, and browser storage.",
+    "Learn how SideQuest handles account data, quests, feedback, AI requests, payments, analytics, and browser storage.",
   path: "/privacy",
 });
 
@@ -17,7 +17,7 @@ export default function PrivacyPage() {
       <PublicPageJsonLd
         path="/privacy"
         title="Privacy Policy | SideQuest"
-        description="Learn how SideQuest handles account, profile, quest, AI, payment, analytics, and browser-storage data."
+        description="Learn how SideQuest handles account, profile, quest, feedback, AI, payment, analytics, and browser-storage data."
         breadcrumbs={[
           { name: "Home", path: "/" },
           { name: "Privacy Policy", path: "/privacy" },
@@ -37,7 +37,7 @@ export default function PrivacyPage() {
       </p>
 
       <section className="info-surface legal-surface" aria-labelledby="privacy-details-title">
-        <p className="info-kicker">Last updated August 25, 2026</p>
+        <p className="info-kicker">Last updated August 27, 2026</p>
         <h2 id="privacy-details-title">
           Small adventures should not come with big surprises.
         </h2>
@@ -74,6 +74,18 @@ export default function PrivacyPage() {
               Row Level Security is used so ordinary users can access only the data
               allowed for their account. Administrators may manage the shared quest
               catalog through protected tools.
+            </p>
+          </section>
+
+          <section className="legal-section" aria-labelledby="privacy-feedback-title">
+            <h3 id="privacy-feedback-title">Product feedback</h3>
+            <p>
+              The feedback widget stores the feedback type, optional rating,
+              message, page path, and submission time in Supabase. If you are signed
+              in, the note may also be associated with your account identifier;
+              signed-out visitors can submit without providing an email address.
+              Feedback is not made publicly readable. A limited network identifier
+              may be processed through Upstash for short-term spam prevention.
             </p>
           </section>
 

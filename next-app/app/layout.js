@@ -2,6 +2,7 @@ import { DM_Sans, Manrope } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
 import JsonLd from "@/components/json-ld";
+import FeedbackWidget from "@/components/feedback-widget";
 import RevealEffects from "@/components/reveal-effects";
 import { ToastProvider } from "@/components/toast-provider";
 import { createWebsiteStructuredData } from "@/lib/structured-data";
@@ -89,7 +90,10 @@ export default function RootLayout({ children }) {
         <Script id="sidequest-theme" strategy="beforeInteractive">
           {themeScript}
         </Script>
-        <ToastProvider>{children}</ToastProvider>
+        <ToastProvider>
+          {children}
+          <FeedbackWidget />
+        </ToastProvider>
         <RevealEffects />
         <Analytics />
       </body>
