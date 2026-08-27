@@ -4,7 +4,7 @@ import * as Sentry from "@sentry/nextjs";
 import Link from "next/link";
 import { useEffect } from "react";
 
-export default function ErrorPage({ error, retry }) {
+export default function ErrorPage({ error, reset }) {
   useEffect(() => {
     Sentry.captureException(error);
   }, [error]);
@@ -22,7 +22,7 @@ export default function ErrorPage({ error, retry }) {
           Something went sideways while opening this part of SideQuest. Your private details remain hidden.
         </p>
         <div className="error-actions">
-          <button className="quest-button" type="button" onClick={() => retry()}>
+          <button className="quest-button" type="button" onClick={() => reset()}>
             <span>Try Again</span><span className="button-arrow" aria-hidden="true">↻</span>
           </button>
           <Link className="admin-secondary-button" href="/">Return Home</Link>

@@ -21,7 +21,7 @@ const globalErrorStyles = `
   @media (prefers-color-scheme: light) { body { color: #152116; background: #f3eddc; } main { background: #fffaf0; border-color: rgba(29,86,50,.22); } h1 { color: #152116; } p { color: #4d5a4e; } a { color: #152116; background: rgba(29,86,50,.06); } }
 `;
 
-export default function GlobalError({ error, retry }) {
+export default function GlobalError({ error, reset }) {
   useEffect(() => {
     Sentry.captureException(error);
   }, [error]);
@@ -41,7 +41,7 @@ export default function GlobalError({ error, retry }) {
             SideQuest hit a trail marker it could not read. Try again, or head home and choose another path.
           </p>
           <div className="actions">
-            <button type="button" onClick={() => retry()}>Try Again</button>
+            <button type="button" onClick={() => reset()}>Try Again</button>
             <Link href="/">Return Home</Link>
           </div>
         </main>
