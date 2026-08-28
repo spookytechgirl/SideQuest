@@ -4,7 +4,10 @@ import {
   getCheckoutReturnOrigin,
 } from "@/lib/stripe";
 import { getSubscriptionState } from "@/lib/subscriptions";
-import { readJsonRequest } from "@/lib/request-validation";
+import {
+  isEmptyJsonObject,
+  readJsonRequest,
+} from "@/lib/request-validation";
 
 export const runtime = "nodejs";
 
@@ -51,12 +54,7 @@ export async function POST(request) {
 
   const body = parsed.data;
 
-  if (
-    !body ||
-    typeof body !== "object" ||
-    Array.isArray(body) ||
-    Object.keys(body).length > 0
-  ) {
+  if (!isEmptyJsonObject(body)) {
     return jsonResponse(
       { error: "Subscription product and price are set securely by SideQuest." },
       400,

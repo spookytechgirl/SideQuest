@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest",
+    "test:run": "vitest run"
   },
   "dependencies": {
     "@sentry/nextjs": "^10.71.0",
@@ -24,6 +26,7 @@
   },
   "devDependencies": {
     "eslint": "^9",
-    "eslint-config-next": "16.3.2"
+    "eslint-config-next": "16.3.2",
+    "vitest": "^4.1.11"
   }
 }

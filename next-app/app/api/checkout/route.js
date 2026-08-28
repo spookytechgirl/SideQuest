@@ -3,7 +3,10 @@ import {
   getCheckoutReturnOrigin,
 } from "@/lib/stripe";
 import { getAuthContext } from "@/lib/auth";
-import { readJsonRequest } from "@/lib/request-validation";
+import {
+  isEmptyJsonObject,
+  readJsonRequest,
+} from "@/lib/request-validation";
 
 export const runtime = "nodejs";
 
@@ -37,12 +40,7 @@ export async function POST(request) {
 
   const body = parsed.data;
 
-  if (
-    !body ||
-    typeof body !== "object" ||
-    Array.isArray(body) ||
-    Object.keys(body).length > 0
-  ) {
+  if (!isEmptyJsonObject(body)) {
     return jsonResponse(
       { error: "Product and price details are set securely by SideQuest." },
       400,

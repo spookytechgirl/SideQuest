@@ -6,6 +6,15 @@ function createError(status, message) {
   return { error: { status, message } };
 }
 
+export function isEmptyJsonObject(value) {
+  return (
+    Boolean(value) &&
+    typeof value === "object" &&
+    !Array.isArray(value) &&
+    Object.keys(value).length === 0
+  );
+}
+
 export async function readJsonRequest(
   request,
   {
