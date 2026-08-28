@@ -6,6 +6,7 @@ import {
   getSubscriptionState,
   saveSubscriptionRecord,
 } from "@/lib/subscriptions";
+import { readJsonRequest } from "@/lib/request-validation";
 
 export const runtime = "nodejs";
 
@@ -23,23 +24,18 @@ export async function POST(request) {
     return jsonResponse({ error: "Sign in to manage SideQuest Plus." }, 401);
   }
 
-  const contentLength = Number(request.headers.get("content-length") || 0);
+  const parsed = await readJsonRequest(request, {
+    maxBytes: 1024,
+    invalidJsonMessage: "Send a valid cancellation request.",
+    unsupportedMediaMessage: "Send the cancellation request as JSON.",
+    tooLargeMessage: "The cancellation request is too large.",
+  });
 
-  if (!Number.isFinite(contentLength) || contentLength > 1024) {
-    return jsonResponse({ error: "The cancellation request is too large." }, 413);
+  if (parsed.error) {
+    return jsonResponse({ error: parsed.error.message }, parsed.error.status);
   }
 
-  if (!request.headers.get("content-type")?.includes("application/json")) {
-    return jsonResponse({ error: "Send the cancellation request as JSON." }, 415);
-  }
-
-  let body;
-
-  try {
-    body = await request.json();
-  } catch {
-    return jsonResponse({ error: "Send a valid cancellation request." }, 400);
-  }
+  const body = parsed.data;
 
   if (
     !body ||

@@ -10,8 +10,11 @@ import {
   createRateLimitResponse,
   createRateLimitUnavailableResponse,
 } from "@/lib/rate-limit";
+import { readJsonRequest } from "@/lib/request-validation";
 
 export const runtime = "nodejs";
+
+const MAX_REMIX_REQUEST_BYTES = 2_000;
 
 function jsonResponse(body, status = 200) {
   return Response.json(body, {
@@ -61,15 +64,18 @@ export async function POST(request) {
     return createRateLimitResponse(rateLimit);
   }
 
-  let body;
+  const parsed = await readJsonRequest(request, {
+    maxBytes: MAX_REMIX_REQUEST_BYTES,
+    invalidJsonMessage: "Send the remix request as valid JSON.",
+    unsupportedMediaMessage: "Send the remix request as JSON.",
+    tooLargeMessage: "The remix request is too large.",
+  });
 
-  try {
-    body = await request.json();
-  } catch {
-    return jsonResponse({ error: "Send the remix request as valid JSON." }, 400);
+  if (parsed.error) {
+    return jsonResponse({ error: parsed.error.message }, parsed.error.status);
   }
 
-  const validation = validateQuestRemixInput(body);
+  const validation = validateQuestRemixInput(parsed.data);
 
   if (validation.error) {
     return jsonResponse({ error: validation.error }, 400);

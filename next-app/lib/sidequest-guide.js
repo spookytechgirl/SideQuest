@@ -9,6 +9,8 @@ export const MAX_CHAT_MESSAGES = 24;
 export const MAX_MESSAGE_LENGTH = 2000;
 export const MAX_CONVERSATION_LENGTH = 12000;
 
+const ALLOWED_MESSAGE_FIELDS = new Set(["role", "content"]);
+
 export function validateChatMessages(value) {
   if (!Array.isArray(value) || value.length === 0) {
     return { error: "Add a message before asking the SideQuest Guide." };
@@ -26,6 +28,9 @@ export function validateChatMessages(value) {
   for (const item of value) {
     if (
       !item ||
+      typeof item !== "object" ||
+      Array.isArray(item) ||
+      Object.keys(item).some((field) => !ALLOWED_MESSAGE_FIELDS.has(field)) ||
       (item.role !== "user" && item.role !== "assistant") ||
       typeof item.content !== "string"
     ) {

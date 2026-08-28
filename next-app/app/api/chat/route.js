@@ -8,8 +8,12 @@ import {
   createRateLimitResponse,
   createRateLimitUnavailableResponse,
 } from "@/lib/rate-limit";
+import { readJsonRequest } from "@/lib/request-validation";
 
 export const runtime = "nodejs";
+
+const MAX_CHAT_REQUEST_BYTES = 32_000;
+const ALLOWED_BODY_FIELDS = new Set(["messages"]);
 
 export async function POST(request) {
   let rateLimit;
@@ -24,18 +28,37 @@ export async function POST(request) {
     return createRateLimitResponse(rateLimit);
   }
 
-  let body;
+  const parsed = await readJsonRequest(request, {
+    maxBytes: MAX_CHAT_REQUEST_BYTES,
+    invalidJsonMessage: "Send the conversation as valid JSON.",
+    unsupportedMediaMessage: "Send the conversation as JSON.",
+    tooLargeMessage: "The conversation request is too large.",
+  });
 
-  try {
-    body = await request.json();
-  } catch {
+  if (parsed.error) {
     return Response.json(
-      { error: "Send the conversation as valid JSON." },
+      { error: parsed.error.message },
+      { status: parsed.error.status },
+    );
+  }
+
+  const body = parsed.data;
+
+  if (!body || typeof body !== "object" || Array.isArray(body)) {
+    return Response.json(
+      { error: "Send the conversation as a JSON object." },
       { status: 400 },
     );
   }
 
-  const validation = validateChatMessages(body?.messages);
+  if (Object.keys(body).some((field) => !ALLOWED_BODY_FIELDS.has(field))) {
+    return Response.json(
+      { error: "The conversation request contains an unsupported field." },
+      { status: 400 },
+    );
+  }
+
+  const validation = validateChatMessages(body.messages);
 
   if (validation.error) {
     return Response.json({ error: validation.error }, { status: 400 });
