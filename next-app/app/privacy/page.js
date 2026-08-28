@@ -203,7 +203,8 @@ export default function PrivacyPage() {
               The updated date at the top will identify the current version.
             </p>
             <p className="legal-contact">
-              Contact: <span>[Add a production support email before launch]</span>
+              Questions about this notice can be sent through the in-app feedback
+              form.
             </p>
           </section>
         </div>

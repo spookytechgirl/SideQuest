@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SideQuest
 
-## Getting Started
+SideQuest is a cozy adventure-planning app for finding small, realistic activities based on your mood, energy, available time, and interests.
 
-First, run the development server:
+Live project: [https://sidequest-next-preview.vercel.app](https://sidequest-next-preview.vercel.app)
+
+## Features
+
+- Random quest generator, personalized quiz, Saved Quests search, and Adventure Log
+- Supabase Google OAuth and email/password authentication
+- Editable profiles with avatar uploads and automatic profile creation
+- Owner-only custom quest CRUD and administrator quest management
+- SideQuest Guide chat and paid AI Quest Remix
+- Stripe test-mode one-time purchases and monthly subscriptions
+- Upstash-backed rate limiting, signed Stripe webhooks, and Resend welcome email
+- Feedback widget, Vercel Web Analytics, and privacy-first Sentry monitoring
+- SEO landing pages, database-generated quest pages, JSON-LD, sitemap, and robots metadata
+- Responsive light/dark themes with accessible navigation and reduced-motion support
+
+## Tech stack
+
+- Next.js 16 App Router, React 19, and JavaScript
+- Supabase Auth, Postgres, Row Level Security, and Storage
+- OpenAI, Stripe, Upstash Redis, and Resend
+- Vercel Analytics, Sentry, Vitest, and ESLint
+- Vercel deployment
+
+## Local development
+
+Use Node.js 20.9 or newer.
+
+```bash
+npm install
+```
+
+Copy `.env.example` to `.env.local`, add the required values for the services you want to exercise, and then start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Browser-safe Supabase configuration:
 
-## Learn More
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
 
-To learn more about Next.js, take a look at the following resources:
+Server-only configuration:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `SUPABASE_SECRET_KEY`
+- `OPENAI_API_KEY`
+- `UPSTASH_REDIS_REST_KV_REST_API_URL`
+- `UPSTASH_REDIS_REST_KV_REST_API_TOKEN`
+- `STRIPE_SECRET_KEY`
+- `STRIPE_WEBHOOK_SECRET`
+- `RESEND_API_KEY`
+- `RESEND_FROM_EMAIL`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Never expose the server-only values through `NEXT_PUBLIC_*` variables. Sentry uses its browser-safe public DSN from the shared Sentry configuration and does not require a private runtime token.
 
-## Deploy on Vercel
+## Database setup
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The repository includes reviewed SQL files for profiles, roles, public/admin quests, user-owned quests, entitlements, subscriptions, feedback, avatar storage, auto-profiles, and welcome-email permissions. Run only the required SQL manually in the Supabase SQL Editor after reviewing it. Never place a service-role or secret key in browser code.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Quality checks
+
+```bash
+npm run test:run
+npm run lint
+npm run build
+```
+
+The automated Vitest suite exercises request validation, safe redirects, AI input validation, quest matching and storage, feedback validation, public quest routes, and structured data without contacting production services.
+
+## Deployment
+
+Deploy `next-app/` as the Vercel project root and configure the environment-variable names above for the appropriate Preview and Production environments. Stripe remains in test mode for this portfolio project.

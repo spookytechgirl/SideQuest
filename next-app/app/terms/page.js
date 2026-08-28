@@ -202,7 +202,8 @@ export default function TermsPage() {
               revision means the revised terms apply from that point forward.
             </p>
             <p className="legal-contact">
-              Contact: <span>[Add a production support email before launch]</span>
+              Questions about these terms can be sent through the in-app feedback
+              form.
             </p>
           </section>
         </div>
